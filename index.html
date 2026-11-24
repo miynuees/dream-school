@@ -75,9 +75,8 @@ input,textarea,select{font:inherit;color:inherit}
 .inp{width:100%;border:1.5px solid var(--line);background:#FFFDF9;border-radius:12px;padding:11px 13px;font-size:15px;outline:none;transition:.15s}
 .inp:focus{border-color:var(--c);background:#fff}
 textarea.inp{resize:vertical;min-height:72px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.chip{border:1px dashed #D8CCBC;background:transparent;border-radius:999px;padding:4px 11px;font-size:13px;color:var(--sub)}
-.chip:hover{color:var(--ink);border-color:var(--ink)}
+.exlist{margin:8px 2px 0;font-size:13px;color:var(--sub);line-height:1.7;user-select:none}
+.exlist b{font-weight:600;margin-right:4px}
 .colors{display:flex;gap:10px;flex-wrap:wrap}
 .colors button{width:38px;height:38px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line)}
 .colors button.on{box-shadow:0 0 0 2.5px var(--ink)}
@@ -254,8 +253,8 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
       </div>
       <div class="field">
         <label>어떤 학생을 위한 학교인가요?</label>
-        <input class="inp" id="fFor" maxlength="60" placeholder="예) 시각예술 분야로 진로를 정한 학생을 위한 학교">
-        <div class="chips" id="forChips"></div>
+        <input class="inp" id="fFor" maxlength="60" placeholder="○○한 학생을 위한 학교">
+        <div class="exlist" id="forChips"></div>
       </div>
       <div class="field">
         <label>이 학교를 졸업한 학생은 어떤 사람이 되어 있을까요? <small>교육 목표</small></label>
@@ -427,8 +426,7 @@ function startNew(){
 }
 function fillStep1(){
   $('fName').value = draft.name; $('fFor').value = draft.forWhom; $('fGoal').value = draft.goal; $('fFounder').value = draft.founder;
-  $('forChips').innerHTML = FOR_EX.map(x=>`<button class="chip" type="button">${esc(x)}</button>`).join('');
-  [...$('forChips').children].forEach((b,i)=> b.onclick = ()=>{ $('fFor').value = FOR_EX[i]+'을 위한 학교'; $('fFor').focus(); });
+  $('forChips').innerHTML = '<b>예)</b>' + FOR_EX.map(esc).join(' · ');
   $('colorPick').innerHTML = SCHOOL_COLORS.map((c,i)=>`<button type="button" style="background:${c[0]}" class="${i===draft.color?'on':''}" data-i="${i}" aria-label="색 ${i+1}"></button>`).join('');
   [...$('colorPick').children].forEach(b => b.onclick = ()=>{ draft.color=+b.dataset.i; setColor(draft.color); [...$('colorPick').children].forEach(x=>x.classList.toggle('on',x===b)); });
   setColor(draft.color);
