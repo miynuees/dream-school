@@ -158,6 +158,10 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
 .tt.ro td{cursor:default}
 .tt.ro td:hover{outline:none}
 .tt td.f{color:#3D3631}
+.tt td.b{color:#8A7F74;cursor:default;font-weight:500}
+.tt:not(.ro) td.b:hover{outline:none}
+.emptyinfo{font-weight:700!important;color:#D9546E!important}
+.emptyinfo.ok{color:#3FA58F!important}
 .hint{font-size:13px;color:var(--sub);margin:4px 0 10px}
 .brushbar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .brushbar button{border:1.5px solid transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
@@ -357,8 +361,8 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
         <div class="pickgrid" id="pickGrid"></div>
       </div>
       <div class="field" id="ttField">
-        <label>시간표 채우기</label>
-        <div class="hint">과목을 고른 다음 칸을 누르세요. 같은 과목 칸을 다시 누르면 지워져요.</div>
+        <label>시간표 채우기 <small class="emptyinfo" id="emptyInfo"></small></label>
+        <div class="hint">기본과목은 자동으로 들어가 있어요. 공강 없이 빈칸을 모두 선택과목으로 채우세요. 과목을 고른 다음 칸을 누르면 들어가고, 다시 누르면 지워져요.</div>
         <div class="brushbar" id="brushBar"></div>
         <div class="tt-wrap"><table class="tt" id="ttEdit"></table></div>
         <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:8px">
@@ -405,7 +409,7 @@ const FOR_EX = ['시각예술 분야로 진로를 정한 학생','공학·기술
 const SCHOOL_COLORS = [['#FF9FB2','#FFEEF2'],['#FFB98A','#FFF1E7'],['#F2C94C','#FDF6DC'],['#7FD1BF','#E5F6F2'],['#8EC5F0','#EAF4FD'],['#B9A6EE','#F1ECFD'],['#B5C98A','#F1F6E6']];
 const COURSE_COLORS = ['#FFC6D0','#FFD8B8','#F8E39A','#B6E6D9','#BEDDF7','#D8CCF7','#D5E4B4','#F1CBE6'];
 const DAYS = ['월','화','수','목','금'];
-const PERIODS = 7;
+const PERIODS = 6;
 
 /* ===== Firebase ===== */
 firebase.initializeApp({
@@ -502,7 +506,7 @@ const roleOf = c => c.role || 'elective';
 const basics = s => s.courses.filter(c=>roleOf(c)==='basic');
 const electives = s => s.courses.filter(c=>roleOf(c)==='elective');
 const isFoundation = c => ['국어','수학','영어'].includes(c.group) || (c.name||'').startsWith('한국사');
-const BASIC_MAX = 8, EL_MIN = 5, EL_MAX = 8;
+const BASIC_MAX = 7, EL_MIN = 5, EL_MAX = 8;
 let addRole = null;
 const whyOpen = new Set();
 
@@ -631,6 +635,9 @@ function prepStep3(){
   $('s3back').textContent = visit ? '← 학교 안내로' : '← 이전';
   $('s3back').onclick = visit ? ()=>openDetail(visit.id) : ()=>toStep(2);
   tt.picks = tt.picks.filter(id => electives(s).some(c=>c.id===id));
+  { const bg = basicGrid(s), g = {...bg};
+    for (const [k,cid] of Object.entries(tt.grid||{})) if (!bg[k] && tt.picks.includes(cid)) g[k]=cid;
+    tt.grid = g; }
   const b = basics(s);
   $('basicLine').innerHTML = b.length ? `<b>기본과목</b> ${b.map(c=>esc(c.name)).join(' · ')}` : '';
   renderPicks(); renderTTEdit();
@@ -645,9 +652,9 @@ function renderPicks(){
     else { if (tt.picks.length>=4) return toast('4개까지 고를 수 있어요.'); tt.picks.push(id); brush=id; }
     renderPicks(); renderTTEdit();
   });
-  const bIds = basics(s).map(c=>c.id), brushIds = [...tt.picks, ...bIds];
-  $('ttField').classList.toggle('hidden', !brushIds.length);
-  if (!brushIds.includes(brush)) brush = tt.picks[0]||bIds[0]||null;
+  const brushIds = tt.picks;
+  $('ttField').classList.toggle('hidden', !tt.picks.length && !basics(s).length);
+  if (!brushIds.includes(brush)) brush = tt.picks[0]||null;
   $('brushBar').innerHTML = brushIds.map(id => { const c=s.courses.find(x=>x.id===id); return `<button class="${brush===id?'on':''}" data-id="${id}" style="background:${courseColor(s,id)}">${esc(c.name)}</button>`; }).join('');
   $('brushBar').querySelectorAll('button').forEach(b => b.onclick = ()=>{ brush=b.dataset.id; renderPicks(); });
 }
@@ -657,37 +664,43 @@ function ttHTML(school, grid, ro){
     h += `<tr><th class="p">${p}</th>`;
     for (let d=0; d<5; d++){
       const k = d+'-'+p, cid = grid[k], c = cid && school.courses.find(x=>x.id===cid);
-      h += c ? `<td class="f" data-k="${k}" style="background:${courseColor(school,cid)}">${ro?'':esc(c.name)}</td>` : `<td data-k="${k}"></td>`;
+      h += c ? `<td class="f${roleOf(c)==='basic'?' b':''}" data-k="${k}" style="background:${courseColor(school,cid)}">${ro?'':esc(c.name)}</td>` : `<td data-k="${k}"></td>`;
     }
     h += '</tr>';
   }
   return h;
 }
+const BASIC_HOURS = 3;
+function allSlots(){ const a=[]; for (let p=1;p<=PERIODS;p++) for (let d=0;d<5;d++) a.push(d+'-'+p); return a; }
+// 기본과목은 과목마다 3시간, 앞 교시부터 요일을 돌며 자동 배치(같은 과목은 서로 다른 요일)
+function basicGrid(school){
+  const hrs = []; basics(school).forEach(c=>{ for (let i=0;i<BASIC_HOURS;i++) hrs.push(c.id); });
+  const g = {}; allSlots().forEach((k,i)=>{ if (i<hrs.length) g[k]=hrs[i]; });
+  return g;
+}
+const emptyCount = () => allSlots().filter(k=>!tt.grid[k]).length;
 function renderTTEdit(){
   const t = $('ttEdit'); t.innerHTML = ttHTML(curSchool(), tt.grid, false);
   t.querySelectorAll('td').forEach(td => td.onclick = ()=>{
     const k=td.dataset.k;
-    if (!brush) return toast('위에서 과목을 먼저 골라 주세요.');
+    if (basicGrid(curSchool())[k]) return toast('기본과목 칸은 바꿀 수 없어요.');
+    if (!brush) return toast('위에서 선택과목을 먼저 골라 주세요.');
     if (tt.grid[k]===brush) delete tt.grid[k]; else tt.grid[k]=brush;
     renderTTEdit();
   });
+  const n = emptyCount();
+  $('emptyInfo').textContent = n ? `빈칸 ${n}칸` : '빈칸 없음';
+  $('emptyInfo').classList.toggle('ok', !n);
+  if (!n) err('e3','');
 }
-function clearGrid(){ tt.grid = {}; renderTTEdit(); }
+function clearGrid(){ tt.grid = basicGrid(curSchool()); renderTTEdit(); }
 function autoFill(){
-  const ids = [...tt.picks, ...basics(curSchool()).map(c=>c.id)];
-  if (!ids.length) return;
-  tt.grid = {};
-  // 과목마다 일주일 3시간, 날짜를 흩어서 (선택과목 먼저)
-  ids.forEach(id => {
-    let placed=0, tries=0;
-    const days = [0,1,2,3,4].sort(()=>Math.random()-.5);
-    while (placed<3 && tries<80){
-      const d = days[placed % 5], p = 1 + Math.floor(Math.random()*PERIODS), k = d+'-'+p;
-      if (!tt.grid[k]){ tt.grid[k]=id; placed++; }
-      tries++;
-    }
-  });
-  renderTTEdit();
+  if (!tt.picks.length) return toast('선택과목을 먼저 골라 주세요.');
+  const bg = basicGrid(curSchool());
+  const g = {...bg};
+  let i = 0;
+  for (const k of allSlots()) if (!bg[k]) g[k] = tt.picks[i++ % tt.picks.length];
+  tt.grid = g; renderTTEdit();
 }
 
 /* ===== 저장 ===== */
@@ -696,6 +709,7 @@ async function saveAll(){
   if (tt.picks.length<3) return err('e3','선택과목을 3개 이상 골라 주세요.');
   const unplaced = tt.picks.filter(id => !Object.values(tt.grid).includes(id));
   if (unplaced.length){ const s=curSchool(); return err('e3',`'${s.courses.find(c=>c.id===unplaced[0]).name}'을(를) 시간표에 넣어 주세요.`); }
+  if (emptyCount()) return err('e3',`공강이 없도록 빈칸 ${emptyCount()}칸을 모두 채워 주세요.`);
   if (!student) return err('e3','학생 이름을 적어 주세요.');
   const btn = $('saveBtn'); btn.disabled = true; btn.textContent = '저장 중…';
   try{
