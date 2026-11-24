@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>내가 꿈꾸는 학교</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+@font-face{
+  font-family:'PDH';
+  src:url('pdh.woff2') format('woff2'),
+      url('https://cdn.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+  font-weight:100 900; font-display:swap;
+}
+:root{
+  --bg:#FBF7F0; --paper:#fff; --ink:#3D3631; --sub:#958A80; --line:#ECE3D6; --soft:#F6F0E6;
+  --c:#8EC5F0; --c-soft:#EAF4FD; /* 학교 색 — 학교마다 갈아끼움 */
+  --hand:'PDH','Pretendard Variable',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.6; font-size:15px;
+  background-image:radial-gradient(rgba(150,130,110,.08) 1px, transparent 1px);
+  background-size:18px 18px;
+  min-height:100vh;
+}
+button{font:inherit;cursor:pointer;color:inherit}
+input,textarea,select{font:inherit;color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding:20px 18px 80px}
+.hand{font-family:var(--hand);font-weight:400}
+.hidden{display:none!important}
+
+/* 상단 */
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.logo{font-family:var(--hand);font-size:26px;background:none;border:0;padding:0}
+.top-btns{display:flex;gap:6px}
+.btn{border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:9px 18px;font-weight:600;font-size:14px;transition:.15s}
+.btn:hover{border-color:var(--ink)}
+.btn.main{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.main:hover{opacity:.88}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--sub)}
+.btn.ghost:hover{color:var(--ink)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.btn:disabled{opacity:.4;cursor:default}
+
+/* 대문 */
+.hero{text-align:center;padding:46px 0 22px}
+.hero h1{font-family:var(--hand);font-weight:400;font-size:58px;line-height:1.1;margin:0 0 10px}
+.hero p{color:var(--sub);margin:0 0 26px;font-size:16px}
+.hero .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero .btn{padding:13px 26px;font-size:16px}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:38px 0 10px}
+.steps3 div{background:var(--paper);border:1.5px solid var(--line);border-radius:18px;padding:18px 16px}
+.steps3 b{font-family:var(--hand);font-weight:400;font-size:30px;display:block;line-height:1;margin-bottom:6px;color:#C9B9A6}
+.steps3 strong{display:block;font-size:15px;margin-bottom:2px}
+.steps3 span{font-size:13px;color:var(--sub)}
+.recent-h{display:flex;align-items:baseline;justify-content:space-between;margin:36px 0 10px}
+.recent-h h2{font-family:var(--hand);font-weight:400;font-size:28px;margin:0}
+
+/* 만들기 */
+.prog{display:flex;gap:6px;margin:6px 0 18px}
+.prog div{flex:1;text-align:center;font-size:13px;color:var(--sub);padding-bottom:8px;border-bottom:3px solid var(--line)}
+.prog div.on{color:var(--ink);font-weight:700;border-color:var(--c)}
+.prog div.done{border-color:var(--c)}
+.sheet{background:var(--paper);border:1.5px solid var(--line);border-radius:22px;padding:26px 24px}
+.sheet h2{font-family:var(--hand);font-weight:400;font-size:34px;margin:0 0 2px;line-height:1.2}
+.sheet .lead{color:var(--sub);margin:0 0 22px;font-size:14px}
+.field{margin-bottom:20px}
+.field label{display:block;font-weight:700;font-size:14px;margin-bottom:6px}
+.field label small{font-weight:400;color:var(--sub);margin-left:4px}
+.inp{width:100%;border:1.5px solid var(--line);background:#FFFDF9;border-radius:12px;padding:11px 13px;font-size:15px;outline:none;transition:.15s}
+.inp:focus{border-color:var(--c);background:#fff}
+textarea.inp{resize:vertical;min-height:72px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{border:1px dashed #D8CCBC;background:transparent;border-radius:999px;padding:4px 11px;font-size:13px;color:var(--sub)}
+.chip:hover{color:var(--ink);border-color:var(--ink)}
+.colors{display:flex;gap:10px;flex-wrap:wrap}
+.colors button{width:38px;height:38px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line)}
+.colors button.on{box-shadow:0 0 0 2.5px var(--ink)}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:10px}
+.err{color:#D9546E;font-size:13px;min-height:18px}
+
+/* 과목 */
+.count{font-family:var(--hand);font-size:24px}
+.count.ok{color:#3FA58F}
+.mycourses{display:flex;flex-direction:column;gap:10px;margin:4px 0 18px}
+.course{border:1.5px solid var(--line);border-radius:16px;padding:14px 14px 12px;background:#FFFDF9;position:relative}
+.course .row1{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-right:30px}
+.course .nm{font-weight:700;font-size:16px}
+.badge{font-size:11.5px;padding:2px 8px;border-radius:999px;background:var(--soft);color:#7D7166;white-space:nowrap}
+.badge.new{background:var(--c-soft);color:var(--ink)}
+.course .desc{font-size:13.5px;color:var(--sub);margin-top:2px}
+.course .why{margin-top:8px}
+.course .why textarea{min-height:54px;font-size:14px}
+.course .x{position:absolute;top:10px;right:10px;border:0;background:none;color:#C4B8AA;font-size:18px;line-height:1;padding:4px}
+.course .x:hover{color:#D9546E}
+.course .why-lab{font-size:12.5px;font-weight:700;color:#7D7166;margin-bottom:4px}
+.empty{border:1.5px dashed var(--line);border-radius:16px;padding:22px;text-align:center;color:var(--sub);font-size:14px}
+
+.addbox{border-top:1.5px dashed var(--line);padding-top:18px}
+.tabs{display:flex;gap:4px;margin-bottom:14px;background:var(--soft);padding:4px;border-radius:999px;width:fit-content}
+.tabs button{border:0;background:none;border-radius:999px;padding:7px 16px;font-size:14px;color:var(--sub)}
+.tabs button.on{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.newform{display:grid;gap:10px}
+.newform .two{display:grid;grid-template-columns:1fr 1.4fr;gap:10px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.filters select{border:1.5px solid var(--line);border-radius:999px;padding:7px 12px;background:#fff;font-size:14px}
+.filters .inp{flex:1;min-width:140px;border-radius:999px;padding:7px 14px;font-size:14px}
+.cat-note{font-size:12.5px;color:var(--sub);margin:0 0 8px}
+.catlist{max-height:330px;overflow:auto;border:1.5px solid var(--line);border-radius:14px;background:#fff}
+.catgroup{padding:10px 12px 6px;border-bottom:1px solid var(--soft)}
+.catgroup h4{margin:0 0 6px;font-size:13px;color:#7D7166}
+.catgroup .t{font-size:11.5px;color:var(--sub);margin:6px 0 4px}
+.subj{display:inline-flex;align-items:center;gap:4px;border:1.5px solid var(--line);background:#FFFDF9;border-radius:999px;padding:4px 11px;font-size:13.5px;margin:0 4px 6px 0}
+.subj:hover{border-color:var(--c);background:var(--c-soft)}
+.subj.added{opacity:.35;cursor:default}
+.subj.added:hover{border-color:var(--line);background:#FFFDF9}
+
+/* 시간표 */
+.pickgrid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.pick{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:9px 14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.pick .dot{width:12px;height:12px;border-radius:50%;background:#ddd;flex:none}
+.pick.on{border-color:var(--ink)}
+.pick.brush{box-shadow:0 0 0 3px rgba(61,54,49,.15)}
+.tt-wrap{overflow-x:auto}
+table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;table-layout:fixed}
+.tt th{font-size:13px;color:var(--sub);font-weight:600;padding:4px 0}
+.tt th.p{width:38px}
+.tt td{height:52px;border-radius:10px;background:var(--soft);font-size:12.5px;font-weight:600;text-align:center;line-height:1.25;padding:3px;word-break:keep-all;cursor:pointer;transition:background .12s}
+.tt td:hover{outline:2px solid rgba(61,54,49,.15)}
+.tt.ro td{cursor:default}
+.tt.ro td:hover{outline:none}
+.tt td.f{color:#3D3631}
+.hint{font-size:13px;color:var(--sub);margin:4px 0 10px}
+.brushbar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.brushbar button{border:1.5px solid transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.brushbar button.on{border-color:var(--ink)}
+
+/* 갤러리 */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.card{background:var(--paper);border:1.5px solid var(--line);border-radius:20px;overflow:hidden;text-align:left;padding:0;transition:.15s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(120,100,80,.12)}
+.card .band{height:10px}
+.card .in{padding:16px 18px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card .nm{font-family:var(--hand);font-size:28px;line-height:1.15}
+.card .for{font-size:13.5px;color:#6F655C}
+.card .meta{margin-top:auto;padding-top:10px;font-size:12.5px;color:var(--sub);display:flex;gap:10px}
+.card .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.card .tags span{font-size:11.5px;background:var(--soft);border-radius:999px;padding:2px 8px;color:#7D7166}
+.gal-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 0 14px;flex-wrap:wrap}
+.gal-h h2{font-family:var(--hand);font-weight:400;font-size:36px;margin:0}
+.gal-h .inp{max-width:220px;border-radius:999px;padding:8px 14px;font-size:14px}
+
+/* 학교 안내(상세) */
+.brochure{background:var(--paper);border:1.5px solid var(--line);border-radius:24px;overflow:hidden}
+.bro-head{background:var(--c-soft);padding:30px 26px 24px;border-bottom:1.5px solid var(--line);position:relative}
+.bro-head .est{font-size:12.5px;color:#7D7166;letter-spacing:.04em}
+.bro-head h1{font-family:var(--hand);font-weight:400;font-size:50px;line-height:1.1;margin:4px 0 6px}
+.bro-head .for{font-size:16px;font-weight:600}
+.bro-head .goal{margin-top:14px;background:#fff;border-radius:14px;padding:12px 16px;font-size:15px;border-left:5px solid var(--c)}
+.bro-head .goal b{display:block;font-size:12px;color:var(--sub);font-weight:600;margin-bottom:2px}
+.bro-body{padding:24px 26px 28px}
+.bro-body h3{font-family:var(--hand);font-weight:400;font-size:28px;margin:6px 0 10px}
+.clist{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.citem{border:1.5px solid var(--line);border-radius:16px;padding:14px 15px;background:#FFFDF9}
+.citem .nm{font-weight:700;font-size:15.5px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.citem .desc{font-size:13px;color:var(--sub);margin-top:2px}
+.citem .why{font-size:14px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.citem .why b{font-size:12px;color:#7D7166;display:block}
+.students{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.stu{border:1.5px solid var(--line);border-radius:16px;padding:12px 12px 10px;background:#fff}
+.stu .who{font-weight:700;font-size:14.5px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.stu .who small{font-weight:400;color:var(--sub);font-size:12px}
+.stu .note{font-size:13.5px;color:#6F655C;margin:4px 2px 6px}
+.stu table.tt{min-width:0;border-spacing:2px}
+.stu .tt td{height:30px;font-size:10.5px;border-radius:6px}
+.stu .tt th{font-size:11px}
+.stu .tt th.p{width:20px}
+.stu .legend{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;margin-top:6px;color:#6F655C}
+.stu .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+.bro-actions{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 0}
+.owner{margin-top:26px;padding-top:14px;border-top:1.5px dashed var(--line);display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:14px;opacity:0;transition:.25s;pointer-events:none;z-index:50}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.loading{color:var(--sub);text-align:center;padding:40px 0}
+
+@media (max-width:640px){
+  .wrap{padding:14px 12px 70px}
+  .hero{padding:26px 0 10px}
+  .hero h1{font-size:44px}
+  .steps3{grid-template-columns:1fr;gap:8px;margin-top:26px}
+  .sheet{padding:20px 16px;border-radius:18px}
+  .sheet h2{font-size:30px}
+  .newform .two{grid-template-columns:1fr}
+  .inp,textarea.inp,.filters select,.filters .inp{font-size:16px}
+  .bro-head{padding:24px 18px 20px}
+  .bro-head h1{font-size:40px}
+  .bro-body{padding:20px 16px 22px}
+  .tt td{height:44px;font-size:11.5px}
+  .students{grid-template-columns:1fr}
+}
+@media print{
+  .top,.bro-actions,.owner{display:none!important}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <button class="logo" onclick="go('home')">내가 꿈꾸는 학교</button>
+    <div class="top-btns">
+      <button class="btn ghost sm" onclick="go('gallery')">학교 구경하기</button>
+      <button class="btn sm" onclick="startNew()">학교 세우기</button>
+    </div>
+  </div>
+
+  <!-- 대문 -->
+  <section id="v-home">
+    <div class="hero">
+      <h1>내가 꿈꾸는 학교</h1>
+      <p>예산, 교사 수, 시수는 잠깐 잊고 바라는 것만 담아 보세요.</p>
+      <div class="btns">
+        <button class="btn main" onclick="startNew()">학교 세우기</button>
+        <button class="btn" onclick="go('gallery')">다른 학교 구경하기</button>
+      </div>
+    </div>
+    <div class="steps3">
+      <div><b>1</b><strong>어떤 학생을 위한 학교인가</strong><span>전공, 역량, 가치 어디서 출발해도 좋아요.</span></div>
+      <div><b>2</b><strong>우리 학교만의 선택과목</strong><span>5~8개. 과목마다 왜 필요한지 함께 적어요.</span></div>
+      <div><b>3</b><strong>학생이 되어 시간표 짜기</strong><span>3~4개를 골라 일주일 시간표를 채워요.</span></div>
+    </div>
+    <div class="recent-h"><h2>방금 세워진 학교</h2><button class="btn ghost sm" onclick="go('gallery')">전체 보기 →</button></div>
+    <div class="cards" id="recentCards"><div class="loading">불러오는 중…</div></div>
+  </section>
+
+  <!-- 만들기 -->
+  <section id="v-build" class="hidden">
+    <div class="prog" id="prog">
+      <div data-s="1">1. 학교 정체성</div><div data-s="2">2. 선택과목</div><div data-s="3">3. 시간표</div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="sheet" id="s1">
+      <h2>어떤 학생을 위한 학교인가요?</h2>
+      <p class="lead">특정 전공을 중심으로 해도 좋고, 길러주고 싶은 역량이나 가치에서 출발해도 좋아요.</p>
+      <div class="field">
+        <label>학교 이름</label>
+        <input class="inp" id="fName" maxlength="30" placeholder="예) 물감고등학교">
+      </div>
+      <div class="field">
+        <label>어떤 학생을 위한 학교인가요?</label>
+        <input class="inp" id="fFor" maxlength="60" placeholder="예) 미술을 사랑하는 학생들을 위한 학교">
+        <div class="chips" id="forChips"></div>
+      </div>
+      <div class="field">
+        <label>이 학교를 졸업한 학생은 어떤 사람이 되어 있을까요? <small>교육 목표</small></label>
+        <textarea class="inp" id="fGoal" maxlength="300" placeholder="예) 자기만의 시선으로 세상을 보고, 그것을 작품으로 말할 수 있는 사람"></textarea>
+      </div>
+      <div class="field">
+        <label>설립자 <small>이름이나 별명</small></label>
+        <input class="inp" id="fFounder" maxlength="20" placeholder="예) 김세은">
+      </div>
+      <div class="field">
+        <label>학교 색</label>
+        <div class="colors" id="colorPick"></div>
+      </div>
+      <div class="nav"><button class="btn ghost" onclick="go('home')">← 처음으로</button><span class="err" id="e1"></span><button class="btn main" onclick="toStep(2)">다음</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="sheet hidden" id="s2">
+      <h2>우리 학교만의 선택과목</h2>
+      <p class="lead">5~8개를 구상해 보세요. 기존 과목을 가져와도, 이름부터 새로 지어도 돼요. 중요한 건 과목마다 '왜 이 배움이 필요한가'예요.</p>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+        <strong>개설 과목</strong><span class="count" id="cCount">0 / 8</span>
+      </div>
+      <div class="mycourses" id="myCourses"></div>
+
+      <div class="addbox">
+        <div class="tabs" id="addTabs">
+          <button data-t="new" class="on">새 과목 만들기</button>
+          <button data-t="cat">기존 선택과목에서 고르기</button>
+        </div>
+        <div id="addNew" class="newform">
+          <div class="two">
+            <input class="inp" id="nName" maxlength="30" placeholder="과목 이름 (예: 동네 미술관 만들기)">
+            <input class="inp" id="nDesc" maxlength="80" placeholder="무엇을 배우나요? (한 줄)">
+          </div>
+          <textarea class="inp" id="nWhy" maxlength="300" placeholder="왜 이 배움이 필요한가요?"></textarea>
+          <div style="display:flex;justify-content:flex-end;gap:8px;align-items:center"><span class="err" id="eNew"></span><button class="btn" onclick="addNew()">+ 과목 추가</button></div>
+        </div>
+        <div id="addCat" class="hidden">
+          <p class="cat-note">2022 개정 교육과정 고등학교 선택과목 (2025학년도 고1부터 적용) · 누르면 위 목록에 담겨요</p>
+          <div class="filters">
+            <select id="catGroup"></select>
+            <select id="catType"><option value="">전체 유형</option><option>일반 선택</option><option>진로 선택</option><option>융합 선택</option></select>
+            <input class="inp" id="catQ" placeholder="과목 검색">
+          </div>
+          <div class="catlist" id="catList"></div>
+        </div>
+      </div>
+      <div class="nav"><button class="btn ghost" onclick="toStep(1)">← 이전</button><span class="err" id="e2"></span><button class="btn main" onclick="toStep(3)">다음</button></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="sheet hidden" id="s3">
+      <div id="s3visit" class="hidden" style="font-size:13px;color:var(--sub);margin-bottom:4px"></div>
+      <h2 id="s3title">이 학교의 학생이 되어 보세요</h2>
+      <p class="lead">내가 이 학교 학생이라면 어떤 과목을 듣고 싶을까요? 3~4개를 고르고 일주일 시간표를 채워 보세요.</p>
+      <div class="field">
+        <label>학생 이름 <small>이름이나 별명</small></label>
+        <input class="inp" id="tName" maxlength="20" style="max-width:260px">
+      </div>
+      <div class="field">
+        <label>듣고 싶은 과목 고르기 <small id="pickCount">0 / 4</small></label>
+        <div class="pickgrid" id="pickGrid"></div>
+      </div>
+      <div class="field" id="ttField">
+        <label>시간표 채우기</label>
+        <div class="hint">과목을 고른 다음 칸을 누르세요. 같은 과목 칸을 다시 누르면 지워져요.</div>
+        <div class="brushbar" id="brushBar"></div>
+        <div class="tt-wrap"><table class="tt" id="ttEdit"></table></div>
+        <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:8px">
+          <button class="btn sm ghost" onclick="clearGrid()">비우기</button>
+          <button class="btn sm" onclick="autoFill()">알아서 채우기</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>왜 이 과목들을 골랐나요? <small>선택</small></label>
+        <textarea class="inp" id="tNote" maxlength="200" placeholder="예) 그림을 그리는 것보다 전시를 기획하는 쪽이 궁금해서"></textarea>
+      </div>
+      <div class="nav"><button class="btn ghost" id="s3back" onclick="toStep(2)">← 이전</button><span class="err" id="e3"></span><button class="btn main" id="saveBtn" onclick="saveAll()">완성!</button></div>
+    </div>
+  </section>
+
+  <!-- 갤러리 -->
+  <section id="v-gallery" class="hidden">
+    <div class="gal-h"><h2>세워진 학교들</h2><input class="inp" id="galQ" placeholder="학교·과목 검색"></div>
+    <div class="cards" id="galCards"><div class="loading">불러오는 중…</div></div>
+  </section>
+
+  <!-- 학교 안내 -->
+  <section id="v-detail" class="hidden"></section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ===== 2022 개정 교육과정 고등학교 선택과목 ===== */
+const CATALOG = {
+  '국어': {'일반 선택':['화법과 언어','독서와 작문','문학'],'진로 선택':['주제 탐구 독서','문학과 영상','직무 의사소통'],'융합 선택':['독서 토론과 글쓰기','매체 의사소통','언어생활 탐구']},
+  '수학': {'일반 선택':['대수','미적분Ⅰ','확률과 통계'],'진로 선택':['기하','미적분Ⅱ','경제 수학','인공지능 수학','직무 수학'],'융합 선택':['수학과 문화','실용 통계','수학과제 탐구']},
+  '영어': {'일반 선택':['영어Ⅰ','영어Ⅱ','영어 독해와 작문'],'진로 선택':['영미 문학 읽기','영어 발표와 토론','심화 영어','심화 영어 독해와 작문','직무 영어'],'융합 선택':['실생활 영어 회화','미디어 영어','세계 문화와 영어']},
+  '사회': {'일반 선택':['세계시민과 지리','세계사','사회와 문화','현대사회와 윤리'],'진로 선택':['한국지리 탐구','도시의 미래 탐구','동아시아 역사 기행','정치','법과 사회','경제','윤리와 사상','인문학과 윤리','국제 관계의 이해'],'융합 선택':['여행지리','역사로 탐구하는 현대 세계','사회문제 탐구','금융과 경제생활','윤리문제 탐구','기후변화와 지속가능한 세계']},
+  '과학': {'일반 선택':['물리학','화학','생명과학','지구과학'],'진로 선택':['역학과 에너지','전자기와 양자','물질과 에너지','화학 반응의 세계','세포와 물질대사','생물의 유전','지구시스템과학','행성우주과학'],'융합 선택':['과학의 역사와 문화','기후변화와 환경생태','융합과학 탐구']},
+  '체육': {'일반 선택':['체육1','체육2'],'진로 선택':['운동과 건강','스포츠 문화','스포츠 과학'],'융합 선택':['스포츠 생활1','스포츠 생활2']},
+  '예술': {'일반 선택':['음악','미술','연극'],'진로 선택':['음악 연주와 창작','음악 감상과 비평','미술 창작','미술 감상과 비평'],'융합 선택':['음악과 미디어','미술과 매체']},
+  '기술·가정/정보': {'일반 선택':['기술·가정','정보'],'진로 선택':['로봇과 공학세계','생활과학 탐구','인공지능 기초','데이터 과학'],'융합 선택':['창의 공학 설계','지식 재산 일반','생애 설계와 자립','아동발달과 부모','소프트웨어와 생활']},
+  '제2외국어/한문': {'일반 선택':['독일어','프랑스어','스페인어','중국어','일본어','러시아어','아랍어','베트남어','한문'],'진로 선택':['독일어 회화','프랑스어 회화','스페인어 회화','중국어 회화','일본어 회화','러시아어 회화','아랍어 회화','베트남어 회화','심화 독일어','심화 프랑스어','심화 스페인어','심화 중국어','심화 일본어','심화 러시아어','심화 아랍어','심화 베트남어','한문 고전 읽기'],'융합 선택':['독일어권 문화','프랑스어권 문화','스페인어권 문화','중국 문화','일본 문화','러시아 문화','아랍 문화','베트남 문화','언어생활과 한자']},
+  '교양': {'일반 선택':['진로와 직업','생태와 환경'],'진로 선택':['인간과 철학','논리와 사고','인간과 심리','교육의 이해','삶과 종교','보건'],'융합 선택':['인간과 경제활동','논술']},
+};
+const FOR_EX = ['미술을 사랑하는 학생','공학자가 되고 싶은 학생','생태적 삶을 배우고 싶은 학생','게임과 놀이로 배우고 싶은 학생','지역사회를 바꾸고 싶은 학생','아직 꿈을 찾는 중인 학생'];
+const SCHOOL_COLORS = [['#FF9FB2','#FFEEF2'],['#FFB98A','#FFF1E7'],['#F2C94C','#FDF6DC'],['#7FD1BF','#E5F6F2'],['#8EC5F0','#EAF4FD'],['#B9A6EE','#F1ECFD'],['#B5C98A','#F1F6E6']];
+const COURSE_COLORS = ['#FFC6D0','#FFD8B8','#F8E39A','#B6E6D9','#BEDDF7','#D8CCF7','#D5E4B4','#F1CBE6'];
+const DAYS = ['월','화','수','목','금'];
+const PERIODS = 7;
+
+/* ===== Firebase ===== */
+firebase.initializeApp({
+  apiKey:"AIzaSyBtSooSc-eg4zMHQ_QF-ErmYJmtaYT1Fkg", authDomain:"limi-88231.firebaseapp.com",
+  projectId:"limi-88231", storageBucket:"limi-88231.firebasestorage.app",
+  messagingSenderId:"361025367626", appId:"1:361025367626:web:19d4e19d54558d4a79c0b3"
+});
+const db = firebase.firestore();
+const SCH = db.collection('dreamschool_schools');
+const TT  = db.collection('dreamschool_timetables');
+
+/* ===== 상태 ===== */
+let schools = [], tts = [];
+let draft = null;      // 만드는 중인 학교
+let visit = null;      // 남의 학교에 학생으로 다녀보기
+let tt = null;         // 시간표 {picks:[], grid:{}}
+let brush = null;
+let detailId = null;
+const MINE_KEY = 'dreamschoolMine';
+const mine = () => { try { return JSON.parse(localStorage.getItem(MINE_KEY)||'{}'); } catch(e){ return {}; } };
+const remember = (kind,id) => { const m = mine(); (m[kind] = m[kind]||[]); if(!m[kind].includes(id)) m[kind].push(id); localStorage.setItem(MINE_KEY, JSON.stringify(m)); };
+const isMine = (kind,id) => (mine()[kind]||[]).includes(id);
+const forget = (kind,id) => { const m = mine(); m[kind] = (m[kind]||[]).filter(x=>x!==id); localStorage.setItem(MINE_KEY, JSON.stringify(m)); };
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => 'c' + Math.random().toString(36).slice(2,9);
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('on'),2000); }
+function setColor(i){ const c = SCHOOL_COLORS[i] || SCHOOL_COLORS[4]; document.documentElement.style.setProperty('--c', c[0]); document.documentElement.style.setProperty('--c-soft', c[1]); }
+
+/* ===== 화면 전환 ===== */
+function go(v, push=true){
+  ['home','build','gallery','detail'].forEach(x => $('v-'+x).classList.toggle('hidden', x!==v));
+  if (v!=='detail' && v!=='build') setColor(4);
+  if (push){
+    const url = v==='detail' && detailId ? '?s='+detailId : (v==='gallery' ? '?g' : location.pathname);
+    history.pushState({v, id:detailId}, '', url);
+  }
+  if (v==='gallery') renderGallery();
+  if (v==='home') renderRecent();
+  window.scrollTo(0,0);
+}
+window.addEventListener('popstate', e => {
+  const st = e.state || {};
+  if (st.v==='detail' && st.id){ openDetail(st.id, false); }
+  else go(st.v && st.v!=='build' ? st.v : 'home', false);
+});
+
+/* ===== STEP 1 ===== */
+function startNew(){
+  visit = null;
+  draft = {id:null, name:'', forWhom:'', goal:'', founder:'', color:4, courses:[]};
+  tt = {picks:[], grid:{}, ttId:null};
+  fillStep1(); go('build'); toStep(1, true);
+}
+function fillStep1(){
+  $('fName').value = draft.name; $('fFor').value = draft.forWhom; $('fGoal').value = draft.goal; $('fFounder').value = draft.founder;
+  $('forChips').innerHTML = FOR_EX.map(x=>`<button class="chip" type="button">${esc(x)}을 위한</button>`).join('');
+  [...$('forChips').children].forEach((b,i)=> b.onclick = ()=>{ $('fFor').value = FOR_EX[i]+'을 위한 학교'; $('fFor').focus(); });
+  $('colorPick').innerHTML = SCHOOL_COLORS.map((c,i)=>`<button type="button" style="background:${c[0]}" class="${i===draft.color?'on':''}" data-i="${i}" aria-label="색 ${i+1}"></button>`).join('');
+  [...$('colorPick').children].forEach(b => b.onclick = ()=>{ draft.color=+b.dataset.i; setColor(draft.color); [...$('colorPick').children].forEach(x=>x.classList.toggle('on',x===b)); });
+  setColor(draft.color);
+}
+function readStep1(){
+  draft.name = $('fName').value.trim(); draft.forWhom = $('fFor').value.trim();
+  draft.goal = $('fGoal').value.trim(); draft.founder = $('fFounder').value.trim();
+}
+
+function toStep(n, force){
+  const cur = [1,2,3].find(i => !$('s'+i).classList.contains('hidden'));
+  if (!force && !visit){
+    if (cur===1) readStep1();
+    if (n>cur && cur===1){
+      if (!draft.name) return err('e1','학교 이름을 적어 주세요.');
+      if (!draft.forWhom) return err('e1','어떤 학생을 위한 학교인지 적어 주세요.');
+      if (!draft.founder) return err('e1','설립자 이름을 적어 주세요.');
+    }
+    if (n>cur && cur===2){
+      syncWhys();
+      if (draft.courses.length<5) return err('e2','과목을 5개 이상 개설해 주세요.');
+      const noWhy = draft.courses.find(c=>!c.why.trim());
+      if (noWhy){ err('e2',`'${noWhy.name}'이(가) 왜 필요한지 적어 주세요.`); const el=document.querySelector(`[data-why="${noWhy.id}"]`); if(el){el.focus(); el.scrollIntoView({block:'center'});} return; }
+    }
+  }
+  ['e1','e2','e3'].forEach(e=>$(e).textContent='');
+  [1,2,3].forEach(i => $('s'+i).classList.toggle('hidden', i!==n));
+  document.querySelectorAll('#prog div').forEach(d => { const s=+d.dataset.s; d.classList.toggle('on', s===n); d.classList.toggle('done', s<n); });
+  $('prog').classList.toggle('hidden', !!visit);
+  if (n===2) renderMyCourses(), renderCatalog();
+  if (n===3) prepStep3();
+  window.scrollTo(0,0);
+}
+function err(id,msg){ $(id).textContent = msg; }
+
+/* ===== STEP 2 ===== */
+function syncWhys(){ document.querySelectorAll('[data-why]').forEach(t => { const c = draft.courses.find(x=>x.id===t.dataset.why); if(c) c.why = t.value; }); }
+function renderMyCourses(){
+  const n = draft.courses.length;
+  $('cCount').textContent = `${n} / 8`; $('cCount').classList.toggle('ok', n>=5);
+  if (!n){ $('myCourses').innerHTML = `<div class="empty">아직 개설한 과목이 없어요. 아래에서 만들거나 골라 보세요.</div>`; return; }
+  $('myCourses').innerHTML = draft.courses.map(c => `
+    <div class="course">
+      <div class="row1"><span class="nm">${esc(c.name)}</span>${c.kind==='new' ? '<span class="badge new">새로 만든 과목</span>' : `<span class="badge">${esc(c.group)} · ${esc(c.type)}</span>`}</div>
+      ${c.desc?`<div class="desc">${esc(c.desc)}</div>`:''}
+      <div class="why"><div class="why-lab">왜 이 배움이 필요한가요?</div><textarea class="inp" maxlength="300" data-why="${c.id}" placeholder="이 학교 학생에게 이 과목이 필요한 이유">${esc(c.why)}</textarea></div>
+      <button class="x" title="빼기" onclick="removeCourse('${c.id}')">✕</button>
+    </div>`).join('');
+  document.querySelectorAll('[data-why]').forEach(t => t.oninput = syncWhys);
+}
+function removeCourse(id){ syncWhys(); draft.courses = draft.courses.filter(c=>c.id!==id); renderMyCourses(); renderCatalog(); }
+function addNew(){
+  const name = $('nName').value.trim(), desc=$('nDesc').value.trim(), why=$('nWhy').value.trim();
+  if (draft.courses.length>=8) return err('eNew','과목은 8개까지예요.');
+  if (!name) return err('eNew','과목 이름을 적어 주세요.');
+  if (draft.courses.some(c=>c.name===name)) return err('eNew','이미 있는 과목이에요.');
+  syncWhys();
+  draft.courses.push({id:uid(), kind:'new', name, desc, why});
+  $('nName').value=$('nDesc').value=$('nWhy').value=''; err('eNew','');
+  renderMyCourses(); renderCatalog(); toast(`'${name}' 개설!`);
+}
+function addCat(group,type,name){
+  if (draft.courses.some(c=>c.name===name)) return;
+  if (draft.courses.length>=8) return toast('과목은 8개까지예요.');
+  syncWhys();
+  const c = {id:uid(), kind:'existing', group, type, name, desc:'', why:''};
+  draft.courses.push(c); renderMyCourses(); renderCatalog();
+  const t = document.querySelector(`[data-why="${c.id}"]`); if(t){ t.scrollIntoView({block:'center',behavior:'smooth'}); setTimeout(()=>t.focus({preventScroll:true}),350); }
+}
+$('catGroup').innerHTML = '<option value="">전체 교과</option>' + Object.keys(CATALOG).map(g=>`<option>${g}</option>`).join('');
+['catGroup','catType'].forEach(id => $(id).onchange = renderCatalog); $('catQ').oninput = renderCatalog;
+function renderCatalog(){
+  const g = $('catGroup').value, ty = $('catType').value, q = $('catQ').value.trim().replace(/\s/g,'');
+  const added = new Set(draft.courses.map(c=>c.name));
+  let html = '';
+  for (const [grp, types] of Object.entries(CATALOG)){
+    if (g && g!==grp) continue;
+    let inner = '';
+    for (const [t, list] of Object.entries(types)){
+      if (ty && ty!==t) continue;
+      const items = list.filter(s => !q || s.replace(/\s/g,'').includes(q));
+      if (!items.length) continue;
+      inner += `<div class="t">${t}</div>` + items.map(s => `<button class="subj ${added.has(s)?'added':''}" data-g="${esc(grp)}" data-t="${t}" data-n="${esc(s)}">${added.has(s)?'✓ ':'+ '}${esc(s)}</button>`).join('');
+    }
+    if (inner) html += `<div class="catgroup"><h4>${grp}</h4>${inner}</div>`;
+  }
+  $('catList').innerHTML = html || '<div class="empty" style="border:0">찾는 과목이 없어요. 새 과목으로 만들어 보세요.</div>';
+  $('catList').querySelectorAll('.subj').forEach(b => b.onclick = ()=> addCat(b.dataset.g, b.dataset.t, b.dataset.n));
+}
+document.querySelectorAll('#addTabs button').forEach(b => b.onclick = ()=>{
+  document.querySelectorAll('#addTabs button').forEach(x=>x.classList.toggle('on',x===b));
+  $('addNew').classList.toggle('hidden', b.dataset.t!=='new'); $('addCat').classList.toggle('hidden', b.dataset.t!=='cat');
+});
+
+/* ===== STEP 3 ===== */
+const curSchool = () => visit || draft;
+const courseColor = (school, cid) => COURSE_COLORS[Math.max(0, school.courses.findIndex(c=>c.id===cid)) % COURSE_COLORS.length];
+function prepStep3(){
+  const s = curSchool();
+  if (!$('tName').value) $('tName').value = visit ? '' : (draft.founder||'');
+  $('s3visit').classList.toggle('hidden', !visit);
+  if (visit) $('s3visit').textContent = visit.name + ' 입학하기';
+  $('s3back').textContent = visit ? '← 학교 안내로' : '← 이전';
+  $('s3back').onclick = visit ? ()=>openDetail(visit.id) : ()=>toStep(2);
+  tt.picks = tt.picks.filter(id => s.courses.some(c=>c.id===id));
+  renderPicks(); renderTTEdit();
+}
+function renderPicks(){
+  const s = curSchool();
+  $('pickCount').textContent = `${tt.picks.length} / 4`;
+  $('pickGrid').innerHTML = s.courses.map(c => `<button class="pick ${tt.picks.includes(c.id)?'on':''}" data-id="${c.id}"><span class="dot" style="background:${tt.picks.includes(c.id)?courseColor(s,c.id):'#E6DDD0'}"></span>${esc(c.name)}</button>`).join('');
+  $('pickGrid').querySelectorAll('.pick').forEach(b => b.onclick = ()=>{
+    const id=b.dataset.id;
+    if (tt.picks.includes(id)){ tt.picks = tt.picks.filter(x=>x!==id); for (const k in tt.grid) if (tt.grid[k]===id) delete tt.grid[k]; if (brush===id) brush=null; }
+    else { if (tt.picks.length>=4) return toast('4개까지 고를 수 있어요.'); tt.picks.push(id); brush=id; }
+    renderPicks(); renderTTEdit();
+  });
+  $('ttField').classList.toggle('hidden', !tt.picks.length);
+  if (!tt.picks.includes(brush)) brush = tt.picks[0]||null;
+  $('brushBar').innerHTML = tt.picks.map(id => { const c=s.courses.find(x=>x.id===id); return `<button class="${brush===id?'on':''}" data-id="${id}" style="background:${courseColor(s,id)}">${esc(c.name)}</button>`; }).join('');
+  $('brushBar').querySelectorAll('button').forEach(b => b.onclick = ()=>{ brush=b.dataset.id; renderPicks(); });
+}
+function ttHTML(school, grid, ro){
+  let h = '<tr><th class="p"></th>' + DAYS.map(d=>`<th>${d}</th>`).join('') + '</tr>';
+  for (let p=1;p<=PERIODS;p++){
+    h += `<tr><th class="p">${p}</th>`;
+    for (let d=0; d<5; d++){
+      const k = d+'-'+p, cid = grid[k], c = cid && school.courses.find(x=>x.id===cid);
+      h += c ? `<td class="f" data-k="${k}" style="background:${courseColor(school,cid)}">${ro?'':esc(c.name)}</td>` : `<td data-k="${k}"></td>`;
+    }
+    h += '</tr>';
+  }
+  return h;
+}
+function renderTTEdit(){
+  const t = $('ttEdit'); t.innerHTML = ttHTML(curSchool(), tt.grid, false);
+  t.querySelectorAll('td').forEach(td => td.onclick = ()=>{
+    const k=td.dataset.k;
+    if (!brush) return toast('위에서 과목을 먼저 골라 주세요.');
+    if (tt.grid[k]===brush) delete tt.grid[k]; else tt.grid[k]=brush;
+    renderTTEdit();
+  });
+}
+function clearGrid(){ tt.grid = {}; renderTTEdit(); }
+function autoFill(){
+  if (!tt.picks.length) return;
+  tt.grid = {};
+  const slots = []; for (let p=1;p<=PERIODS;p++) for (let d=0;d<5;d++) slots.push(d+'-'+p);
+  // 과목마다 일주일 4시간, 날짜를 흩어서
+  tt.picks.forEach((id, i) => {
+    let placed=0, tries=0;
+    const days = [0,1,2,3,4].sort(()=>Math.random()-.5);
+    while (placed<4 && tries<60){
+      const d = days[placed % 5], p = 1 + Math.floor(Math.random()*PERIODS), k = d+'-'+p;
+      if (!tt.grid[k]){ tt.grid[k]=id; placed++; }
+      tries++;
+    }
+  });
+  renderTTEdit();
+}
+
+/* ===== 저장 ===== */
+async function saveAll(){
+  const student = $('tName').value.trim(), note = $('tNote').value.trim();
+  if (tt.picks.length<3) return err('e3','과목을 3개 이상 골라 주세요.');
+  const unplaced = tt.picks.filter(id => !Object.values(tt.grid).includes(id));
+  if (unplaced.length){ const s=curSchool(); return err('e3',`'${s.courses.find(c=>c.id===unplaced[0]).name}'을(를) 시간표에 넣어 주세요.`); }
+  if (!student) return err('e3','학생 이름을 적어 주세요.');
+  const btn = $('saveBtn'); btn.disabled = true; btn.textContent = '저장 중…';
+  try{
+    let schoolId;
+    if (visit){
+      schoolId = visit.id;
+    } else {
+      syncWhys();
+      const data = {name:draft.name, forWhom:draft.forWhom, goal:draft.goal, founder:draft.founder, color:draft.color,
+        courses: draft.courses.map(c=>({id:c.id, kind:c.kind, name:c.name, desc:c.desc||'', why:c.why.trim(), group:c.group||'', type:c.type||''})),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()};
+      if (draft.id){ await SCH.doc(draft.id).update(data); schoolId = draft.id; }
+      else { data.createdAt = firebase.firestore.FieldValue.serverTimestamp(); const r = await SCH.add(data); schoolId = r.id; remember('schools', schoolId); }
+    }
+    const tdata = {schoolId, student, note, picks:tt.picks, grid:tt.grid, founder: !visit, updatedAt: firebase.firestore.FieldValue.serverTimestamp()};
+    if (tt.ttId){ await TT.doc(tt.ttId).update(tdata); }
+    else { tdata.createdAt = firebase.firestore.FieldValue.serverTimestamp(); const r = await TT.add(tdata); remember('tts', r.id); }
+    toast(visit ? '입학 완료!' : '학교가 세워졌어요!');
+    $('tName').value=''; $('tNote').value='';
+    openDetail(schoolId);
+  }catch(e){ console.error(e); err('e3','저장하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.'); }
+  btn.disabled = false; btn.textContent = '완성!';
+}
+
+/* ===== 갤러리 ===== */
+const ttCount = id => tts.filter(t=>t.schoolId===id).length;
+function cardHTML(s){
+  const col = (SCHOOL_COLORS[s.color]||SCHOOL_COLORS[4]);
+  const newCnt = (s.courses||[]).filter(c=>c.kind==='new').length;
+  return `<button class="card" onclick="openDetail('${s.id}')">
+    <div class="band" style="background:${col[0]}"></div>
+    <div class="in">
+      <div class="nm">${esc(s.name)}</div>
+      <div class="for">${esc(s.forWhom)}</div>
+      <div class="tags">${(s.courses||[]).slice(0,4).map(c=>`<span>${esc(c.name)}</span>`).join('')}${(s.courses||[]).length>4?`<span>+${s.courses.length-4}</span>`:''}</div>
+      <div class="meta"><span>과목 ${(s.courses||[]).length}개${newCnt?` (새 과목 ${newCnt})`:''}</span><span>학생 ${ttCount(s.id)}명</span></div>
+    </div></button>`;
+}
+function renderRecent(){
+  if (!loaded) return;
+  $('recentCards').innerHTML = schools.length ? schools.slice(0,6).map(cardHTML).join('') : '<div class="empty" style="grid-column:1/-1">아직 세워진 학교가 없어요. 첫 학교를 세워 보세요.</div>';
+}
+function renderGallery(){
+  if (!loaded) return;
+  const q = $('galQ').value.trim();
+  const list = schools.filter(s => !q || [s.name,s.forWhom,s.goal,s.founder,...(s.courses||[]).map(c=>c.name)].join(' ').includes(q));
+  $('galCards').innerHTML = list.length ? list.map(cardHTML).join('') : `<div class="empty" style="grid-column:1/-1">${q?'찾는 학교가 없어요.':'아직 세워진 학교가 없어요.'}</div>`;
+}
+$('galQ').oninput = renderGallery;
+
+/* ===== 학교 안내 ===== */
+function openDetail(id, push=true){
+  detailId = id;
+  const s = schools.find(x=>x.id===id);
+  const v = $('v-detail');
+  if (!s){
+    v.innerHTML = loaded ? '<div class="empty">학교를 찾을 수 없어요. 지워졌을 수도 있어요.</div>' : '<div class="loading">불러오는 중…</div>';
+    go('detail', push); return;
+  }
+  setColor(s.color);
+  const list = tts.filter(t=>t.schoolId===id).sort((a,b)=> (b.founder?1:0)-(a.founder?1:0));
+  const myS = isMine('schools', id);
+  v.innerHTML = `
+  <div class="brochure">
+    <div class="bro-head">
+      <div class="est">설립자 ${esc(s.founder)}${s.createdAt?' · '+fmtDate(s.createdAt):''}</div>
+      <h1>${esc(s.name)}</h1>
+      <div class="for">${esc(s.forWhom)}</div>
+      ${s.goal?`<div class="goal"><b>교육 목표</b>${esc(s.goal)}</div>`:''}
+    </div>
+    <div class="bro-body">
+      <h3>개설 과목 ${s.courses.length}</h3>
+      <div class="clist">${s.courses.map(c=>`
+        <div class="citem">
+          <div class="nm"><span style="width:10px;height:10px;border-radius:50%;background:${courseColor(s,c.id)};flex:none"></span>${esc(c.name)} ${c.kind==='new'?'<span class="badge new">새로 만든 과목</span>':`<span class="badge">${esc(c.group)} · ${esc(c.type)}</span>`}</div>
+          ${c.desc?`<div class="desc">${esc(c.desc)}</div>`:''}
+          <div class="why"><b>왜 필요한가</b>${esc(c.why)}</div>
+        </div>`).join('')}
+      </div>
+      <h3 style="margin-top:28px">이 학교 학생들의 시간표 ${list.length}</h3>
+      <div class="students">${list.map(t => stuHTML(s,t)).join('') || '<div class="empty">아직 입학한 학생이 없어요.</div>'}</div>
+      <div class="bro-actions">
+        <button class="btn main" onclick="enroll('${id}')">나도 이 학교 학생 되어 보기</button>
+        <button class="btn" onclick="copyLink('${id}')">학교 주소 복사</button>
+        <button class="btn ghost" onclick="go('gallery')">다른 학교 구경하기</button>
+      </div>
+      ${myS?`<div class="owner"><button class="btn sm" onclick="editSchool('${id}')">학교 고치기</button><button class="btn sm ghost" onclick="delSchool('${id}')">학교 지우기</button></div>`:''}
+    </div>
+  </div>`;
+  go('detail', push);
+}
+function stuHTML(s,t){
+  const mineT = isMine('tts', t.id);
+  const picks = (t.picks||[]).filter(id=>s.courses.some(c=>c.id===id));
+  return `<div class="stu">
+    <div class="who"><span>${esc(t.student)} ${t.founder?'<small>설립자</small>':''}</span>${mineT?`<span><button class="btn sm ghost" style="padding:2px 8px" onclick="editTT('${t.id}')">고치기</button><button class="btn sm ghost" style="padding:2px 8px" onclick="delTT('${t.id}')">지우기</button></span>`:''}</div>
+    ${t.note?`<div class="note">${esc(t.note)}</div>`:''}
+    <table class="tt ro">${ttHTML(s, t.grid||{}, true)}</table>
+    <div class="legend">${picks.map(id=>`<span><i style="background:${courseColor(s,id)}"></i>${esc(s.courses.find(c=>c.id===id).name)}</span>`).join('')}</div>
+  </div>`;
+}
+function fmtDate(ts){ try{ const d = ts.toDate(); return `${d.getMonth()+1}월 ${d.getDate()}일`; }catch(e){ return ''; } }
+function copyLink(id){
+  const url = location.origin + location.pathname + '?s=' + id;
+  (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(()=>toast('주소를 복사했어요.')).catch(()=>prompt('주소를 복사하세요', url));
+}
+function enroll(id){
+  const s = schools.find(x=>x.id===id); if(!s) return;
+  visit = s; draft = null; tt = {picks:[], grid:{}, ttId:null};
+  $('tName').value=''; $('tNote').value='';
+  go('build'); toStep(3, true);
+}
+function editSchool(id){
+  const s = schools.find(x=>x.id===id); if(!s) return;
+  visit = null;
+  draft = {id, name:s.name, forWhom:s.forWhom, goal:s.goal||'', founder:s.founder, color:s.color??4, courses: s.courses.map(c=>({...c}))};
+  const myT = tts.find(t=>t.schoolId===id && t.founder && isMine('tts',t.id));
+  tt = myT ? {picks:[...myT.picks], grid:{...myT.grid}, ttId:myT.id} : {picks:[], grid:{}, ttId:null};
+  $('tName').value = myT ? myT.student : s.founder; $('tNote').value = myT ? (myT.note||'') : '';
+  fillStep1(); go('build'); toStep(1, true);
+}
+function editTT(tid){
+  const t = tts.find(x=>x.id===tid); if(!t) return;
+  if (t.founder){ return editSchool(t.schoolId); }
+  const s = schools.find(x=>x.id===t.schoolId); if(!s) return;
+  visit = s; draft = null; tt = {picks:[...t.picks], grid:{...t.grid}, ttId:tid};
+  $('tName').value = t.student; $('tNote').value = t.note||'';
+  go('build'); toStep(3, true);
+}
+async function delSchool(id){
+  if (!confirm('이 학교를 지울까요? 이 학교 학생들의 시간표도 함께 사라져요.')) return;
+  try{
+    await Promise.all(tts.filter(t=>t.schoolId===id).map(t=>TT.doc(t.id).delete()));
+    await SCH.doc(id).delete(); forget('schools', id); toast('지웠어요.'); go('gallery');
+  }catch(e){ toast('지우지 못했어요.'); }
+}
+async function delTT(tid){
+  if (!confirm('이 시간표를 지울까요?')) return;
+  try{ await TT.doc(tid).delete(); forget('tts', tid); toast('지웠어요.'); }catch(e){ toast('지우지 못했어요.'); }
+}
+
+/* ===== 실시간 불러오기 ===== */
+let loaded = false, gotS = false, gotT = false;
+function refresh(){
+  if (!(gotS && gotT)) return;
+  loaded = true;
+  if (!$('v-home').classList.contains('hidden')) renderRecent();
+  if (!$('v-gallery').classList.contains('hidden')) renderGallery();
+  if (!$('v-detail').classList.contains('hidden') && detailId){
+    const y = window.scrollY; openDetail(detailId, false); window.scrollTo(0,y);
+  }
+}
+SCH.orderBy('createdAt','desc').onSnapshot(snap => {
+  schools = snap.docs.map(d=>({id:d.id, ...d.data()})).filter(s=>s.name && Array.isArray(s.courses));
+  gotS = true; refresh();
+}, e => { console.error(e); $('recentCards').innerHTML = '<div class="empty" style="grid-column:1/-1">불러오지 못했어요. 새로고침해 주세요.</div>'; });
+TT.onSnapshot(snap => { tts = snap.docs.map(d=>({id:d.id, ...d.data()})); tts.sort((a,b)=>(a.createdAt?.seconds||9e9)-(b.createdAt?.seconds||9e9)); gotT = true; refresh(); });
+
+/* 처음 주소 */
+(function init(){
+  const p = new URLSearchParams(location.search);
+  if (p.get('s')){ detailId = p.get('s'); history.replaceState({v:'detail', id:detailId}, '', location.href); openDetail(detailId, false); }
+  else if (p.has('g')){ history.replaceState({v:'gallery'}, '', location.href); go('gallery', false); }
+  else { history.replaceState({v:'home'}, '', location.href); go('home', false); }
+})();
+</script>
+</body>
+</html>
