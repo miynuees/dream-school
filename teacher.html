@@ -248,25 +248,28 @@ function renderNew(){
 async function delSchool(id){
   const s = schools.find(x=>x.id===id); if (!s || s.isSample) return;
   if (!confirm(`'${s.name}'을(를) 지울까요? 이 학교 시간표도 함께 지워져요.`)) return;
-  await Promise.all(tts.filter(t=>t.schoolId===id).map(t=>TT.doc(t.id).delete()));
-  await SCH.doc(id).delete(); open.delete(id); toast('지웠어요.');
+  try{
+    await Promise.all(tts.filter(t=>t.schoolId===id).map(t=>TT.doc(t.id).delete()));
+    await SCH.doc(id).delete(); open.delete(id); toast('지웠어요.');
+  }catch(e){ toast('지우지 못했어요. 다시 해 주세요.'); }
 }
 async function delTT(id){
   const t = tts.find(x=>x.id===id); if (!t) return;
   if (!confirm(`${t.student}의 시간표를 지울까요?`)) return;
-  await TT.doc(id).delete(); toast('지웠어요.');
+  try{ await TT.doc(id).delete(); toast('지웠어요.'); }catch(e){ toast('지우지 못했어요. 다시 해 주세요.'); }
 }
 async function wipeAll(){
   const r = real(); if (!r.length) return toast('지울 학교가 없어요.');
   if (!confirm(`예시 학교를 빼고 학교 ${r.length}개와 시간표를 모두 지울까요?`)) return;
   if (prompt('되돌릴 수 없어요. 계속하려면 "지우기"라고 입력하세요.') !== '지우기') return toast('취소했어요.');
-  const ids = new Set(r.map(s=>s.id));
-  await Promise.all(tts.filter(t=>ids.has(t.schoolId)).map(t=>TT.doc(t.id).delete()));
-  await Promise.all(r.map(s=>SCH.doc(s.id).delete()));
-  // 예시 학교에 입학한 사람들 시간표도 정리 (A·B만 남김)
   const sample = schools.find(s=>s.isSample);
-  if (sample) await Promise.all(tts.filter(t=>t.schoolId===sample.id && !['학생 A','학생 B'].includes(t.student)).map(t=>TT.doc(t.id).delete()));
-  toast('모두 지웠어요.');
+  // 예시 학교의 학생 A·B만 남기고 시간표 전부(주인 없는 시간표 포함) 지움
+  const keepTT = t => sample && t.schoolId===sample.id && ['학생 A','학생 B'].includes(t.student);
+  try{
+    await Promise.all(tts.filter(t=>!keepTT(t)).map(t=>TT.doc(t.id).delete()));
+    await Promise.all(r.map(s=>SCH.doc(s.id).delete()));
+    toast('모두 지웠어요.');
+  }catch(e){ toast('일부를 지우지 못했어요. 다시 눌러 주세요.'); }
 }
 </script>
 </body>

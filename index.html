@@ -150,10 +150,10 @@ textarea.inp{resize:vertical;min-height:72px}
 .pick.on{border-color:var(--ink)}
 .pick.brush{box-shadow:0 0 0 3px rgba(61,54,49,.15)}
 .tt-wrap{overflow-x:auto}
-table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;table-layout:fixed}
+table.tt{border-collapse:separate;border-spacing:4px;width:100%;table-layout:fixed}
 .tt th{font-size:13px;color:var(--sub);font-weight:600;padding:4px 0}
 .tt th.p{width:38px}
-.tt td{height:52px;border-radius:10px;background:var(--soft);font-size:12.5px;font-weight:600;text-align:center;line-height:1.25;padding:3px;word-break:keep-all;cursor:pointer;transition:background .12s}
+.tt td{height:52px;border-radius:10px;background:var(--soft);font-size:12.5px;font-weight:600;text-align:center;line-height:1.25;padding:3px;word-break:keep-all;overflow-wrap:anywhere;overflow:hidden;cursor:pointer;transition:background .12s}
 .tt td:hover{outline:2px solid rgba(61,54,49,.15)}
 .tt.ro td{cursor:default}
 .tt.ro td:hover{outline:none}
@@ -166,6 +166,54 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
 .brushbar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .brushbar button{border:1.5px solid transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
 .brushbar button.on{border-color:var(--ink)}
+
+.resume{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:12px 16px;margin:6px 0 0;font-size:14px}
+.resume span:last-child{display:flex;gap:4px}
+/* 과목 줄 */
+.crows{display:flex;flex-direction:column;border:1.5px solid var(--line);border-radius:14px;background:#FFFDF9;overflow:hidden;margin-bottom:8px}
+.crow{padding:9px 12px;border-top:1px solid var(--line)}
+.crow:first-child{border-top:0}
+.crow-main{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.crow .nm{font-weight:700;font-size:15px}
+.crow-act{margin-left:auto;display:flex;align-items:center;gap:2px}
+.crow .desc{font-size:13px;color:var(--sub);margin-top:1px}
+.crow textarea.why{margin-top:8px;min-height:54px;font-size:14px}
+.whyt{border:1px solid var(--line);background:#fff;border-radius:999px;padding:2px 10px;font-size:12.5px;color:var(--sub)}
+.whyt:hover,.whyt.on{color:var(--ink);border-color:#CDBFAE}
+.crow .x{border:0;background:none;color:#C4B8AA;font-size:15px;padding:4px 6px;line-height:1}
+.crow .x:hover{color:#D9546E}
+.crow-empty{padding:12px;color:var(--sub);font-size:13.5px;text-align:center}
+.addbtn{width:100%;border-style:dashed;color:#6F655C}
+.addbtn:hover{background:var(--c-soft)}
+.ib{display:inline-flex;align-items:center;gap:6px}
+.logo{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.logo .px{font-size:30px}
+.top-btns .px{font-size:16px}
+.hero .btn .px{font-size:20px}
+.hero-ico{font-size:84px;display:block;margin:0 auto 10px}
+.steps3 .px{font-size:30px;float:right}
+.recent-h h2 .px,.gal-h h2 .px{font-size:28px;vertical-align:-4px}
+/* 과목 담기 창 */
+body.noscroll{overflow:hidden}
+.modal{position:fixed;inset:0;background:rgba(61,54,49,.35);z-index:40;display:flex;align-items:center;justify-content:center;padding:20px}
+.panel{background:#fff;border-radius:20px;width:100%;max-width:640px;height:min(720px,100%);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(60,40,20,.25)}
+.ph{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px 10px}
+.ph strong{font-size:18px}
+.pk-count{font-family:var(--hand);font-size:22px;margin-left:6px;color:#3FA58F}
+.pk-count.full{color:#D9546E}
+.panel .tabs{margin:0 18px 10px}
+.pk-body{flex:1;min-height:0;display:flex;flex-direction:column;padding:0 18px 16px;overflow:auto}
+.gchips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;flex:none;scrollbar-width:thin}
+.gchips button{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:13.5px;white-space:nowrap}
+.gchips button.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
+.pk-q{border-radius:999px;padding:8px 14px;font-size:14px;margin-bottom:8px;flex:none}
+#pkCat .catlist{flex:1;max-height:none;min-height:0}
+.subj.on{background:var(--c-soft);border-color:var(--c);font-weight:600}
+.subj.other{opacity:.5;cursor:default}
+.subj.other small{font-size:11px;color:var(--sub)}
+#pkCat .cat-note{margin:8px 0 0;flex:none}
+.pk-made{margin-top:18px}
+.pk-made .t{font-size:12.5px;color:var(--sub);margin-bottom:6px}
 
 /* 갤러리 */
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
@@ -216,6 +264,15 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
 .loading{color:var(--sub);text-align:center;padding:40px 0}
 
 @media (max-width:640px){
+  .modal{padding:0;align-items:flex-end}
+  .panel{height:92%;border-radius:20px 20px 0 0;max-width:none}
+  .hero-ico{font-size:64px}
+  .steps3 .px{font-size:26px}
+  .top-btns .lbl{display:none}
+  .top-btns .btn{padding:8px 11px}
+  .top-btns .px{font-size:20px}
+  .logo{font-size:22px}
+  .logo .px{font-size:24px}
   .wrap{padding:14px 12px 70px}
   .hero{padding:26px 0 10px}
   .hero h1{font-size:44px}
@@ -227,7 +284,9 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
   .bro-head{padding:24px 18px 20px}
   .bro-head h1{font-size:40px}
   .bro-body{padding:20px 16px 22px}
-  .tt td{height:44px;font-size:11.5px}
+  table.tt{border-spacing:3px}
+  .tt th.p{width:16px;font-size:11px}
+  .tt td{height:42px;font-size:10.5px;padding:2px;border-radius:7px;letter-spacing:-.02em}
   .students{grid-template-columns:1fr}
 }
 @media print{
@@ -235,39 +294,61 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
   body{background:#fff}
 }
 </style>
+<style id="px">
+/* 도트 아이콘 — 원본 tools/icons.py, python tools/build_css.py 로 다시 붙임 */
+:root{
+  --px-school:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect x='7' y='0' width='3' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='1' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='8' y='1' width='2' height='1' fill='%23F2688A'/%3E%3Crect x='10' y='1' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='2' width='3' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='3' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='6' y='4' width='3' height='1' fill='%234A3A3A'/%3E%3Crect x='5' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='6' y='5' width='3' height='1' fill='%23F2688A'/%3E%3Crect x='9' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='4' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='5' y='6' width='2' height='1' fill='%23F2688A'/%3E%3Crect x='7' y='6' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='8' y='6' width='2' height='1' fill='%23F2688A'/%3E%3Crect x='10' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='7' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='4' y='7' width='2' height='1' fill='%23F2688A'/%3E%3Crect x='6' y='7' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='7' y='7' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='8' y='7' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='9' y='7' width='2' height='1' fill='%23F2688A'/%3E%3Crect x='11' y='7' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='8' width='4' height='1' fill='%23F2688A'/%3E%3Crect x='7' y='8' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='8' y='8' width='4' height='1' fill='%23F2688A'/%3E%3Crect x='12' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='9' width='13' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='10' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='10' width='9' height='1' fill='%23F1D3B0'/%3E%3Crect x='12' y='10' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='11' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='11' width='1' height='1' fill='%23F1D3B0'/%3E%3Crect x='4' y='11' width='2' height='1' fill='%23C4DEFF'/%3E%3Crect x='6' y='11' width='3' height='1' fill='%23F1D3B0'/%3E%3Crect x='9' y='11' width='2' height='1' fill='%23C4DEFF'/%3E%3Crect x='11' y='11' width='1' height='1' fill='%23F1D3B0'/%3E%3Crect x='12' y='11' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='12' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='12' width='1' height='1' fill='%23F1D3B0'/%3E%3Crect x='4' y='12' width='2' height='1' fill='%23C4DEFF'/%3E%3Crect x='6' y='12' width='3' height='1' fill='%234A3A3A'/%3E%3Crect x='9' y='12' width='2' height='1' fill='%23C4DEFF'/%3E%3Crect x='11' y='12' width='1' height='1' fill='%23F1D3B0'/%3E%3Crect x='12' y='12' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='13' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='13' width='3' height='1' fill='%23F1D3B0'/%3E%3Crect x='6' y='13' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='13' width='1' height='1' fill='%23C98B5E'/%3E%3Crect x='8' y='13' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='9' y='13' width='3' height='1' fill='%23F1D3B0'/%3E%3Crect x='12' y='13' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='14' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='14' width='3' height='1' fill='%23F1D3B0'/%3E%3Crect x='6' y='14' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='14' width='1' height='1' fill='%23C98B5E'/%3E%3Crect x='8' y='14' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='9' y='14' width='3' height='1' fill='%23F1D3B0'/%3E%3Crect x='12' y='14' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='15' width='11' height='1' fill='%234A3A3A'/%3E%3C/svg%3E");
+  --px-books:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Crect x='2' y='1' width='9' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='2' width='1' height='1' fill='%23F2688A'/%3E%3Crect x='4' y='2' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='5' y='2' width='5' height='1' fill='%23F2688A'/%3E%3Crect x='10' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='3' width='9' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='4' width='9' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%235CC8B2'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='4' y='5' width='5' height='1' fill='%235CC8B2'/%3E%3Crect x='9' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='6' width='9' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='7' width='9' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='8' width='1' height='1' fill='%236FA8EC'/%3E%3Crect x='4' y='8' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='5' y='8' width='5' height='1' fill='%236FA8EC'/%3E%3Crect x='10' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='9' width='9' height='1' fill='%234A3A3A'/%3E%3C/svg%3E");
+  --px-cal:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='0' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='8' y='0' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='1' width='10' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='2' width='8' height='1' fill='%23F2688A'/%3E%3Crect x='10' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='3' width='10' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='4' width='8' height='1' fill='%23FFFFFF'/%3E%3Crect x='10' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='4' y='5' width='3' height='1' fill='%23FFFFFF'/%3E%3Crect x='7' y='5' width='1' height='1' fill='%235CC8B2'/%3E%3Crect x='8' y='5' width='2' height='1' fill='%23FFFFFF'/%3E%3Crect x='10' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='6' width='8' height='1' fill='%23FFFFFF'/%3E%3Crect x='10' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='7' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='7' width='2' height='1' fill='%23FFFFFF'/%3E%3Crect x='4' y='7' width='1' height='1' fill='%236FA8EC'/%3E%3Crect x='5' y='7' width='3' height='1' fill='%23FFFFFF'/%3E%3Crect x='8' y='7' width='1' height='1' fill='%23F2688A'/%3E%3Crect x='9' y='7' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='10' y='7' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='8' width='8' height='1' fill='%23FFFFFF'/%3E%3Crect x='10' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='9' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='9' width='1' height='1' fill='%235CC8B2'/%3E%3Crect x='3' y='9' width='3' height='1' fill='%23FFFFFF'/%3E%3Crect x='6' y='9' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='7' y='9' width='3' height='1' fill='%23FFFFFF'/%3E%3Crect x='10' y='9' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='10' width='10' height='1' fill='%234A3A3A'/%3E%3C/svg%3E");
+  --px-look:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='3' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='2' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='4' y='2' width='2' height='1' fill='%23C4DEFF'/%3E%3Crect x='6' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='3' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='3' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='3' y='3' width='4' height='1' fill='%23C4DEFF'/%3E%3Crect x='7' y='3' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='4' width='5' height='1' fill='%23C4DEFF'/%3E%3Crect x='7' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='5' width='5' height='1' fill='%23C4DEFF'/%3E%3Crect x='7' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='6' width='3' height='1' fill='%23C4DEFF'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='7' width='3' height='1' fill='%234A3A3A'/%3E%3Crect x='6' y='7' width='1' height='1' fill='%23C98B5E'/%3E%3Crect x='7' y='7' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='6' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='8' width='2' height='1' fill='%23C98B5E'/%3E%3Crect x='9' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='9' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='8' y='9' width='2' height='1' fill='%23C98B5E'/%3E%3Crect x='10' y='9' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='8' y='10' width='3' height='1' fill='%234A3A3A'/%3E%3C/svg%3E");
+  --px-pen:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Crect x='8' y='0' width='2' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='1' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='8' y='1' width='2' height='1' fill='%23FFB8C9'/%3E%3Crect x='10' y='1' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='6' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='7' y='2' width='1' height='1' fill='%23C4DEFF'/%3E%3Crect x='8' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='9' y='2' width='1' height='1' fill='%23FFB8C9'/%3E%3Crect x='10' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='6' y='3' width='2' height='1' fill='%236FA8EC'/%3E%3Crect x='8' y='3' width='1' height='1' fill='%23C4DEFF'/%3E%3Crect x='9' y='3' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='5' y='4' width='3' height='1' fill='%236FA8EC'/%3E%3Crect x='8' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='4' y='5' width='3' height='1' fill='%236FA8EC'/%3E%3Crect x='7' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='6' width='3' height='1' fill='%236FA8EC'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='7' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='7' width='1' height='1' fill='%23F1D3B0'/%3E%3Crect x='4' y='7' width='1' height='1' fill='%236FA8EC'/%3E%3Crect x='5' y='7' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='8' width='3' height='1' fill='%23F1D3B0'/%3E%3Crect x='5' y='8' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='9' width='4' height='1' fill='%234A3A3A'/%3E%3C/svg%3E");
+  --px-spark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Crect x='5' y='0' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='5' y='1' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='4' y='2' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='5' y='2' width='1' height='1' fill='%23F5A043'/%3E%3Crect x='6' y='2' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='2' y='3' width='3' height='1' fill='%23FFD15C'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%23F5A043'/%3E%3Crect x='6' y='3' width='3' height='1' fill='%23FFD15C'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='5' y='4' width='1' height='1' fill='%23F5A043'/%3E%3Crect x='6' y='4' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='5' y='5' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='5' y='6' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='9' y='6' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='9' y='7' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='8' y='8' width='3' height='1' fill='%23FFD15C'/%3E%3Crect x='9' y='9' width='1' height='1' fill='%23FFD15C'/%3E%3Crect x='9' y='10' width='1' height='1' fill='%23FFD15C'/%3E%3C/svg%3E");
+  --px-person:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Crect x='3' y='1' width='6' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='2' width='6' height='1' fill='%23C98B5E'/%3E%3Crect x='9' y='2' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='3' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='3' width='1' height='1' fill='%23C98B5E'/%3E%3Crect x='4' y='3' width='4' height='1' fill='%23F1D3B0'/%3E%3Crect x='8' y='3' width='1' height='1' fill='%23C98B5E'/%3E%3Crect x='9' y='3' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%23F1D3B0'/%3E%3Crect x='4' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='5' y='4' width='2' height='1' fill='%23F1D3B0'/%3E%3Crect x='7' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='8' y='4' width='1' height='1' fill='%23F1D3B0'/%3E%3Crect x='9' y='4' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='5' width='6' height='1' fill='%23F1D3B0'/%3E%3Crect x='9' y='5' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='3' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='4' y='6' width='4' height='1' fill='%23F1D3B0'/%3E%3Crect x='8' y='6' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='4' y='7' width='4' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='8' width='2' height='1' fill='%234A3A3A'/%3E%3Crect x='4' y='8' width='4' height='1' fill='%236FA8EC'/%3E%3Crect x='8' y='8' width='2' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='9' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='9' width='3' height='1' fill='%236FA8EC'/%3E%3Crect x='5' y='9' width='2' height='1' fill='%23FFFFFF'/%3E%3Crect x='7' y='9' width='3' height='1' fill='%236FA8EC'/%3E%3Crect x='10' y='9' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='10' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='2' y='10' width='3' height='1' fill='%236FA8EC'/%3E%3Crect x='5' y='10' width='2' height='1' fill='%23FFFFFF'/%3E%3Crect x='7' y='10' width='3' height='1' fill='%236FA8EC'/%3E%3Crect x='10' y='10' width='1' height='1' fill='%234A3A3A'/%3E%3Crect x='1' y='11' width='10' height='1' fill='%234A3A3A'/%3E%3C/svg%3E");
+}
+.px{display:inline-block;width:1em;height:1em;background-size:contain;background-repeat:no-repeat;background-position:center;image-rendering:pixelated;vertical-align:-0.12em;flex:none}
+.px-school{background-image:var(--px-school)}
+.px-books{background-image:var(--px-books)}
+.px-cal{background-image:var(--px-cal)}
+.px-look{background-image:var(--px-look)}
+.px-pen{background-image:var(--px-pen)}
+.px-spark{background-image:var(--px-spark)}
+.px-person{background-image:var(--px-person)}
+</style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <button class="logo" onclick="go('home')">내가 꿈꾸는 학교</button>
+    <button class="logo" onclick="go('home')"><span class="px px-school"></span>내가 꿈꾸는 학교</button>
     <div class="top-btns">
-      <button class="btn ghost sm" onclick="go('gallery')">학교 구경하기</button>
-      <button class="btn sm" onclick="startNew()">학교 세우기</button>
+      <button class="btn ghost sm ib" aria-label="학교 구경하기" title="학교 구경하기" onclick="go('gallery')"><span class="px px-look"></span><span class="lbl">학교 구경하기</span></button>
+      <button class="btn sm ib" aria-label="학교 세우기" title="학교 세우기" onclick="startNew()"><span class="px px-pen"></span><span class="lbl">학교 세우기</span></button>
     </div>
   </div>
 
   <!-- 대문 -->
   <section id="v-home">
     <div class="hero">
+      <div class="hero-ico px px-school"></div>
       <h1>내가 꿈꾸는 학교</h1>
       <div class="btns">
-        <button class="btn main" onclick="startNew()">학교 세우기</button>
-        <button class="btn" onclick="go('gallery')">다른 학교 구경하기</button>
+        <button class="btn main ib" onclick="startNew()"><span class="px px-pen"></span>학교 세우기</button>
+        <button class="btn ib" onclick="go('gallery')"><span class="px px-look"></span>다른 학교 구경하기</button>
       </div>
     </div>
+    <div class="resume hidden" id="resume"><span id="resumeText"></span><span><button class="btn sm main" onclick="resumeDraft()">이어서 하기</button><button class="btn sm ghost" onclick="dropDraft()">지우기</button></span></div>
     <div class="steps3">
-      <div><b>1</b><strong>어떤 학생을 위한 학교인가</strong><span>전공, 역량, 가치 어디서 출발해도 좋아요.</span></div>
-      <div><b>2</b><strong>우리 학교만의 선택과목</strong><span>5~8개. 과목마다 왜 필요한지 함께 적어요.</span></div>
-      <div><b>3</b><strong>학생이 되어 시간표 짜기</strong><span>3~4개를 골라 일주일 시간표를 채워요.</span></div>
+      <div><span class="px px-person"></span><b>1</b><strong>어떤 학생을 위한 학교인가</strong><span>전공, 역량, 가치 어디서 출발해도 좋아요.</span></div>
+      <div><span class="px px-books"></span><b>2</b><strong>우리 학교 교육과정</strong><span>모두가 듣는 기본과목과 골라 듣는 선택과목을 정해요.</span></div>
+      <div><span class="px px-cal"></span><b>3</b><strong>학생이 되어 시간표 짜기</strong><span>선택과목을 골라 공강 없이 시간표를 채워요.</span></div>
     </div>
-    <div class="recent-h"><h2>방금 세워진 학교</h2><button class="btn ghost sm" onclick="go('gallery')">전체 보기 →</button></div>
+    <div class="recent-h"><h2><span class="px px-spark"></span> 방금 세워진 학교</h2><button class="btn ghost sm" onclick="go('gallery')">전체 보기 →</button></div>
     <div class="cards" id="recentCards"><div class="loading">불러오는 중…</div></div>
   </section>
 
   <!-- 만들기 -->
   <section id="v-build" class="hidden">
     <div class="prog" id="prog">
-      <div data-s="1">1. 학교 정체성</div><div data-s="2">2. 선택과목</div><div data-s="3">3. 시간표</div>
+      <div data-s="1">1. 학교 정체성</div><div data-s="2">2. 교육과정</div><div data-s="3">3. 시간표</div>
     </div>
 
     <!-- STEP 1 -->
@@ -301,46 +382,19 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
     <!-- STEP 2 -->
     <div class="sheet hidden" id="s2">
       <h2>우리 학교 교육과정</h2>
-      <p class="lead">모든 학생이 배우는 기본과목과, 학생이 골라 듣는 선택과목을 정해요. 기존 과목을 가져와도, 새로 만들어도 돼요.</p>
+      <p class="lead">모든 학생이 배우는 기본과목과, 학생이 골라 듣는 선택과목을 정해요. 공통 과목은 미리 담아 두었어요.</p>
 
       <div class="rules" id="rules"></div>
 
       <div class="sec">
-        <div class="sec-h"><div><strong>기본과목</strong><span>모든 학생이 배워요</span></div><span class="count" id="bCount">0</span></div>
-        <div class="mycourses" id="myBasic"></div>
-        <button class="btn sm addbtn" data-role="basic">+ 기본과목 추가</button>
-        <div class="addslot" id="slot-basic"></div>
+        <div class="sec-h"><div><strong>기본과목</strong><span>모든 학생이 배워요</span></div><span class="count" id="bCount"></span></div>
+        <div class="crows" id="myBasic"></div>
+        <button class="btn addbtn" onclick="openPicker('basic')">+ 기본과목 담기</button>
       </div>
       <div class="sec">
-        <div class="sec-h"><div><strong>선택과목</strong><span>학생이 골라 들어요</span></div><span class="count" id="eCount">0</span></div>
-        <div class="mycourses" id="myElective"></div>
-        <button class="btn sm addbtn" data-role="elective">+ 선택과목 추가</button>
-        <div class="addslot" id="slot-elective"></div>
-      </div>
-
-      <div class="addbox hidden" id="addBox">
-        <div class="addbox-h"><strong id="addTitle">과목 추가</strong><button class="btn sm ghost" onclick="closeAdd()">닫기</button></div>
-        <div class="tabs" id="addTabs">
-          <button data-t="cat" class="on">기존 과목에서 고르기</button>
-          <button data-t="new">새 과목 만들기</button>
-        </div>
-        <div id="addCat">
-          <p class="cat-note" id="catNote"></p>
-          <div class="filters">
-            <select id="catGroup"></select>
-            <select id="catType"></select>
-            <input class="inp" id="catQ" placeholder="과목 검색">
-          </div>
-          <div class="catlist" id="catList"></div>
-        </div>
-        <div id="addNew" class="newform hidden">
-          <div class="two">
-            <input class="inp" id="nName" maxlength="30" placeholder="과목 이름">
-            <select class="inp" id="nGroup"></select>
-          </div>
-          <input class="inp" id="nDesc" maxlength="80" placeholder="무엇을 배우나요? (한 줄 소개)">
-          <div style="display:flex;justify-content:flex-end;gap:8px;align-items:center"><span class="err" id="eNew"></span><button class="btn" onclick="addNew()">+ 추가</button></div>
-        </div>
+        <div class="sec-h"><div><strong>선택과목</strong><span>학생이 골라 들어요</span></div><span class="count" id="eCount"></span></div>
+        <div class="crows" id="myElective"></div>
+        <button class="btn addbtn" onclick="openPicker('elective')">+ 선택과목 담기</button>
       </div>
 
       <div class="nav"><button class="btn ghost" onclick="toStep(1)">← 이전</button><span class="err" id="e2"></span><button class="btn main" onclick="toStep(3)">다음</button></div>
@@ -350,13 +404,13 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
     <div class="sheet hidden" id="s3">
       <div id="s3visit" class="hidden" style="font-size:13px;color:var(--sub);margin-bottom:4px"></div>
       <h2 id="s3title">이 학교의 학생이 되어 보세요</h2>
-      <p class="lead">기본과목은 모두 함께 들어요. 내가 이 학교 학생이라면 어떤 선택과목을 듣고 싶을까요? 3~4개를 고르고 일주일 시간표를 채워 보세요.</p>
+      <p class="lead" id="s3lead"></p>
       <div class="field">
         <label>학생 이름 <small>이름이나 별명</small></label>
         <input class="inp" id="tName" maxlength="20" style="max-width:260px">
       </div>
       <div class="field">
-        <label>듣고 싶은 선택과목 고르기 <small id="pickCount">0 / 4</small></label>
+        <label>듣고 싶은 선택과목 고르기 <small id="pickCount"></small></label>
         <div class="basicline" id="basicLine"></div>
         <div class="pickgrid" id="pickGrid"></div>
       </div>
@@ -380,12 +434,40 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
 
   <!-- 갤러리 -->
   <section id="v-gallery" class="hidden">
-    <div class="gal-h"><h2>세워진 학교들</h2><input class="inp" id="galQ" placeholder="학교·과목 검색"></div>
+    <div class="gal-h"><h2><span class="px px-school"></span> 세워진 학교들</h2><input class="inp" id="galQ" placeholder="학교·과목 검색"></div>
     <div class="cards" id="galCards"><div class="loading">불러오는 중…</div></div>
   </section>
 
   <!-- 학교 안내 -->
   <section id="v-detail" class="hidden"></section>
+</div>
+<!-- 과목 담기 창 -->
+<div class="modal hidden" id="picker" onclick="if(event.target===this) closePicker()">
+  <div class="panel" role="dialog" aria-modal="true">
+    <div class="ph">
+      <div><strong id="pkTitle">과목 담기</strong> <span class="pk-count" id="pkCount"></span></div>
+      <button class="btn main sm" onclick="closePicker()">완료</button>
+    </div>
+    <div class="tabs" id="pkTabs">
+      <button data-t="cat" class="on">교육과정 과목</button>
+      <button data-t="new">직접 만들기</button>
+    </div>
+    <div id="pkCat" class="pk-body">
+      <div class="gchips" id="gChips"></div>
+      <input class="inp pk-q" id="catQ" placeholder="과목 이름으로 찾기">
+      <div class="catlist" id="catList"></div>
+      <p class="cat-note">2022 개정 교육과정 고등학교 과목 (2025학년도 고1부터 적용)</p>
+    </div>
+    <div id="pkNew" class="pk-body hidden">
+      <div class="newform">
+        <input class="inp" id="nName" maxlength="15" placeholder="과목 이름">
+        <select class="inp" id="nGroup"></select>
+        <input class="inp" id="nDesc" maxlength="80" placeholder="무엇을 배우나요? (한 줄 소개, 선택)">
+        <div style="display:flex;justify-content:flex-end;gap:8px;align-items:center"><span class="err" id="eNew"></span><button class="btn main" onclick="addNew()">담기</button></div>
+      </div>
+      <div class="pk-made" id="pkMade"></div>
+    </div>
+  </div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -444,24 +526,75 @@ function setColor(i){ const c = SCHOOL_COLORS[i] || SCHOOL_COLORS[4]; document.d
 function go(v, push=true){
   ['home','build','gallery','detail'].forEach(x => $('v-'+x).classList.toggle('hidden', x!==v));
   if (v!=='detail' && v!=='build') setColor(4);
-  if (push){
+  if (push && v!=='build'){
     const url = v==='detail' && detailId ? '?s='+detailId : (v==='gallery' ? '?g' : location.pathname);
     history.pushState({v, id:detailId}, '', url);
   }
+  if (v==='home') showResume();
   if (v==='gallery') renderGallery();
   if (v==='home') renderRecent();
   window.scrollTo(0,0);
 }
 window.addEventListener('popstate', e => {
   const st = e.state || {};
+  if (pkRole) closePicker();
+  if (st.v==='build' && (draft || visit)){
+    const cur = $('v-build').classList.contains('hidden') ? 0 : curStep();
+    go('build', false);
+    if (st.step > cur && cur){ if (!toStep(st.step, false, true)) history.replaceState({v:'build', step:cur}, '', location.pathname); }
+    else toStep(st.step||1, true, true);
+    return;
+  }
   if (st.v==='detail' && st.id){ openDetail(st.id, false); }
   else go(st.v && st.v!=='build' ? st.v : 'home', false);
 });
 
+/* 만들던 것 기기에 보관 — 새로고침·뒤로가기로 잃지 않게 */
+const DRAFT_KEY = 'dreamschoolDraft';
+const curStep = () => [1,2,3].find(i => !$('s'+i).classList.contains('hidden')) || 1;
+function saveDraft(){
+  if ($('v-build').classList.contains('hidden') || (!draft && !visit)) return;
+  if (draft && !visit && curStep()===1) readStep1();
+  try{ localStorage.setItem(DRAFT_KEY, JSON.stringify({at:Date.now(), step:curStep(), draft, visitId: visit?visit.id:null, tt, tName:$('tName').value, tNote:$('tNote').value})); }catch(e){}
+}
+function loadDraft(){
+  try{ const d = JSON.parse(localStorage.getItem(DRAFT_KEY)||'null'); if (d && Date.now()-d.at < 3*86400000) return d; }catch(e){}
+  return null;
+}
+const clearDraft = () => localStorage.removeItem(DRAFT_KEY);
+function draftLabel(d){ return d.visitId ? ((schools.find(s=>s.id===d.visitId)||{}).name||'다른 학교') + ' 시간표' : (d.draft && d.draft.name ? `'${d.draft.name}'` : '만들던 학교'); }
+function showResume(){
+  const d = loadDraft(), box = $('resume');
+  if (!d || (d.visitId && !loaded)){ box.classList.add('hidden'); return; }
+  if (d.visitId && !schools.some(s=>s.id===d.visitId)){ clearDraft(); box.classList.add('hidden'); return; }
+  $('resumeText').textContent = `${draftLabel(d)}을(를) 만들던 중이에요.`;
+  box.classList.remove('hidden');
+}
+function resumeDraft(){
+  const d = loadDraft(); if (!d) return showResume();
+  visit = d.visitId ? schools.find(s=>s.id===d.visitId) : null;
+  draft = d.visitId ? null : d.draft;
+  if (!visit && !draft) { clearDraft(); return showResume(); }
+  tt = d.tt || {picks:[], grid:{}, ttId:null};
+  $('tName').value = d.tName||''; $('tNote').value = d.tNote||'';
+  whyOpen.clear();
+  if (draft) fillStep1();
+  go('build'); toStep(visit ? 3 : (d.step||1), true);
+}
+function dropDraft(){ clearDraft(); showResume(); }
+document.addEventListener('input', e => { if (e.target.closest && e.target.closest('#v-build')) { clearTimeout(saveDraft._t); saveDraft._t = setTimeout(saveDraft, 400); } });
+
 /* ===== STEP 1 ===== */
 function startNew(){
+  const d = loadDraft();
+  if (d && !d.visitId && d.draft && (d.draft.name || d.step>1)){
+    if (confirm(`${draftLabel(d)}을(를) 만들던 중이에요. 이어서 할까요?\n(취소를 누르면 새로 시작해요)`)) return resumeDraft();
+  }
+  clearDraft();
+  $('tName').value=''; $('tNote').value='';
   visit = null;
-  draft = {id:null, name:'', forWhom:'', goal:'', founder:'', color:4, courses:[]};
+  draft = {id:null, name:'', forWhom:'', goal:'', founder:'', color:4, courses:defaultBasics()};
+  whyOpen.clear();
   tt = {picks:[], grid:{}, ttId:null};
   fillStep1(); go('build'); toStep(1, true);
 }
@@ -477,27 +610,30 @@ function readStep1(){
   draft.goal = $('fGoal').value.trim(); draft.founder = $('fFounder').value.trim();
 }
 
-function toStep(n, force){
+function toStep(n, force, fromPop){
   const cur = [1,2,3].find(i => !$('s'+i).classList.contains('hidden'));
   if (!force && !visit){
     if (cur===1) readStep1();
     if (n>cur && cur===1){
-      if (!draft.name) return err('e1','학교 이름을 적어 주세요.');
-      if (!draft.forWhom) return err('e1','어떤 학생을 위한 학교인지 적어 주세요.');
-      if (!draft.founder) return err('e1','설립자 이름을 적어 주세요.');
+      if (!draft.name){ err('e1','학교 이름을 적어 주세요.'); return false; }
+      if (!draft.forWhom){ err('e1','어떤 학생을 위한 학교인지 적어 주세요.'); return false; }
+      if (!draft.founder){ err('e1','설립자 이름을 적어 주세요.'); return false; }
     }
     if (n>cur && cur===2){
       syncWhys();
-      if (checkRules(draft).some(r=>!r.ok)){ err('e2','교육과정 편성 기준을 충족하지 않았습니다.'); const r=$('rules'); r.scrollIntoView({block:'center',behavior:'smooth'}); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); return; }
+      if (checkRules(draft).some(r=>!r.ok)){ err('e2','교육과정 편성 기준을 충족하지 않았습니다.'); toast('교육과정 편성 기준을 확인해 주세요.'); const r=$('rules'); r.scrollIntoView({block:'center',behavior:'smooth'}); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); return false; }
     }
   }
   ['e1','e2','e3'].forEach(e=>$(e).textContent='');
   [1,2,3].forEach(i => $('s'+i).classList.toggle('hidden', i!==n));
   document.querySelectorAll('#prog div').forEach(d => { const s=+d.dataset.s; d.classList.toggle('on', s===n); d.classList.toggle('done', s<n); });
   $('prog').classList.toggle('hidden', !!visit);
-  if (n===2){ closeAdd(); renderMyCourses(); }
+  if (n===2) renderMyCourses();
   if (n===3) prepStep3();
   window.scrollTo(0,0);
+  if (!fromPop){ const st = history.state||{}; (st.v==='build' && st.step===n ? history.replaceState : history.pushState).call(history, {v:'build', step:n}, '', location.pathname); }
+  saveDraft();
+  return true;
 }
 function err(id,msg){ $(id).textContent = msg; }
 
@@ -506,8 +642,12 @@ const roleOf = c => c.role || 'elective';
 const basics = s => s.courses.filter(c=>roleOf(c)==='basic');
 const electives = s => s.courses.filter(c=>roleOf(c)==='elective');
 const isFoundation = c => ['국어','수학','영어'].includes(c.group) || (c.name||'').startsWith('한국사');
-const BASIC_MAX = 7, EL_MIN = 5, EL_MAX = 8;
-let addRole = null;
+const BASIC_MAX = 8, EL_MAX = 12, HOURS = 2, SLOTS = 30;
+// 학생이 골라야 하는 선택과목 수 = (30칸 - 기본과목×2시간) ÷ 2시간
+const needPicks = sch => Math.max(0, (SLOTS - basics(sch).length*HOURS) / HOURS);
+const DEFAULT_BASICS = [['국어','공통국어'],['수학','공통수학'],['영어','공통영어'],['사회','한국사'],['사회','통합사회'],['과학','통합과학']];
+const defaultBasics = () => DEFAULT_BASICS.map(([g,n]) => ({id:uid(), kind:'existing', role:'basic', group:g, type:'공통 과목', name:n, desc:'', why:''}));
+let pkRole = null, pkGroup = '';
 const whyOpen = new Set();
 
 function checkRules(d){
@@ -517,7 +657,7 @@ function checkRules(d){
   return [
     {ok: has(b,'국어') && has(b,'수학') && has(b,'영어') && has(b,'사회') && has(b,'과학'), t:'기본과목에 국어·수학·영어·사회(한국사 포함)·과학 각 1과목 이상 필수'},
     {ok: has(all,'체육') && has(all,'예술'), t:'체육·예술 각 1과목 이상 필수 <small>기본·선택 무관</small>'},
-    {ok: e.length>=EL_MIN && e.length<=EL_MAX, t:`선택과목 ${EL_MIN}~${EL_MAX}개 <small>현재 ${e.length}개</small>`},
+    {ok: e.length>=needPicks(d) && e.length<=EL_MAX, t:`선택과목 ${needPicks(d)}개 이상 필수 <small>학생 시간표 30칸을 채우는 데 필요 · 현재 ${e.length}개</small>`},
     {ok: all.length>0 && f*2<=all.length, t:`국어·수학·영어·한국사 과목은 전체의 절반을 넘을 수 없음 <small>현재 ${f} / ${all.length}</small>`},
   ];
 }
@@ -528,96 +668,126 @@ function renderRules(){
   if (r.every(x=>x.ok)) err('e2','');
 }
 function syncWhys(){ document.querySelectorAll('[data-why]').forEach(t => { const c = draft.courses.find(x=>x.id===t.dataset.why); if(c) c.why = t.value; }); }
-function courseCardHTML(c){
-  const badge = c.kind==='new' ? `<span class="badge new">새로 만든 과목 · ${esc(c.group||'')}</span>` : `<span class="badge">${esc(c.group)} · ${esc(c.type)}</span>`;
-  const showWhy = (c.why||'').trim() || whyOpen.has(c.id);
-  return `<div class="course">
-      <div class="row1"><span class="nm">${esc(c.name)}</span>${badge}</div>
+const badgeHTML = c => c.kind==='new' ? `<span class="badge new">직접 만든 과목 · ${esc(c.group||'')}</span>` : `<span class="badge">${esc(c.group)} · ${esc(c.type)}</span>`;
+function courseRowHTML(c){
+  const hasWhy = (c.why||'').trim(), open = hasWhy || whyOpen.has(c.id);
+  return `<div class="crow">
+      <div class="crow-main">
+        <span class="nm">${esc(c.name)}</span>${badgeHTML(c)}
+        <span class="crow-act">
+          <button class="whyt ${open?'on':''}" onclick="toggleWhy('${c.id}')">${hasWhy?'이유 ✓':'이유 적기'}</button>
+          <button class="x" title="빼기" aria-label="${esc(c.name)} 빼기" onclick="removeCourse('${c.id}')">✕</button>
+        </span>
+      </div>
       ${c.desc?`<div class="desc">${esc(c.desc)}</div>`:''}
-      ${showWhy ? `<div class="why"><textarea class="inp" maxlength="300" data-why="${c.id}" placeholder="이 과목이 필요한 이유">${esc(c.why||'')}</textarea></div>`
-                : `<button class="whybtn" onclick="openWhy('${c.id}')">+ 필요한 이유 적기</button>`}
-      <button class="x" title="빼기" onclick="removeCourse('${c.id}')">✕</button>
+      ${open ? `<textarea class="inp why" maxlength="300" data-why="${c.id}" placeholder="이 과목이 필요한 이유 (선택)">${esc(c.why||'')}</textarea>` : ''}
     </div>`;
 }
-function openWhy(id){ syncWhys(); whyOpen.add(id); renderMyCourses(); const t=document.querySelector(`[data-why="${id}"]`); if(t) t.focus(); }
+function toggleWhy(id){
+  syncWhys();
+  const c = draft.courses.find(x=>x.id===id);
+  if (whyOpen.has(id) && !(c.why||'').trim()) whyOpen.delete(id); else whyOpen.add(id);
+  renderMyCourses();
+  const t = document.querySelector(`[data-why="${id}"]`); if (t) t.focus();
+}
 function renderMyCourses(){
   const b = basics(draft), e = electives(draft);
-  $('bCount').textContent = `${b.length}개`;
-  $('eCount').textContent = `${e.length} / ${EL_MAX}`; $('eCount').classList.toggle('ok', e.length>=EL_MIN);
-  $('myBasic').innerHTML = b.map(courseCardHTML).join('');
-  $('myElective').innerHTML = e.map(courseCardHTML).join('');
+  $('bCount').textContent = `${b.length} / ${BASIC_MAX}`;
+  $('eCount').textContent = `${e.length} / ${EL_MAX}`; $('eCount').classList.toggle('ok', e.length>=needPicks(draft));
+  $('myBasic').innerHTML = b.length ? b.map(courseRowHTML).join('') : '<div class="crow-empty">아직 없어요</div>';
+  $('myElective').innerHTML = e.length ? e.map(courseRowHTML).join('') : '<div class="crow-empty">아직 없어요</div>';
   document.querySelectorAll('[data-why]').forEach(t => t.oninput = syncWhys);
-  renderRules();
+  renderRules(); saveDraft();
 }
-function removeCourse(id){ syncWhys(); draft.courses = draft.courses.filter(c=>c.id!==id); renderMyCourses(); renderCatalog(); }
-function roleFull(){
-  const n = (addRole==='basic' ? basics(draft) : electives(draft)).length;
-  const max = addRole==='basic' ? BASIC_MAX : EL_MAX;
-  return n>=max ? `${addRole==='basic'?'기본':'선택'}과목은 ${max}개까지예요.` : '';
-}
-function addNew(){
-  const name = $('nName').value.trim(), desc=$('nDesc').value.trim(), group=$('nGroup').value;
-  const full = roleFull(); if (full) return err('eNew', full);
-  if (!name) return err('eNew','과목 이름을 적어 주세요.');
-  if (!group) return err('eNew','어느 교과인지 골라 주세요.');
-  if (draft.courses.some(c=>c.name===name)) return err('eNew','이미 있는 과목이에요.');
+function removeCourse(id){
+  if (draft.id && !draft.isNew){
+    const c = draft.courses.find(x=>x.id===id);
+    const n = tts.filter(t=>t.schoolId===draft.id && t.id!==tt.ttId && (t.picks||[]).includes(id)).length;
+    if (n && !confirm(`${n}명의 학생이 시간표에 '${c.name}'을(를) 넣었어요. 빼면 그 학생들 시간표에서도 빠져요. 뺄까요?`)) return;
+  }
+  syncWhys(); draft.courses = draft.courses.filter(c=>c.id!==id); whyOpen.delete(id); renderMyCourses(); if (pkRole) renderPicker(); }
+
+/* --- 과목 담기 창 --- */
+const roleList = () => pkRole==='basic' ? basics(draft) : electives(draft);
+const roleMax = () => pkRole==='basic' ? BASIC_MAX : EL_MAX;
+const roleName = r => (r||pkRole)==='basic' ? '기본과목' : '선택과목';
+function openPicker(role){
   syncWhys();
-  draft.courses.push({id:uid(), kind:'new', role:addRole, name, desc, group, type:'', why:''});
-  $('nName').value=$('nDesc').value=''; $('nGroup').value=''; err('eNew','');
-  renderMyCourses(); renderCatalog(); toast(`'${name}' 추가했어요.`);
+  pkRole = role; pkGroup = role==='basic' ? '공통 과목' : '';
+  $('pkTitle').textContent = roleName() + ' 담기';
+  $('catQ').value = ''; err('eNew','');
+  setPkTab('cat');
+  $('picker').classList.remove('hidden'); document.body.classList.add('noscroll');
+  renderPicker();
+  $('catList').scrollTop = 0;
 }
-function addCat(group,type,name){
-  if (draft.courses.some(c=>c.name===name)) return;
-  const full = roleFull(); if (full) return toast(full);
-  syncWhys();
-  draft.courses.push({id:uid(), kind:'existing', role:addRole, group, type, name, desc:'', why:''});
-  renderMyCourses(); renderCatalog();
+function closePicker(){
+  $('picker').classList.add('hidden'); document.body.classList.remove('noscroll');
+  pkRole = null; renderMyCourses();
 }
-function openAdd(role){
-  syncWhys();
-  addRole = role;
-  $('slot-'+role).appendChild($('addBox'));
-  $('addBox').classList.remove('hidden');
-  document.querySelectorAll('.addbtn').forEach(b => b.classList.toggle('hidden', b.dataset.role===role));
-  $('addTitle').textContent = role==='basic' ? '기본과목 추가' : '선택과목 추가';
-  $('catNote').textContent = role==='basic'
-    ? '2022 개정 교육과정 고등학교 과목 · 공통 과목이 아니어도 모두가 배웠으면 하는 과목을 골라도 돼요'
-    : '2022 개정 교육과정 고등학교 선택과목 (2025학년도 고1부터 적용)';
-  const types = role==='basic' ? ['공통 과목','일반 선택','진로 선택','융합 선택'] : ['일반 선택','진로 선택','융합 선택'];
-  $('catType').innerHTML = '<option value="">전체 유형</option>' + types.map(t=>`<option>${t}</option>`).join('');
-  $('catQ').value=''; $('catGroup').value='';
+function setPkTab(t){
+  document.querySelectorAll('#pkTabs button').forEach(x=>x.classList.toggle('on', x.dataset.t===t));
+  $('pkCat').classList.toggle('hidden', t!=='cat'); $('pkNew').classList.toggle('hidden', t!=='new');
+}
+document.querySelectorAll('#pkTabs button').forEach(b => b.onclick = ()=> setPkTab(b.dataset.t));
+document.addEventListener('keydown', e => { if (e.key==='Escape' && pkRole) closePicker(); });
+function renderPicker(){
+  const n = roleList().length;
+  $('pkCount').textContent = `${n} / ${roleMax()}`;
+  $('pkCount').classList.toggle('full', n>=roleMax());
+  // 교과 칩
+  const groups = (pkRole==='basic' ? ['공통 과목'] : ['전체']).concat(Object.keys(CATALOG));
+  $('gChips').innerHTML = groups.map(g => { const v = (g==='전체') ? '' : g; return `<button class="${pkGroup===v?'on':''}" data-g="${esc(v)}">${esc(g)}</button>`; }).join('');
+  $('gChips').querySelectorAll('button').forEach(b => b.onclick = ()=>{ pkGroup = b.dataset.g; $('catQ').value=''; renderPicker(); $('catList').scrollTop=0; });
   renderCatalog();
-  $('addBox').scrollIntoView({block:'nearest', behavior:'smooth'});
+  // 직접 만든 과목 목록
+  const made = roleList().filter(c=>c.kind==='new');
+  $('pkMade').innerHTML = made.length ? `<div class="t">직접 만든 ${roleName()}</div>` + made.map(c=>`<button class="subj on" onclick="removeCourse('${c.id}')">✓ ${esc(c.name)}</button>`).join('') : '';
 }
-function closeAdd(){ $('addBox').classList.add('hidden'); addRole=null; document.querySelectorAll('.addbtn').forEach(b=>b.classList.remove('hidden')); }
-document.querySelectorAll('.addbtn').forEach(b => b.onclick = ()=> openAdd(b.dataset.role));
-$('catGroup').innerHTML = '<option value="">전체 교과</option>' + Object.keys(CATALOG).map(g=>`<option>${g}</option>`).join('');
-$('nGroup').innerHTML = '<option value="">어느 교과인가요?</option>' + [...Object.keys(CATALOG),'교과 융합'].map(g=>`<option>${g}</option>`).join('');
-['catGroup','catType'].forEach(id => $(id).onchange = renderCatalog); $('catQ').oninput = renderCatalog;
 function renderCatalog(){
-  if (!addRole) return;
-  const g = $('catGroup').value, ty = $('catType').value, q = $('catQ').value.trim().replace(/\s/g,'');
-  const added = new Set(draft.courses.map(c=>c.name));
+  if (!pkRole) return;
+  const q = $('catQ').value.trim().replace(/\s/g,'');
+  const byName = Object.fromEntries(draft.courses.map(c=>[c.name,c]));
   let html = '';
   for (const [grp, types] of Object.entries(CATALOG)){
-    if (g && g!==grp) continue;
+    if (!q && pkGroup && pkGroup!=='공통 과목' && pkGroup!==grp) continue;
     let inner = '';
     for (const [t, list] of Object.entries(types)){
-      if (ty && ty!==t) continue;
-      if (addRole==='elective' && t==='공통 과목') continue;
+      if (!q && pkGroup==='공통 과목' && t!=='공통 과목') continue;
+      if (pkRole==='elective' && t==='공통 과목') continue;
       const items = list.filter(s => !q || s.replace(/\s/g,'').includes(q));
       if (!items.length) continue;
-      inner += `<div class="t">${t}</div>` + items.map(s => `<button class="subj ${added.has(s)?'added':''}" data-g="${esc(grp)}" data-t="${t}" data-n="${esc(s)}">${added.has(s)?'✓ ':'+ '}${esc(s)}</button>`).join('');
+      inner += (pkGroup==='공통 과목' && !q ? '' : `<div class="t">${t}</div>`) + items.map(s => {
+        const c = byName[s];
+        if (!c) return `<button class="subj" data-g="${esc(grp)}" data-t="${t}" data-n="${esc(s)}">+ ${esc(s)}</button>`;
+        if (roleOf(c)===pkRole) return `<button class="subj on" data-n="${esc(s)}">✓ ${esc(s)}</button>`;
+        return `<button class="subj other" disabled>${esc(s)} <small>${roleName(roleOf(c))}에 있음</small></button>`;
+      }).join('');
     }
-    if (inner) html += `<div class="catgroup"><h4>${grp}</h4>${inner}</div>`;
+    if (inner) html += `<div class="catgroup">${(pkGroup && pkGroup!=='공통 과목' && !q) ? '' : `<h4>${grp}</h4>`}${inner}</div>`;
   }
-  $('catList').innerHTML = html || '<div class="empty" style="border:0">찾는 과목이 없어요. 새 과목으로 만들어 보세요.</div>';
-  $('catList').querySelectorAll('.subj').forEach(b => b.onclick = ()=> addCat(b.dataset.g, b.dataset.t, b.dataset.n));
+  $('catList').innerHTML = html || `<div class="crow-empty" style="padding:22px">찾는 과목이 없어요. '직접 만들기'에서 새 과목을 만들 수 있어요.</div>`;
+  $('catList').querySelectorAll('.subj:not([disabled])').forEach(b => b.onclick = ()=> toggleCat(b.dataset.g, b.dataset.t, b.dataset.n));
 }
-document.querySelectorAll('#addTabs button').forEach(b => b.onclick = ()=>{
-  document.querySelectorAll('#addTabs button').forEach(x=>x.classList.toggle('on',x===b));
-  $('addNew').classList.toggle('hidden', b.dataset.t!=='new'); $('addCat').classList.toggle('hidden', b.dataset.t!=='cat');
-});
+$('catQ').oninput = renderCatalog;
+function toggleCat(group, type, name){
+  const c = draft.courses.find(x=>x.name===name);
+  if (c){ if (roleOf(c)===pkRole) removeCourse(c.id); return; }
+  if (roleList().length >= roleMax()) return toast(`${roleName()}은 ${roleMax()}개까지예요.`);
+  draft.courses.push({id:uid(), kind:'existing', role:pkRole, group, type, name, desc:'', why:''});
+  renderMyCourses(); renderPicker();
+}
+$('nGroup').innerHTML = '<option value="">어느 교과인가요?</option>' + [...Object.keys(CATALOG),'교과 융합'].map(g=>`<option>${g}</option>`).join('');
+function addNew(){
+  const name = $('nName').value.trim(), desc=$('nDesc').value.trim(), group=$('nGroup').value;
+  if (roleList().length >= roleMax()) return err('eNew', `${roleName()}은 ${roleMax()}개까지예요.`);
+  if (!name) return err('eNew','과목 이름을 적어 주세요.');
+  if (!group) return err('eNew','어느 교과인지 골라 주세요.');
+  if (draft.courses.some(c=>c.name===name)) return err('eNew','이미 담긴 과목이에요.');
+  draft.courses.push({id:uid(), kind:'new', role:pkRole, name, desc, group, type:'', why:''});
+  $('nName').value=$('nDesc').value=''; $('nGroup').value=''; err('eNew','');
+  renderMyCourses(); renderPicker(); toast(`'${name}' 담았어요.`);
+}
 
 /* ===== STEP 3 ===== */
 const curSchool = () => visit || draft;
@@ -629,7 +799,7 @@ const courseColor = (school, cid) => {
 };
 function prepStep3(){
   const s = curSchool();
-  if (!$('tName').value) $('tName').value = visit ? '' : (draft.founder||'');
+  if (!$('tName').value && !visit) $('tName').value = draft.founder||'';
   $('s3visit').classList.toggle('hidden', !visit);
   if (visit) $('s3visit').textContent = visit.name + ' 입학하기';
   $('s3back').textContent = visit ? '← 학교 안내로' : '← 이전';
@@ -638,18 +808,20 @@ function prepStep3(){
   { const bg = basicGrid(s), g = {...bg};
     for (const [k,cid] of Object.entries(tt.grid||{})) if (!bg[k] && tt.picks.includes(cid)) g[k]=cid;
     tt.grid = g; }
-  const b = basics(s);
+  const b = basics(s), need = needPicks(s);
+  $('s3lead').textContent = `기본과목은 모두 함께 들어요. 모든 과목은 일주일에 2시간씩이에요. 내가 이 학교 학생이라면 어떤 선택과목을 듣고 싶을까요? ${need}개를 골라 빈칸을 채워 보세요.`;
   $('basicLine').innerHTML = b.length ? `<b>기본과목</b> ${b.map(c=>esc(c.name)).join(' · ')}` : '';
   renderPicks(); renderTTEdit();
 }
 function renderPicks(){
   const s = curSchool();
-  $('pickCount').textContent = `${tt.picks.length} / 4`;
+  const need = needPicks(s);
+  $('pickCount').textContent = `${tt.picks.length} / ${need}`;
   $('pickGrid').innerHTML = electives(s).map(c => `<button class="pick ${tt.picks.includes(c.id)?'on':''}" data-id="${c.id}"><span class="dot" style="background:${tt.picks.includes(c.id)?courseColor(s,c.id):'#E6DDD0'}"></span>${esc(c.name)}</button>`).join('');
   $('pickGrid').querySelectorAll('.pick').forEach(b => b.onclick = ()=>{
     const id=b.dataset.id;
     if (tt.picks.includes(id)){ tt.picks = tt.picks.filter(x=>x!==id); for (const k in tt.grid) if (tt.grid[k]===id) delete tt.grid[k]; if (brush===id) brush=null; }
-    else { if (tt.picks.length>=4) return toast('4개까지 고를 수 있어요.'); tt.picks.push(id); brush=id; }
+    else { if (tt.picks.length>=need) return toast(`선택과목은 ${need}개를 골라요. 다른 과목을 빼고 골라 주세요.`); tt.picks.push(id); brush=id; }
     renderPicks(); renderTTEdit();
   });
   const brushIds = tt.picks;
@@ -664,13 +836,13 @@ function ttHTML(school, grid, ro){
     h += `<tr><th class="p">${p}</th>`;
     for (let d=0; d<5; d++){
       const k = d+'-'+p, cid = grid[k], c = cid && school.courses.find(x=>x.id===cid);
-      h += c ? `<td class="f${roleOf(c)==='basic'?' b':''}" data-k="${k}" style="background:${courseColor(school,cid)}">${ro?'':esc(c.name)}</td>` : `<td data-k="${k}"></td>`;
+      h += c ? `<td class="f${roleOf(c)==='basic'?' b':''}" data-k="${k}" title="${esc(c.name)}" style="background:${courseColor(school,cid)}">${ro?'':esc(c.name)}</td>` : `<td data-k="${k}"></td>`;
     }
     h += '</tr>';
   }
   return h;
 }
-const BASIC_HOURS = 2;
+const BASIC_HOURS = HOURS;
 function allSlots(){ const a=[]; for (let p=1;p<=PERIODS;p++) for (let d=0;d<5;d++) a.push(d+'-'+p); return a; }
 // 기본과목은 과목마다 2시간, 앞 교시부터 요일을 돌며 자동 배치(같은 과목은 서로 다른 요일)
 function basicGrid(school){
@@ -685,50 +857,75 @@ function renderTTEdit(){
     const k=td.dataset.k;
     if (basicGrid(curSchool())[k]) return toast('기본과목 칸은 바꿀 수 없어요.');
     if (!brush) return toast('위에서 선택과목을 먼저 골라 주세요.');
-    if (tt.grid[k]===brush) delete tt.grid[k]; else tt.grid[k]=brush;
+    if (tt.grid[k]===brush) delete tt.grid[k];
+    else {
+      if (Object.values(tt.grid).filter(x=>x===brush).length >= HOURS){ const c=curSchool().courses.find(x=>x.id===brush); return toast(`'${c.name}'은(는) 이미 ${HOURS}시간 다 들어갔어요.`); }
+      tt.grid[k]=brush;
+    }
     renderTTEdit();
   });
   const n = emptyCount();
   $('emptyInfo').textContent = n ? `빈칸 ${n}칸` : '빈칸 없음';
   $('emptyInfo').classList.toggle('ok', !n);
   if (!n) err('e3','');
+  saveDraft();
 }
 function clearGrid(){ tt.grid = basicGrid(curSchool()); renderTTEdit(); }
 function autoFill(){
   if (!tt.picks.length) return toast('선택과목을 먼저 골라 주세요.');
-  const bg = basicGrid(curSchool());
-  const g = {...bg};
-  let i = 0;
-  for (const k of allSlots()) if (!bg[k]) g[k] = tt.picks[i++ % tt.picks.length];
+  const bg = basicGrid(curSchool()), g = {...bg};
+  const empties = allSlots().filter(k=>!bg[k]);
+  const P = tt.picks.length;
+  empties.slice(0, P*HOURS).forEach((k,i) => g[k] = tt.picks[i % P]);
   tt.grid = g; renderTTEdit();
+  const need = needPicks(curSchool());
+  if (P < need) toast(`선택과목을 ${need - P}개 더 고르면 빈칸이 다 채워져요.`);
 }
 
 /* ===== 저장 ===== */
+const withTimeout = (pr, ms=15000) => Promise.race([pr, new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))]);
 async function saveAll(){
   const student = $('tName').value.trim(), note = $('tNote').value.trim();
-  if (tt.picks.length<3) return err('e3','선택과목을 3개 이상 골라 주세요.');
-  const unplaced = tt.picks.filter(id => !Object.values(tt.grid).includes(id));
-  if (unplaced.length){ const s=curSchool(); return err('e3',`'${s.courses.find(c=>c.id===unplaced[0]).name}'을(를) 시간표에 넣어 주세요.`); }
+  if (!student){ err('e3','학생 이름을 적어 주세요.'); $('tName').focus(); return; }
+  const need = needPicks(curSchool());
+  if (tt.picks.length!==need) return err('e3',`선택과목을 ${need}개 골라 주세요. (지금 ${tt.picks.length}개)`);
+  const unplaced = tt.picks.filter(id => Object.values(tt.grid).filter(x=>x===id).length !== HOURS);
+  if (unplaced.length){ const s=curSchool(); return err('e3',`'${s.courses.find(c=>c.id===unplaced[0]).name}'을(를) 시간표에 ${HOURS}시간 넣어 주세요.`); }
   if (emptyCount()) return err('e3',`공강이 없도록 빈칸 ${emptyCount()}칸을 모두 채워 주세요.`);
-  if (!student) return err('e3','학생 이름을 적어 주세요.');
   const btn = $('saveBtn'); btn.disabled = true; btn.textContent = '저장 중…';
+  const TS = () => firebase.firestore.FieldValue.serverTimestamp();
   try{
     let schoolId;
     if (visit){
       schoolId = visit.id;
     } else {
       syncWhys();
+      if (!draft.id){ draft.id = SCH.doc().id; draft.isNew = true; }   // 다시 눌러도 같은 문서에 저장 → 중복 없음
       const data = {name:draft.name, forWhom:draft.forWhom, goal:draft.goal, founder:draft.founder, color:draft.color,
         courses: draft.courses.map(c=>({id:c.id, kind:c.kind, role:roleOf(c), name:c.name, desc:c.desc||'', why:(c.why||'').trim(), group:c.group||'', type:c.type||''})),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()};
-      if (draft.id){ await SCH.doc(draft.id).update(data); schoolId = draft.id; }
-      else { data.createdAt = firebase.firestore.FieldValue.serverTimestamp(); const r = await SCH.add(data); schoolId = r.id; remember('schools', schoolId); }
+        updatedAt: TS()};
+      if (draft.isNew) data.createdAt = TS();
+      await withTimeout(SCH.doc(draft.id).set(data, {merge:true}));
+      schoolId = draft.id; remember('schools', schoolId);
+      // 학교를 고친 경우: 다른 학생들 시간표를 바뀐 과목에 맞춰 정리
+      if (!draft.isNew){
+        const S = {courses: data.courses}, bg = basicGrid(S), elIds = new Set(electives(S).map(c=>c.id));
+        await withTimeout(Promise.all(tts.filter(t=>t.schoolId===schoolId && t.id!==tt.ttId).map(t => {
+          const picks = (t.picks||[]).filter(id=>elIds.has(id)), g = {...bg};
+          for (const [k,cid] of Object.entries(t.grid||{})) if (!bg[k] && picks.includes(cid)) g[k]=cid;
+          return TT.doc(t.id).update({picks, grid:g});
+        })));
+      }
     }
-    const tdata = {schoolId, student, note, picks:tt.picks, grid:tt.grid, founder: !visit, updatedAt: firebase.firestore.FieldValue.serverTimestamp()};
-    if (tt.ttId){ await TT.doc(tt.ttId).update(tdata); }
-    else { tdata.createdAt = firebase.firestore.FieldValue.serverTimestamp(); const r = await TT.add(tdata); remember('tts', r.id); }
+    if (!tt.ttId){ tt.ttId = TT.doc().id; tt.isNew = true; }
+    const tdata = {schoolId, student, note, picks:tt.picks, grid:tt.grid, founder: !visit, updatedAt: TS()};
+    if (tt.isNew) tdata.createdAt = TS();
+    await withTimeout(TT.doc(tt.ttId).set(tdata, {merge:true}));
+    remember('tts', tt.ttId);
+    clearDraft();
     toast(visit ? '입학했어요.' : '학교가 세워졌어요.');
     $('tName').value=''; $('tNote').value='';
+    draft = null; visit = null;
     openDetail(schoolId);
   }catch(e){ console.error(e); err('e3','저장하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.'); }
   btn.disabled = false; btn.textContent = '완성';
@@ -766,7 +963,7 @@ function openDetail(id, push=true){
   const s = schools.find(x=>x.id===id);
   const v = $('v-detail');
   if (!s){
-    v.innerHTML = loaded ? '<div class="empty">학교를 찾을 수 없어요. 지워졌을 수도 있어요.</div>' : '<div class="loading">불러오는 중…</div>';
+    v.innerHTML = loaded ? `<div class="empty">학교를 찾을 수 없어요. 지워졌을 수도 있어요.<br><br><button class="btn" onclick="go('gallery')">학교 구경하기</button></div>` : '<div class="loading">불러오는 중…</div>';
     go('detail', push); return;
   }
   setColor(s.color);
@@ -820,24 +1017,25 @@ function copyLink(id){
 }
 function enroll(id){
   const s = schools.find(x=>x.id===id); if(!s) return;
-  visit = s; draft = null; tt = {picks:[], grid:{}, ttId:null};
+  visit = s; draft = null; clearDraft(); tt = {picks:[], grid:{}, ttId:null};
   $('tName').value=''; $('tNote').value='';
   go('build'); toStep(3, true);
 }
-function editSchool(id){
+function editSchool(id, step=1){
   const s = schools.find(x=>x.id===id); if(!s) return;
   visit = null;
   draft = {id, name:s.name, forWhom:s.forWhom, goal:s.goal||'', founder:s.founder, color:s.color??4, courses: s.courses.map(c=>({...c}))};
   const myT = tts.find(t=>t.schoolId===id && t.founder && isMine('tts',t.id));
   tt = myT ? {picks:[...myT.picks], grid:{...myT.grid}, ttId:myT.id} : {picks:[], grid:{}, ttId:null};
   $('tName').value = myT ? myT.student : s.founder; $('tNote').value = myT ? (myT.note||'') : '';
-  fillStep1(); go('build'); toStep(1, true);
+  whyOpen.clear(); clearDraft();
+  fillStep1(); go('build'); toStep(step, true);
 }
 function editTT(tid){
   const t = tts.find(x=>x.id===tid); if(!t) return;
-  if (t.founder){ return editSchool(t.schoolId); }
+  if (t.founder){ return editSchool(t.schoolId, 3); }
   const s = schools.find(x=>x.id===t.schoolId); if(!s) return;
-  visit = s; draft = null; tt = {picks:[...t.picks], grid:{...t.grid}, ttId:tid};
+  visit = s; draft = null; clearDraft(); tt = {picks:[...t.picks], grid:{...t.grid}, ttId:tid};
   $('tName').value = t.student; $('tNote').value = t.note||'';
   go('build'); toStep(3, true);
 }
@@ -858,7 +1056,7 @@ let loaded = false, gotS = false, gotT = false;
 function refresh(){
   if (!(gotS && gotT)) return;
   loaded = true;
-  if (!$('v-home').classList.contains('hidden')) renderRecent();
+  if (!$('v-home').classList.contains('hidden')){ renderRecent(); showResume(); }
   if (!$('v-gallery').classList.contains('hidden')) renderGallery();
   if (!$('v-detail').classList.contains('hidden') && detailId){
     const y = window.scrollY; openDetail(detailId, false); window.scrollTo(0,y);
@@ -869,6 +1067,7 @@ SCH.orderBy('createdAt','desc').onSnapshot(snap => {
   schools.sort((a,b)=>(b.isSample?1:0)-(a.isSample?1:0));
   gotS = true; refresh();
 }, e => { console.error(e); $('recentCards').innerHTML = '<div class="empty" style="grid-column:1/-1">불러오지 못했어요. 새로고침해 주세요.</div>'; });
+setTimeout(()=>{ if (!loaded) document.querySelectorAll('.loading').forEach(el=>el.textContent='불러오지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.'); }, 12000);
 TT.onSnapshot(snap => { tts = snap.docs.map(d=>({id:d.id, ...d.data()})); tts.sort((a,b)=>(a.createdAt?.seconds||9e9)-(b.createdAt?.seconds||9e9)); gotT = true; refresh(); });
 
 /* 처음 주소 */

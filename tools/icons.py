@@ -1,0 +1,110 @@
+# 꿈꾸는 학교 도트 아이콘. '.' = 투명. 크기 자유(행 길이 같게)
+PAL = {'k':'#4A3A3A','p':'#F2688A','l':'#FFB8C9','y':'#FFD15C','o':'#F5A043','b':'#6FA8EC','c':'#C4DEFF',
+       'm':'#5CC8B2','n':'#BDEFE4','w':'#FFFFFF','g':'#B9ABA5','v':'#A88BE0','x':'#E2D4FF','u':'#C98B5E','t':'#F1D3B0','d':'#8C7B75'}
+I = {}
+I['school'] = [
+ ".......kkk......",
+ ".......kppk.....",
+ ".......kkk......",
+ ".......k........",
+ "......kkk.......",
+ ".....kpppk......",
+ "....kppyppk.....",
+ "...kppykyppk....",
+ "..kppppyppppk...",
+ ".kkkkkkkkkkkkk..",
+ "..ktttttttttk...",
+ "..ktcctttcctk...",
+ "..ktcckkkcctk...",
+ "..ktttkuktttk...",
+ "..ktttkuktttk...",
+ "..kkkkkkkkkkk...",
+]
+I['books'] = [
+ "............",
+ "..kkkkkkkkk.",
+ "..kpwpppppk.",
+ "..kkkkkkkkk.",
+ ".kkkkkkkkk..",
+ ".kmwmmmmmk..",
+ ".kkkkkkkkk..",
+ "..kkkkkkkkk.",
+ "..kbwbbbbbk.",
+ "..kkkkkkkkk.",
+ "............",
+ "............",
+]
+I['cal'] = [
+ "...k....k...",
+ ".kkkkkkkkkk.",
+ ".kppppppppk.",
+ ".kkkkkkkkkk.",
+ ".kwwwwwwwwk.",
+ ".kwywwwmwwk.",
+ ".kwwwwwwwwk.",
+ ".kwwbwwwpwk.",
+ ".kwwwwwwwwk.",
+ ".kmwwwywwwk.",
+ ".kkkkkkkkkk.",
+ "............",
+]
+I['look'] = [
+ "............",
+ "...kkk......",
+ "..kwcck.....",
+ ".kwcccck....",
+ ".kccccck....",
+ ".kccccck....",
+ "..kccck.....",
+ "...kkkuk....",
+ "......kuuk..",
+ ".......kuuk.",
+ "........kkk.",
+ "............",
+]
+I['pen'] = [
+ "........kk..",
+ ".......kllk.",
+ "......kcklk.",
+ ".....kbbck..",
+ "....kbbbk...",
+ "...kbbbk....",
+ "..kbbbk.....",
+ "..ktbk......",
+ ".ktttk......",
+ ".kkkk.......",
+ "............",
+ "............",
+]
+I['spark'] = [
+ ".....y......",
+ ".....y......",
+ "....yoy.....",
+ "..yyyoyyy...",
+ "....yoy.....",
+ ".....y......",
+ ".....y...y..",
+ ".........y..",
+ "........yyy.",
+ ".........y..",
+ ".........y..",
+ "............",
+]
+I['person'] = [
+ "............",
+ "...kkkkkk...",
+ "..kuuuuuuk..",
+ "..kuttttuk..",
+ "..ktkttktk..",
+ "..kttttttk..",
+ "...kttttk...",
+ "....kkkk....",
+ "..kkbbbbkk..",
+ ".kbbbwwbbbk.",
+ ".kbbbwwbbbk.",
+ ".kkkkkkkkkk.",
+]
+for n,g in I.items():
+    L = len(g[0])
+    for r in g: assert len(r)==L, (n, r, len(r))
+    assert len(g)==L, (n, len(g))
