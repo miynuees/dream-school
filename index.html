@@ -166,9 +166,21 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;table-layout:fix
 .brushbar{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .brushbar button{border:1.5px solid transparent;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
 .brushbar button.on{border-color:var(--ink)}
+.brushbar button small{font-weight:700;opacity:.55;margin-left:2px}
+.brushbar button.full small{opacity:1;color:#2F8F7B}
+.hint b{color:var(--ink)}
 
 .resume{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:12px 16px;margin:6px 0 0;font-size:14px}
 .resume span:last-child{display:flex;gap:4px}
+.done{text-align:center;padding:50px 10px 30px}
+.done-ico{font-size:96px;display:block;margin:0 auto 14px;animation:pop .5s ease-out}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.done-sub{font-size:15px;color:var(--sub);margin-bottom:2px}
+.done h2{font-family:var(--hand);font-weight:400;font-size:54px;line-height:1.15;margin:0 0 6px;word-break:keep-all}
+.done p{color:#6F655C;margin:0 0 28px}
+.done-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.done-btns .btn{padding:13px 24px;font-size:16px}
+.done-btns .px{font-size:20px}
 /* 과목 줄 */
 .crows{display:flex;flex-direction:column;border:1.5px solid var(--line);border-radius:14px;background:#FFFDF9;overflow:hidden;margin-bottom:8px}
 .crow{padding:9px 12px;border-top:1px solid var(--line)}
@@ -267,6 +279,9 @@ body.noscroll{overflow:hidden}
   .modal{padding:0;align-items:flex-end}
   .panel{height:92%;border-radius:20px 20px 0 0;max-width:none}
   .hero-ico{font-size:64px}
+  .done h2{font-size:42px}
+  .done-ico{font-size:76px}
+  .done-btns .btn{width:100%;justify-content:center}
   .steps3 .px{font-size:26px}
   .top-btns .lbl{display:none}
   .top-btns .btn{padding:8px 11px}
@@ -348,7 +363,7 @@ body.noscroll{overflow:hidden}
   <!-- 만들기 -->
   <section id="v-build" class="hidden">
     <div class="prog" id="prog">
-      <div data-s="1">1. 학교 정체성</div><div data-s="2">2. 교육과정</div><div data-s="3">3. 시간표</div>
+      <div data-s="1">1. 학교 정체성</div><div data-s="2">2. 교육과정</div>
     </div>
 
     <!-- STEP 1 -->
@@ -397,7 +412,7 @@ body.noscroll{overflow:hidden}
         <button class="btn addbtn" onclick="openPicker('elective')">+ 선택과목 담기</button>
       </div>
 
-      <div class="nav"><button class="btn ghost" onclick="toStep(1)">← 이전</button><span class="err" id="e2"></span><button class="btn main" onclick="toStep(3)">다음</button></div>
+      <div class="nav"><button class="btn ghost" onclick="toStep(1)">← 이전</button><span class="err" id="e2"></span><button class="btn main" id="schoolBtn" onclick="saveSchool()">학교 세우기</button></div>
     </div>
 
     <!-- STEP 3 -->
@@ -416,7 +431,7 @@ body.noscroll{overflow:hidden}
       </div>
       <div class="field" id="ttField">
         <label>시간표 채우기 <small class="emptyinfo" id="emptyInfo"></small></label>
-        <div class="hint">기본과목은 자동으로 들어가 있어요. 공강 없이 빈칸을 모두 선택과목으로 채우세요. 과목을 고른 다음 칸을 누르면 들어가고, 다시 누르면 지워져요.</div>
+        <div class="hint"><b>선택과목은 과목마다 2시간씩</b> 빈칸에 넣어요. 기본과목은 자동으로 들어가 있어요. 아래에서 과목을 고른 다음 칸을 누르면 들어가고, 다시 누르면 지워져요. 공강 없이 빈칸을 모두 채워 주세요.</div>
         <div class="brushbar" id="brushBar"></div>
         <div class="tt-wrap"><table class="tt" id="ttEdit"></table></div>
         <div style="display:flex;gap:6px;justify-content:flex-end;margin-top:8px">
@@ -440,6 +455,21 @@ body.noscroll{overflow:hidden}
 
   <!-- 학교 안내 -->
   <section id="v-detail" class="hidden"></section>
+
+  <!-- 학교가 세워졌어요 -->
+  <section id="v-done" class="hidden">
+    <div class="done">
+      <div class="px px-school done-ico"></div>
+      <div class="done-sub">학교가 세워졌어요</div>
+      <h2 id="doneName"></h2>
+      <p id="doneFor"></p>
+      <div class="done-btns">
+        <button class="btn main ib" onclick="enroll(detailId)"><span class="px px-cal"></span>우리 학교 학생 되어 보기</button>
+        <button class="btn ib" onclick="go('gallery')"><span class="px px-look"></span>다른 학교 구경하기</button>
+      </div>
+      <button class="btn ghost sm" onclick="openDetail(detailId)">학교 안내 보기</button>
+    </div>
+  </section>
 </div>
 <!-- 과목 담기 창 -->
 <div class="modal hidden" id="picker" onclick="if(event.target===this) closePicker()">
@@ -524,10 +554,10 @@ function setColor(i){ const c = SCHOOL_COLORS[i] || SCHOOL_COLORS[4]; document.d
 
 /* ===== 화면 전환 ===== */
 function go(v, push=true){
-  ['home','build','gallery','detail'].forEach(x => $('v-'+x).classList.toggle('hidden', x!==v));
-  if (v!=='detail' && v!=='build') setColor(4);
+  ['home','build','gallery','detail','done'].forEach(x => $('v-'+x).classList.toggle('hidden', x!==v));
+  if (v!=='detail' && v!=='build' && v!=='done') setColor(4);
   if (push && v!=='build'){
-    const url = v==='detail' && detailId ? '?s='+detailId : (v==='gallery' ? '?g' : location.pathname);
+    const url = (v==='detail' || v==='done') && detailId ? '?s='+detailId : (v==='gallery' ? '?g' : location.pathname);
     history.pushState({v, id:detailId}, '', url);
   }
   if (v==='home') showResume();
@@ -546,6 +576,7 @@ window.addEventListener('popstate', e => {
     return;
   }
   if (st.v==='detail' && st.id){ openDetail(st.id, false); }
+  else if (st.v==='done' && st.id){ showDone(st.id, false); }
   else go(st.v && st.v!=='build' ? st.v : 'home', false);
 });
 
@@ -579,7 +610,7 @@ function resumeDraft(){
   $('tName').value = d.tName||''; $('tNote').value = d.tNote||'';
   whyOpen.clear();
   if (draft) fillStep1();
-  go('build'); toStep(visit ? 3 : (d.step||1), true);
+  go('build'); toStep(visit ? 3 : Math.min(d.step||1, 2), true);
 }
 function dropDraft(){ clearDraft(); showResume(); }
 document.addEventListener('input', e => { if (e.target.closest && e.target.closest('#v-build')) { clearTimeout(saveDraft._t); saveDraft._t = setTimeout(saveDraft, 400); } });
@@ -628,8 +659,9 @@ function toStep(n, force, fromPop){
   [1,2,3].forEach(i => $('s'+i).classList.toggle('hidden', i!==n));
   document.querySelectorAll('#prog div').forEach(d => { const s=+d.dataset.s; d.classList.toggle('on', s===n); d.classList.toggle('done', s<n); });
   $('prog').classList.toggle('hidden', !!visit);
-  if (n===2) renderMyCourses();
+  if (n===2){ renderMyCourses(); $('schoolBtn').textContent = (draft && draft.id && !draft.isNew) ? '고치기 완료' : '학교 세우기'; }
   if (n===3) prepStep3();
+  $('s3visit').classList.toggle('hidden', n!==3);
   window.scrollTo(0,0);
   if (!fromPop){ const st = history.state||{}; (st.v==='build' && st.step===n ? history.replaceState : history.pushState).call(history, {v:'build', step:n}, '', location.pathname); }
   saveDraft();
@@ -799,11 +831,11 @@ const courseColor = (school, cid) => {
 };
 function prepStep3(){
   const s = curSchool();
-  if (!$('tName').value && !visit) $('tName').value = draft.founder||'';
+  if (!$('tName').value && isMine('schools', visit.id)) $('tName').value = visit.founder||'';
   $('s3visit').classList.toggle('hidden', !visit);
   if (visit) $('s3visit').textContent = visit.name + ' 입학하기';
-  $('s3back').textContent = visit ? '← 학교 안내로' : '← 이전';
-  $('s3back').onclick = visit ? ()=>openDetail(visit.id) : ()=>toStep(2);
+  $('s3back').textContent = '← 학교 안내로';
+  $('s3back').onclick = ()=>openDetail(visit.id);
   tt.picks = tt.picks.filter(id => electives(s).some(c=>c.id===id));
   { const bg = basicGrid(s), g = {...bg};
     for (const [k,cid] of Object.entries(tt.grid||{})) if (!bg[k] && tt.picks.includes(cid)) g[k]=cid;
@@ -827,7 +859,11 @@ function renderPicks(){
   const brushIds = tt.picks;
   $('ttField').classList.toggle('hidden', !tt.picks.length && !basics(s).length);
   if (!brushIds.includes(brush)) brush = tt.picks[0]||null;
-  $('brushBar').innerHTML = brushIds.map(id => { const c=s.courses.find(x=>x.id===id); return `<button class="${brush===id?'on':''}" data-id="${id}" style="background:${courseColor(s,id)}">${esc(c.name)}</button>`; }).join('');
+  renderBrush();
+}
+function renderBrush(){
+  const s = curSchool(), brushIds = tt.picks;
+  $('brushBar').innerHTML = brushIds.map(id => { const c=s.courses.find(x=>x.id===id); const n = Object.values(tt.grid).filter(x=>x===id).length; return `<button class="${brush===id?'on':''} ${n>=HOURS?'full':''}" data-id="${id}" style="background:${courseColor(s,id)}">${esc(c.name)} <small>${n}/${HOURS}</small></button>`; }).join('');
   $('brushBar').querySelectorAll('button').forEach(b => b.onclick = ()=>{ brush=b.dataset.id; renderPicks(); });
 }
 function ttHTML(school, grid, ro){
@@ -844,15 +880,41 @@ function ttHTML(school, grid, ro){
 }
 const BASIC_HOURS = HOURS;
 function allSlots(){ const a=[]; for (let p=1;p<=PERIODS;p++) for (let d=0;d<5;d++) a.push(d+'-'+p); return a; }
-// 기본과목은 과목마다 2시간, 앞 교시부터 요일을 돌며 자동 배치(같은 과목은 서로 다른 요일)
+// 기본과목 자동 배치: 일주일 전체에 고르게 흩고(교시마다 비슷한 수, 요일은 엇갈리게), 같은 과목 2시간은 서로 다른 요일
 function basicGrid(school){
-  const hrs = []; basics(school).forEach(c=>{ for (let i=0;i<BASIC_HOURS;i++) hrs.push(c.id); });
-  const g = {}; allSlots().forEach((k,i)=>{ if (i<hrs.length) g[k]=hrs[i]; });
+  const ids = basics(school).map(c=>c.id), n = ids.length, H = n*BASIC_HOURS, D = 5, g = {};
+  if (!n) return g;
+  const cells = [];
+  for (let r=0; r<PERIODS; r++){
+    const cnt = Math.floor(H*(r+1)/PERIODS) - Math.floor(H*r/PERIODS);
+    const cols = [...new Set(Array.from({length:cnt}, (_,i)=> (Math.floor((i+0.5)*D/cnt) + r*2) % D))].sort((x,y)=>x-y);
+    cols.forEach(c => cells.push([r,c]));
+  }
+  return spreadTwo(cells.map(([r,c])=>c+'-'+(r+1)), ids);
+}
+// 칸 목록(2n개)에 과목 n개를 2칸씩: 앞 n칸에 한 번씩, 뒤 n칸은 첫 시간과 다른 요일이 되게
+function spreadTwo(keys, ids){
+  const n = ids.length, g = {}, day = k => k.split('-')[0];
+  if (!n) return g;
+  keys.slice(0,n).forEach((k,j) => g[k] = ids[j]);
+  const rest = keys.slice(n, 2*n), used = new Set(), asg = [];
+  const ok = (function dfs(i){
+    if (i===rest.length) return true;
+    for (let x=0; x<n; x++){
+      if (used.has(x) || day(keys[x])===day(rest[i])) continue;
+      used.add(x); asg[i]=x;
+      if (dfs(i+1)) return true;
+      used.delete(x);
+    }
+    return false;
+  })(0);
+  rest.forEach((k,i) => g[k] = ids[ok ? asg[i] : i % n]);
   return g;
 }
 const emptyCount = () => allSlots().filter(k=>!tt.grid[k]).length;
 function renderTTEdit(){
   const t = $('ttEdit'); t.innerHTML = ttHTML(curSchool(), tt.grid, false);
+  if (tt.picks.length) renderBrush();
   t.querySelectorAll('td').forEach(td => td.onclick = ()=>{
     const k=td.dataset.k;
     if (basicGrid(curSchool())[k]) return toast('기본과목 칸은 바꿀 수 없어요.');
@@ -876,7 +938,7 @@ function autoFill(){
   const bg = basicGrid(curSchool()), g = {...bg};
   const empties = allSlots().filter(k=>!bg[k]);
   const P = tt.picks.length;
-  empties.slice(0, P*HOURS).forEach((k,i) => g[k] = tt.picks[i % P]);
+  Object.assign(g, spreadTwo(empties.slice(0, P*HOURS), tt.picks));
   tt.grid = g; renderTTEdit();
   const need = needPicks(curSchool());
   if (P < need) toast(`선택과목을 ${need - P}개 더 고르면 빈칸이 다 채워져요.`);
@@ -884,6 +946,44 @@ function autoFill(){
 
 /* ===== 저장 ===== */
 const withTimeout = (pr, ms=15000) => Promise.race([pr, new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))]);
+async function saveSchool(){
+  if (pkRole) closePicker();
+  syncWhys();
+  if (checkRules(draft).some(r=>!r.ok)){ err('e2','교육과정 편성 기준을 충족하지 않았습니다.'); toast('교육과정 편성 기준을 확인해 주세요.'); const r=$('rules'); r.scrollIntoView({block:'center',behavior:'smooth'}); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); return; }
+  const btn = $('schoolBtn'), label = btn.textContent; btn.disabled = true; btn.textContent = '저장 중…';
+  const TS = () => firebase.firestore.FieldValue.serverTimestamp();
+  try{
+    if (!draft.id){ draft.id = SCH.doc().id; draft.isNew = true; }   // 다시 눌러도 같은 문서에 저장 → 중복 없음
+    const data = {name:draft.name, forWhom:draft.forWhom, goal:draft.goal, founder:draft.founder, color:draft.color,
+      courses: draft.courses.map(c=>({id:c.id, kind:c.kind, role:roleOf(c), name:c.name, desc:c.desc||'', why:(c.why||'').trim(), group:c.group||'', type:c.type||''})),
+      updatedAt: TS()};
+    if (draft.isNew) data.createdAt = TS();
+    await withTimeout(SCH.doc(draft.id).set(data, {merge:true}));
+    const id = draft.id, isNew = draft.isNew;
+    remember('schools', id);
+    // 학교를 고친 경우: 학생들 시간표를 바뀐 과목에 맞춰 정리
+    if (!isNew){
+      const S = {courses: data.courses}, bg = basicGrid(S), elIds = new Set(electives(S).map(c=>c.id));
+      await withTimeout(Promise.all(tts.filter(t=>t.schoolId===id).map(t => {
+        const picks = (t.picks||[]).filter(x=>elIds.has(x)), g = {...bg};
+        for (const [k,cid] of Object.entries(t.grid||{})) if (!bg[k] && picks.includes(cid)) g[k]=cid;
+        return TT.doc(t.id).update({picks, grid:g});
+      })));
+    }
+    clearDraft(); draft = null;
+    if (isNew) showDone(id); else { toast('고쳤어요.'); openDetail(id); }
+  }catch(e){ console.error(e); err('e2','저장하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.'); }
+  btn.disabled = false; btn.textContent = label;
+}
+function showDone(id, push=true){
+  detailId = id;
+  const s = schools.find(x=>x.id===id) || {};
+  $('doneName').textContent = s.name || '';
+  $('doneFor').textContent = s.forWhom || '';
+  if (s.color!=null) setColor(s.color);
+  go('done', push);
+  if (!s.name) setTimeout(()=>{ const t = schools.find(x=>x.id===id); if (t){ $('doneName').textContent=t.name; $('doneFor').textContent=t.forWhom; setColor(t.color); } }, 1500);
+}
 async function saveAll(){
   const student = $('tName').value.trim(), note = $('tNote').value.trim();
   if (!student){ err('e3','학생 이름을 적어 주세요.'); $('tName').focus(); return; }
@@ -895,37 +995,16 @@ async function saveAll(){
   const btn = $('saveBtn'); btn.disabled = true; btn.textContent = '저장 중…';
   const TS = () => firebase.firestore.FieldValue.serverTimestamp();
   try{
-    let schoolId;
-    if (visit){
-      schoolId = visit.id;
-    } else {
-      syncWhys();
-      if (!draft.id){ draft.id = SCH.doc().id; draft.isNew = true; }   // 다시 눌러도 같은 문서에 저장 → 중복 없음
-      const data = {name:draft.name, forWhom:draft.forWhom, goal:draft.goal, founder:draft.founder, color:draft.color,
-        courses: draft.courses.map(c=>({id:c.id, kind:c.kind, role:roleOf(c), name:c.name, desc:c.desc||'', why:(c.why||'').trim(), group:c.group||'', type:c.type||''})),
-        updatedAt: TS()};
-      if (draft.isNew) data.createdAt = TS();
-      await withTimeout(SCH.doc(draft.id).set(data, {merge:true}));
-      schoolId = draft.id; remember('schools', schoolId);
-      // 학교를 고친 경우: 다른 학생들 시간표를 바뀐 과목에 맞춰 정리
-      if (!draft.isNew){
-        const S = {courses: data.courses}, bg = basicGrid(S), elIds = new Set(electives(S).map(c=>c.id));
-        await withTimeout(Promise.all(tts.filter(t=>t.schoolId===schoolId && t.id!==tt.ttId).map(t => {
-          const picks = (t.picks||[]).filter(id=>elIds.has(id)), g = {...bg};
-          for (const [k,cid] of Object.entries(t.grid||{})) if (!bg[k] && picks.includes(cid)) g[k]=cid;
-          return TT.doc(t.id).update({picks, grid:g});
-        })));
-      }
-    }
+    const schoolId = visit.id;
     if (!tt.ttId){ tt.ttId = TT.doc().id; tt.isNew = true; }
-    const tdata = {schoolId, student, note, picks:tt.picks, grid:tt.grid, founder: !visit, updatedAt: TS()};
+    const tdata = {schoolId, student, note, picks:tt.picks, grid:tt.grid, founder: isMine('schools', schoolId), updatedAt: TS()};
     if (tt.isNew) tdata.createdAt = TS();
     await withTimeout(TT.doc(tt.ttId).set(tdata, {merge:true}));
     remember('tts', tt.ttId);
     clearDraft();
-    toast(visit ? '입학했어요.' : '학교가 세워졌어요.');
+    toast(tt.isNew ? '입학했어요.' : '시간표를 고쳤어요.');
     $('tName').value=''; $('tNote').value='';
-    draft = null; visit = null;
+    visit = null;
     openDetail(schoolId);
   }catch(e){ console.error(e); err('e3','저장하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.'); }
   btn.disabled = false; btn.textContent = '완성';
@@ -1025,15 +1104,12 @@ function editSchool(id, step=1){
   const s = schools.find(x=>x.id===id); if(!s) return;
   visit = null;
   draft = {id, name:s.name, forWhom:s.forWhom, goal:s.goal||'', founder:s.founder, color:s.color??4, courses: s.courses.map(c=>({...c}))};
-  const myT = tts.find(t=>t.schoolId===id && t.founder && isMine('tts',t.id));
-  tt = myT ? {picks:[...myT.picks], grid:{...myT.grid}, ttId:myT.id} : {picks:[], grid:{}, ttId:null};
-  $('tName').value = myT ? myT.student : s.founder; $('tNote').value = myT ? (myT.note||'') : '';
+  tt = {picks:[], grid:{}, ttId:null};
   whyOpen.clear(); clearDraft();
   fillStep1(); go('build'); toStep(step, true);
 }
 function editTT(tid){
   const t = tts.find(x=>x.id===tid); if(!t) return;
-  if (t.founder){ return editSchool(t.schoolId, 3); }
   const s = schools.find(x=>x.id===t.schoolId); if(!s) return;
   visit = s; draft = null; clearDraft(); tt = {picks:[...t.picks], grid:{...t.grid}, ttId:tid};
   $('tName').value = t.student; $('tNote').value = t.note||'';
