@@ -82,6 +82,7 @@ textarea.inp{resize:vertical;min-height:72px}
 .colors button.on{box-shadow:0 0 0 2.5px var(--ink)}
 .nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:10px}
 .err{color:#D9546E;font-size:13px;min-height:18px}
+.nav .btn{white-space:nowrap;flex:none}
 
 /* 과목 */
 .count{font-family:var(--hand);font-size:24px}
@@ -156,6 +157,7 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;table-layout:fix
 .tt td{height:52px;border-radius:10px;background:var(--soft);font-size:12.5px;font-weight:600;text-align:center;line-height:1.25;padding:3px;word-break:keep-all;overflow-wrap:anywhere;overflow:hidden;cursor:pointer;transition:background .12s}
 .tt td:hover{outline:2px solid rgba(61,54,49,.15)}
 .tt.ro td{cursor:default}
+.tt.ro td:not(.f){background:#fff;box-shadow:inset 0 0 0 1px #E7DDCF}
 .tt.ro td:hover{outline:none}
 .tt td.f{color:#3D3631}
 .tt td.b{color:#8A7F74;cursor:default;font-weight:500}
@@ -172,12 +174,12 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;table-layout:fix
 
 .resume{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--paper);border:1.5px solid var(--line);border-radius:16px;padding:12px 16px;margin:6px 0 0;font-size:14px}
 .resume span:last-child{display:flex;gap:4px}
-.done{text-align:center;padding:50px 10px 30px}
+.donebox{text-align:center;padding:50px 10px 30px}
 .done-ico{font-size:96px;display:block;margin:0 auto 14px;animation:pop .5s ease-out}
 @keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
 .done-sub{font-size:15px;color:var(--sub);margin-bottom:2px}
-.done h2{font-family:var(--hand);font-weight:400;font-size:54px;line-height:1.15;margin:0 0 6px;word-break:keep-all}
-.done p{color:#6F655C;margin:0 0 28px}
+.donebox h2{font-family:var(--hand);font-weight:400;font-size:54px;line-height:1.15;margin:0 0 6px;word-break:keep-all;overflow-wrap:anywhere}
+.donebox p{color:#6F655C;margin:0 0 28px;overflow-wrap:anywhere}
 .done-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
 .done-btns .btn{padding:13px 24px;font-size:16px}
 .done-btns .px{font-size:20px}
@@ -216,6 +218,8 @@ body.noscroll{overflow:hidden}
 .panel .tabs{margin:0 18px 10px}
 .pk-body{flex:1;min-height:0;display:flex;flex-direction:column;padding:0 18px 16px;overflow:auto}
 .gchips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;flex:none;scrollbar-width:thin}
+@media (min-width:641px){.gchips{flex-wrap:wrap;overflow:visible}}
+select.inp{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23958A80' stroke-width='1.8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 .gchips button{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:13.5px;white-space:nowrap}
 .gchips button.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
 .pk-q{border-radius:999px;padding:8px 14px;font-size:14px;margin-bottom:8px;flex:none}
@@ -262,6 +266,7 @@ body.noscroll{overflow:hidden}
 .stu{border:1.5px solid var(--line);border-radius:16px;padding:12px 12px 10px;background:#fff}
 .stu .who{font-weight:700;font-size:14.5px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:6px}
 .stu .who small{font-weight:400;color:var(--sub);font-size:12px}
+.stu .redo{font-size:12.5px;color:#C2410C;background:#FFF1E6;border-radius:8px;padding:5px 9px;margin:4px 0 6px}
 .stu .note{font-size:13.5px;color:#6F655C;margin:4px 2px 6px}
 .stu table.tt{min-width:0;border-spacing:2px}
 .stu .tt td{height:30px;font-size:10.5px;border-radius:6px}
@@ -276,10 +281,13 @@ body.noscroll{overflow:hidden}
 .loading{color:var(--sub);text-align:center;padding:40px 0}
 
 @media (max-width:640px){
+  .nav{flex-wrap:wrap}
+  .nav .err{order:3;width:100%;text-align:center;min-height:0}
+  .nav .err:empty{display:none}
   .modal{padding:0;align-items:flex-end}
   .panel{height:92%;border-radius:20px 20px 0 0;max-width:none}
   .hero-ico{font-size:64px}
-  .done h2{font-size:42px}
+  .donebox h2{font-size:40px}
   .done-ico{font-size:76px}
   .done-btns .btn{width:100%;justify-content:center}
   .steps3 .px{font-size:26px}
@@ -458,7 +466,7 @@ body.noscroll{overflow:hidden}
 
   <!-- 학교가 세워졌어요 -->
   <section id="v-done" class="hidden">
-    <div class="done">
+    <div class="donebox">
       <div class="px px-school done-ico"></div>
       <div class="done-sub">학교가 세워졌어요</div>
       <h2 id="doneName"></h2>
@@ -519,7 +527,7 @@ const CATALOG = {
 };
 const FOR_EX = ['시각예술 분야로 진로를 정한 학생','공학·기술 분야로 진로를 정한 학생','생태 전환을 실천하는 시민으로 성장할 학생','놀이와 게임을 통해 배우는 학생','지역사회의 문제를 직접 해결해 보려는 학생','아직 진로를 탐색 중인 학생'];
 const SCHOOL_COLORS = [['#FF9FB2','#FFEEF2'],['#FFB98A','#FFF1E7'],['#F2C94C','#FDF6DC'],['#7FD1BF','#E5F6F2'],['#8EC5F0','#EAF4FD'],['#B9A6EE','#F1ECFD'],['#B5C98A','#F1F6E6']];
-const COURSE_COLORS = ['#FFC6D0','#FFD8B8','#F8E39A','#B6E6D9','#BEDDF7','#D8CCF7','#D5E4B4','#F1CBE6'];
+const COURSE_COLORS = ['#FFC6D0','#FFD8B8','#F8E39A','#B6E6D9','#BEDDF7','#D8CCF7','#D5E4B4','#F1CBE6','#A9DCF0','#FFB4A8','#C9C2F2','#B8E3B0'];
 const DAYS = ['월','화','수','목','금'];
 const PERIODS = 6;
 
@@ -567,7 +575,9 @@ function go(v, push=true){
 }
 window.addEventListener('popstate', e => {
   const st = e.state || {};
-  if (pkRole) closePicker();
+  if (pkRole){ closePicker(true); if (st.v==='build' && st.step===2) return; }
+  if (st.picker){ history.back(); return; }
+  if (st.v==='build' && (draft || visit) && !$('v-build').classList.contains('hidden') && st.step===curStep()) return;
   if (st.v==='build' && (draft || visit)){
     const cur = $('v-build').classList.contains('hidden') ? 0 : curStep();
     go('build', false);
@@ -593,12 +603,16 @@ function loadDraft(){
   return null;
 }
 const clearDraft = () => localStorage.removeItem(DRAFT_KEY);
-function draftLabel(d){ return d.visitId ? ((schools.find(s=>s.id===d.visitId)||{}).name||'다른 학교') + ' 시간표' : (d.draft && d.draft.name ? `'${d.draft.name}'` : '만들던 학교'); }
+function draftLabel(d){
+  if (d.visitId) return `'${(schools.find(s=>s.id===d.visitId)||{}).name||'다른 학교'}' 시간표를 짜던 중이에요.`;
+  const nm = d.draft && d.draft.name ? `'${d.draft.name}'` : '학교';
+  return (d.draft && d.draft.id && !d.draft.isNew) ? `${nm}을(를) 고치던 중이에요.` : `${nm}을(를) 세우던 중이에요.`;
+}
 function showResume(){
   const d = loadDraft(), box = $('resume');
   if (!d || (d.visitId && !loaded)){ box.classList.add('hidden'); return; }
   if (d.visitId && !schools.some(s=>s.id===d.visitId)){ clearDraft(); box.classList.add('hidden'); return; }
-  $('resumeText').textContent = `${draftLabel(d)}을(를) 만들던 중이에요.`;
+  $('resumeText').textContent = draftLabel(d);
   box.classList.remove('hidden');
 }
 function resumeDraft(){
@@ -619,7 +633,7 @@ document.addEventListener('input', e => { if (e.target.closest && e.target.close
 function startNew(){
   const d = loadDraft();
   if (d && !d.visitId && d.draft && (d.draft.name || d.step>1)){
-    if (confirm(`${draftLabel(d)}을(를) 만들던 중이에요. 이어서 할까요?\n(취소를 누르면 새로 시작해요)`)) return resumeDraft();
+    if (confirm(`${draftLabel(d)} 이어서 할까요?\n(취소를 누르면 새로 시작해요)`)) return resumeDraft();
   }
   clearDraft();
   $('tName').value=''; $('tNote').value='';
@@ -725,7 +739,7 @@ function toggleWhy(id){
 function renderMyCourses(){
   const b = basics(draft), e = electives(draft);
   $('bCount').textContent = `${b.length} / ${BASIC_MAX}`;
-  $('eCount').textContent = `${e.length} / ${EL_MAX}`; $('eCount').classList.toggle('ok', e.length>=needPicks(draft));
+  $('eCount').textContent = `${e.length}개 / 최소 ${needPicks(draft)}`; $('eCount').classList.toggle('ok', e.length>=needPicks(draft));
   $('myBasic').innerHTML = b.length ? b.map(courseRowHTML).join('') : '<div class="crow-empty">아직 없어요</div>';
   $('myElective').innerHTML = e.length ? e.map(courseRowHTML).join('') : '<div class="crow-empty">아직 없어요</div>';
   document.querySelectorAll('[data-why]').forEach(t => t.oninput = syncWhys);
@@ -750,12 +764,15 @@ function openPicker(role){
   $('catQ').value = ''; err('eNew','');
   setPkTab('cat');
   $('picker').classList.remove('hidden'); document.body.classList.add('noscroll');
+  history.pushState({v:'build', step:2, picker:true}, '', location.pathname);
   renderPicker();
   $('catList').scrollTop = 0;
 }
-function closePicker(){
+function closePicker(fromPop){
+  if (!pkRole) return;
   $('picker').classList.add('hidden'); document.body.classList.remove('noscroll');
   pkRole = null; renderMyCourses();
+  if (!fromPop && history.state && history.state.picker) history.back();
 }
 function setPkTab(t){
   document.querySelectorAll('#pkTabs button').forEach(x=>x.classList.toggle('on', x.dataset.t===t));
@@ -847,6 +864,7 @@ function prepStep3(){
 }
 function renderPicks(){
   const s = curSchool();
+  err('e3','');
   const need = needPicks(s);
   $('pickCount').textContent = `${tt.picks.length} / ${need}`;
   $('pickGrid').innerHTML = electives(s).map(c => `<button class="pick ${tt.picks.includes(c.id)?'on':''}" data-id="${c.id}"><span class="dot" style="background:${tt.picks.includes(c.id)?courseColor(s,c.id):'#E6DDD0'}"></span>${esc(c.name)}</button>`).join('');
@@ -947,9 +965,14 @@ function autoFill(){
 /* ===== 저장 ===== */
 const withTimeout = (pr, ms=15000) => Promise.race([pr, new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')), ms))]);
 async function saveSchool(){
-  if (pkRole) closePicker();
+  if (pkRole) closePicker(true);
   syncWhys();
   if (checkRules(draft).some(r=>!r.ok)){ err('e2','교육과정 편성 기준을 충족하지 않았습니다.'); toast('교육과정 편성 기준을 확인해 주세요.'); const r=$('rules'); r.scrollIntoView({block:'center',behavior:'smooth'}); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); return; }
+  if (draft.id && !draft.isNew){
+    const old = schools.find(x=>x.id===draft.id), n = tts.filter(t=>t.schoolId===draft.id).length;
+    const sameBasics = old && basics(old).map(c=>c.id).join() === basics(draft).map(c=>c.id).join();
+    if (n && !sameBasics && !confirm(`기본과목이 바뀌어서 이 학교 학생 ${n}명의 시간표가 새로 맞춰져요. 계속할까요?`)) return;
+  }
   const btn = $('schoolBtn'), label = btn.textContent; btn.disabled = true; btn.textContent = '저장 중…';
   const TS = () => firebase.firestore.FieldValue.serverTimestamp();
   try{
@@ -961,19 +984,32 @@ async function saveSchool(){
     await withTimeout(SCH.doc(draft.id).set(data, {merge:true}));
     const id = draft.id, isNew = draft.isNew;
     remember('schools', id);
-    // 학교를 고친 경우: 학생들 시간표를 바뀐 과목에 맞춰 정리
+    // 학교를 고친 경우: 학생들 시간표를 바뀐 교육과정에 맞게 다시 맞춤
     if (!isNew){
-      const S = {courses: data.courses}, bg = basicGrid(S), elIds = new Set(electives(S).map(c=>c.id));
-      await withTimeout(Promise.all(tts.filter(t=>t.schoolId===id).map(t => {
-        const picks = (t.picks||[]).filter(x=>elIds.has(x)), g = {...bg};
-        for (const [k,cid] of Object.entries(t.grid||{})) if (!bg[k] && picks.includes(cid)) g[k]=cid;
-        return TT.doc(t.id).update({picks, grid:g});
-      })));
+      const S = {courses: data.courses};
+      await withTimeout(Promise.all(tts.filter(t=>t.schoolId===id).map(t => TT.doc(t.id).update(refitTT(S, t)))));
     }
     clearDraft(); draft = null;
     if (isNew) showDone(id); else { toast('고쳤어요.'); openDetail(id); }
   }catch(e){ console.error(e); err('e2','저장하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.'); }
   btn.disabled = false; btn.textContent = label;
+}
+// 바뀐 학교에 시간표 맞추기: 지금 배치가 그대로 맞으면 유지, 아니면 고른 과목으로 다시 배치
+function refitTT(S, t){
+  const need = needPicks(S), elIds = electives(S).map(c=>c.id);
+  let picks = (t.picks||[]).filter(x=>elIds.includes(x)).slice(0, need);
+  const bg = basicGrid(S), g = {...bg};
+  for (const [k,cid] of Object.entries(t.grid||{})) if (!bg[k] && picks.includes(cid)) g[k]=cid;
+  if (ttValid(S, {picks, grid:g})) return {picks, grid:g};
+  const g2 = {...bg};
+  Object.assign(g2, spreadTwo(allSlots().filter(k=>!bg[k]).slice(0, picks.length*HOURS), picks));
+  return {picks, grid:g2};
+}
+function ttValid(S, t){
+  const need = needPicks(S), picks = t.picks||[], vals = Object.values(t.grid||{});
+  if (picks.length!==need) return false;
+  if (picks.some(id => !electives(S).some(c=>c.id===id) || vals.filter(x=>x===id).length!==HOURS)) return false;
+  return allSlots().every(k => t.grid[k] && S.courses.some(c=>c.id===t.grid[k]));
 }
 function showDone(id, push=true){
   detailId = id;
@@ -992,6 +1028,12 @@ async function saveAll(){
   const unplaced = tt.picks.filter(id => Object.values(tt.grid).filter(x=>x===id).length !== HOURS);
   if (unplaced.length){ const s=curSchool(); return err('e3',`'${s.courses.find(c=>c.id===unplaced[0]).name}'을(를) 시간표에 ${HOURS}시간 넣어 주세요.`); }
   if (emptyCount()) return err('e3',`공강이 없도록 빈칸 ${emptyCount()}칸을 모두 채워 주세요.`);
+  const latest = schools.find(x=>x.id===visit.id);
+  if (!latest){ return err('e3','이 학교가 지워졌어요. 다른 학교를 구경해 보세요.'); }
+  if (JSON.stringify(latest.courses) !== JSON.stringify(visit.courses)){
+    visit = latest; prepStep3();
+    return err('e3','방금 설립자가 교육과정을 바꿨어요. 바뀐 과목으로 시간표를 다시 확인해 주세요.');
+  }
   const btn = $('saveBtn'); btn.disabled = true; btn.textContent = '저장 중…';
   const TS = () => firebase.firestore.FieldValue.serverTimestamp();
   try{
@@ -1085,6 +1127,7 @@ function stuHTML(s,t){
   return `<div class="stu">
     <div class="who"><span>${esc(t.student)} ${t.founder?'<small>설립자</small>':''}</span>${mineT?`<span><button class="btn sm ghost" style="padding:2px 8px" onclick="editTT('${t.id}')">고치기</button><button class="btn sm ghost" style="padding:2px 8px" onclick="delTT('${t.id}')">지우기</button></span>`:''}</div>
     ${t.note?`<div class="note">${esc(t.note)}</div>`:''}
+    ${ttValid(s,t)?'':`<div class="redo">학교 교육과정이 바뀌어서 시간표를 다시 짜야 해요.</div>`}
     <table class="tt ro">${ttHTML(s, t.grid||{}, true)}</table>
     <div class="legend">${basics(s).length?`<span><i style="background:${BASIC_COLOR}"></i>기본과목</span>`:''}${picks.map(id=>`<span><i style="background:${courseColor(s,id)}"></i>${esc(s.courses.find(c=>c.id===id).name)}</span>`).join('')}</div>
   </div>`;
