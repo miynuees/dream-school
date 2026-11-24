@@ -670,9 +670,9 @@ function ttHTML(school, grid, ro){
   }
   return h;
 }
-const BASIC_HOURS = 3;
+const BASIC_HOURS = 2;
 function allSlots(){ const a=[]; for (let p=1;p<=PERIODS;p++) for (let d=0;d<5;d++) a.push(d+'-'+p); return a; }
-// 기본과목은 과목마다 3시간, 앞 교시부터 요일을 돌며 자동 배치(같은 과목은 서로 다른 요일)
+// 기본과목은 과목마다 2시간, 앞 교시부터 요일을 돌며 자동 배치(같은 과목은 서로 다른 요일)
 function basicGrid(school){
   const hrs = []; basics(school).forEach(c=>{ for (let i=0;i<BASIC_HOURS;i++) hrs.push(c.id); });
   const g = {}; allSlots().forEach((k,i)=>{ if (i<hrs.length) g[k]=hrs[i]; });
