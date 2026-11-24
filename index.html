@@ -484,7 +484,7 @@ function toStep(n, force){
     }
     if (n>cur && cur===2){
       syncWhys();
-      if (checkRules(draft).some(r=>!r.ok)){ err('e2','교육과정 기준을 모두 채워 주세요.'); const r=$('rules'); r.scrollIntoView({block:'center',behavior:'smooth'}); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); return; }
+      if (checkRules(draft).some(r=>!r.ok)){ err('e2','교육과정 편성 기준을 충족하지 않았습니다.'); const r=$('rules'); r.scrollIntoView({block:'center',behavior:'smooth'}); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); return; }
     }
   }
   ['e1','e2','e3'].forEach(e=>$(e).textContent='');
@@ -511,16 +511,15 @@ function checkRules(d){
   const has = (list,g) => list.some(c=>c.group===g);
   const f = all.filter(isFoundation).length;
   return [
-    {ok: has(b,'국어') && has(b,'수학') && has(b,'영어'), t:'기본과목에 국어·수학·영어 과목이 하나씩 있어요'},
-    {ok: has(b,'사회') && has(b,'과학'), t:'기본과목에 사회(한국사 포함)·과학 과목이 하나씩 있어요'},
-    {ok: has(all,'체육') && has(all,'예술'), t:'체육·예술 과목이 하나 이상 있어요 <small>기본·선택 어디든</small>'},
-    {ok: e.length>=EL_MIN && e.length<=EL_MAX, t:`선택과목이 ${EL_MIN}~${EL_MAX}개예요 <small>지금 ${e.length}개</small>`},
-    {ok: all.length>0 && f*2<=all.length, t:`국어·수학·영어·한국사 과목이 전체의 절반을 넘지 않아요 <small>지금 ${f} / ${all.length}</small>`},
+    {ok: has(b,'국어') && has(b,'수학') && has(b,'영어') && has(b,'사회') && has(b,'과학'), t:'기본과목에 국어·수학·영어·사회(한국사 포함)·과학 각 1과목 이상 필수'},
+    {ok: has(all,'체육') && has(all,'예술'), t:'체육·예술 각 1과목 이상 필수 <small>기본·선택 무관</small>'},
+    {ok: e.length>=EL_MIN && e.length<=EL_MAX, t:`선택과목 ${EL_MIN}~${EL_MAX}개 <small>현재 ${e.length}개</small>`},
+    {ok: all.length>0 && f*2<=all.length, t:`국어·수학·영어·한국사 과목은 전체의 절반을 넘을 수 없음 <small>현재 ${f} / ${all.length}</small>`},
   ];
 }
 function renderRules(){
   const r = checkRules(draft);
-  $('rules').innerHTML = `<div class="rules-h">교육과정 기준 <small>실제 기준을 간단히 줄였어요</small></div>` +
+  $('rules').innerHTML = `<div class="rules-h">교육과정 편성 기준 <small>실제 기준을 간소화함</small></div>` +
     r.map(x=>`<div class="rule ${x.ok?'ok':''}"><i>${x.ok?'✓':''}</i><span>${x.t}</span></div>`).join('');
   if (r.every(x=>x.ok)) err('e2','');
 }
