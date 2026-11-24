@@ -262,9 +262,9 @@ async function wipeAll(){
   const r = real(); if (!r.length) return toast('지울 학교가 없어요.');
   if (!confirm(`예시 학교를 빼고 학교 ${r.length}개와 시간표를 모두 지울까요?`)) return;
   if (prompt('되돌릴 수 없어요. 계속하려면 "지우기"라고 입력하세요.') !== '지우기') return toast('취소했어요.');
-  const sample = schools.find(s=>s.isSample);
-  // 예시 학교의 학생 A·B만 남기고 시간표 전부(주인 없는 시간표 포함) 지움
-  const keepTT = t => sample && t.schoolId===sample.id && ['학생 A','학생 B'].includes(t.student);
+  // 예시 학교들의 학생 A·B만 남기고 시간표 전부(주인 없는 시간표 포함) 지움
+  const sampleIds = new Set(schools.filter(s=>s.isSample).map(s=>s.id));
+  const keepTT = t => sampleIds.has(t.schoolId) && ['학생 A','학생 B'].includes(t.student);
   try{
     await Promise.all(tts.filter(t=>!keepTT(t)).map(t=>TT.doc(t.id).delete()));
     await Promise.all(r.map(s=>SCH.doc(s.id).delete()));
