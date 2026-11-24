@@ -49,7 +49,7 @@ input,textarea,select{font:inherit;color:inherit}
 
 /* 대문 */
 .hero{text-align:center;padding:46px 0 22px}
-.hero h1{font-family:var(--hand);font-weight:400;font-size:58px;line-height:1.1;margin:0 0 10px}
+.hero h1{font-family:var(--hand);font-weight:400;font-size:58px;line-height:1.1;margin:0 0 26px}
 .hero p{color:var(--sub);margin:0 0 26px;font-size:16px}
 .hero .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .hero .btn{padding:13px 26px;font-size:16px}
@@ -92,6 +92,7 @@ textarea.inp{resize:vertical;min-height:72px}
 .course .row1{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-right:30px}
 .course .nm{font-weight:700;font-size:16px}
 .badge{font-size:11.5px;padding:2px 8px;border-radius:999px;background:var(--soft);color:#7D7166;white-space:nowrap}
+.badge.sample{background:var(--ink);color:#fff;font-family:'Pretendard Variable',sans-serif;font-size:11.5px;vertical-align:middle;letter-spacing:0}
 .badge.new{background:var(--c-soft);color:var(--ink)}
 .course .desc{font-size:13.5px;color:var(--sub);margin-top:2px}
 .course .why{margin-top:8px}
@@ -223,7 +224,6 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
   <section id="v-home">
     <div class="hero">
       <h1>내가 꿈꾸는 학교</h1>
-      <p>예산, 교사 수, 시수는 잠깐 잊고 바라는 것만 담아 보세요.</p>
       <div class="btns">
         <button class="btn main" onclick="startNew()">학교 세우기</button>
         <button class="btn" onclick="go('gallery')">다른 학교 구경하기</button>
@@ -250,20 +250,20 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
       <p class="lead">특정 전공을 중심으로 해도 좋고, 길러주고 싶은 역량이나 가치에서 출발해도 좋아요.</p>
       <div class="field">
         <label>학교 이름</label>
-        <input class="inp" id="fName" maxlength="30" placeholder="예) 물감고등학교">
+        <input class="inp" id="fName" maxlength="30" placeholder="학교 이름">
       </div>
       <div class="field">
         <label>어떤 학생을 위한 학교인가요?</label>
-        <input class="inp" id="fFor" maxlength="60" placeholder="예) 미술을 사랑하는 학생들을 위한 학교">
+        <input class="inp" id="fFor" maxlength="60" placeholder="예) 시각예술 분야로 진로를 정한 학생을 위한 학교">
         <div class="chips" id="forChips"></div>
       </div>
       <div class="field">
         <label>이 학교를 졸업한 학생은 어떤 사람이 되어 있을까요? <small>교육 목표</small></label>
-        <textarea class="inp" id="fGoal" maxlength="300" placeholder="예) 자기만의 시선으로 세상을 보고, 그것을 작품으로 말할 수 있는 사람"></textarea>
+        <textarea class="inp" id="fGoal" maxlength="300" placeholder="예) 자신의 관점으로 세계를 해석하고, 시각 언어로 표현해 타인과 소통할 수 있는 사람"></textarea>
       </div>
       <div class="field">
         <label>설립자 <small>이름이나 별명</small></label>
-        <input class="inp" id="fFounder" maxlength="20" placeholder="예) 김세은">
+        <input class="inp" id="fFounder" maxlength="20">
       </div>
       <div class="field">
         <label>학교 색</label>
@@ -288,8 +288,8 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
         </div>
         <div id="addNew" class="newform">
           <div class="two">
-            <input class="inp" id="nName" maxlength="30" placeholder="과목 이름 (예: 동네 미술관 만들기)">
-            <input class="inp" id="nDesc" maxlength="80" placeholder="무엇을 배우나요? (한 줄)">
+            <input class="inp" id="nName" maxlength="30" placeholder="과목 이름">
+            <input class="inp" id="nDesc" maxlength="80" placeholder="무엇을 배우나요? (한 줄 소개)">
           </div>
           <textarea class="inp" id="nWhy" maxlength="300" placeholder="왜 이 배움이 필요한가요?"></textarea>
           <div style="display:flex;justify-content:flex-end;gap:8px;align-items:center"><span class="err" id="eNew"></span><button class="btn" onclick="addNew()">+ 과목 추가</button></div>
@@ -332,9 +332,9 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
       </div>
       <div class="field">
         <label>왜 이 과목들을 골랐나요? <small>선택</small></label>
-        <textarea class="inp" id="tNote" maxlength="200" placeholder="예) 그림을 그리는 것보다 전시를 기획하는 쪽이 궁금해서"></textarea>
+        <textarea class="inp" id="tNote" maxlength="200" placeholder="예) 작품 제작보다 전시 기획 쪽 진로를 고민하고 있어서"></textarea>
       </div>
-      <div class="nav"><button class="btn ghost" id="s3back" onclick="toStep(2)">← 이전</button><span class="err" id="e3"></span><button class="btn main" id="saveBtn" onclick="saveAll()">완성!</button></div>
+      <div class="nav"><button class="btn ghost" id="s3back" onclick="toStep(2)">← 이전</button><span class="err" id="e3"></span><button class="btn main" id="saveBtn" onclick="saveAll()">완성</button></div>
     </div>
   </section>
 
@@ -365,7 +365,7 @@ const CATALOG = {
   '제2외국어/한문': {'일반 선택':['독일어','프랑스어','스페인어','중국어','일본어','러시아어','아랍어','베트남어','한문'],'진로 선택':['독일어 회화','프랑스어 회화','스페인어 회화','중국어 회화','일본어 회화','러시아어 회화','아랍어 회화','베트남어 회화','심화 독일어','심화 프랑스어','심화 스페인어','심화 중국어','심화 일본어','심화 러시아어','심화 아랍어','심화 베트남어','한문 고전 읽기'],'융합 선택':['독일어권 문화','프랑스어권 문화','스페인어권 문화','중국 문화','일본 문화','러시아 문화','아랍 문화','베트남 문화','언어생활과 한자']},
   '교양': {'일반 선택':['진로와 직업','생태와 환경'],'진로 선택':['인간과 철학','논리와 사고','인간과 심리','교육의 이해','삶과 종교','보건'],'융합 선택':['인간과 경제활동','논술']},
 };
-const FOR_EX = ['미술을 사랑하는 학생','공학자가 되고 싶은 학생','생태적 삶을 배우고 싶은 학생','게임과 놀이로 배우고 싶은 학생','지역사회를 바꾸고 싶은 학생','아직 꿈을 찾는 중인 학생'];
+const FOR_EX = ['시각예술 분야로 진로를 정한 학생','공학·기술 분야로 진로를 정한 학생','생태 전환을 실천하는 시민으로 성장할 학생','놀이와 게임을 통해 배우는 학생','지역사회의 문제를 직접 해결해 보려는 학생','아직 진로를 탐색 중인 학생'];
 const SCHOOL_COLORS = [['#FF9FB2','#FFEEF2'],['#FFB98A','#FFF1E7'],['#F2C94C','#FDF6DC'],['#7FD1BF','#E5F6F2'],['#8EC5F0','#EAF4FD'],['#B9A6EE','#F1ECFD'],['#B5C98A','#F1F6E6']];
 const COURSE_COLORS = ['#FFC6D0','#FFD8B8','#F8E39A','#B6E6D9','#BEDDF7','#D8CCF7','#D5E4B4','#F1CBE6'];
 const DAYS = ['월','화','수','목','금'];
@@ -427,7 +427,7 @@ function startNew(){
 }
 function fillStep1(){
   $('fName').value = draft.name; $('fFor').value = draft.forWhom; $('fGoal').value = draft.goal; $('fFounder').value = draft.founder;
-  $('forChips').innerHTML = FOR_EX.map(x=>`<button class="chip" type="button">${esc(x)}을 위한</button>`).join('');
+  $('forChips').innerHTML = FOR_EX.map(x=>`<button class="chip" type="button">${esc(x)}</button>`).join('');
   [...$('forChips').children].forEach((b,i)=> b.onclick = ()=>{ $('fFor').value = FOR_EX[i]+'을 위한 학교'; $('fFor').focus(); });
   $('colorPick').innerHTML = SCHOOL_COLORS.map((c,i)=>`<button type="button" style="background:${c[0]}" class="${i===draft.color?'on':''}" data-i="${i}" aria-label="색 ${i+1}"></button>`).join('');
   [...$('colorPick').children].forEach(b => b.onclick = ()=>{ draft.color=+b.dataset.i; setColor(draft.color); [...$('colorPick').children].forEach(x=>x.classList.toggle('on',x===b)); });
@@ -488,7 +488,7 @@ function addNew(){
   syncWhys();
   draft.courses.push({id:uid(), kind:'new', name, desc, why});
   $('nName').value=$('nDesc').value=$('nWhy').value=''; err('eNew','');
-  renderMyCourses(); renderCatalog(); toast(`'${name}' 개설!`);
+  renderMyCourses(); renderCatalog(); toast(`'${name}' 추가했어요.`);
 }
 function addCat(group,type,name){
   if (draft.courses.some(c=>c.name===name)) return;
@@ -613,11 +613,11 @@ async function saveAll(){
     const tdata = {schoolId, student, note, picks:tt.picks, grid:tt.grid, founder: !visit, updatedAt: firebase.firestore.FieldValue.serverTimestamp()};
     if (tt.ttId){ await TT.doc(tt.ttId).update(tdata); }
     else { tdata.createdAt = firebase.firestore.FieldValue.serverTimestamp(); const r = await TT.add(tdata); remember('tts', r.id); }
-    toast(visit ? '입학 완료!' : '학교가 세워졌어요!');
+    toast(visit ? '입학했어요.' : '학교가 세워졌어요.');
     $('tName').value=''; $('tNote').value='';
     openDetail(schoolId);
   }catch(e){ console.error(e); err('e3','저장하지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.'); }
-  btn.disabled = false; btn.textContent = '완성!';
+  btn.disabled = false; btn.textContent = '완성';
 }
 
 /* ===== 갤러리 ===== */
@@ -628,7 +628,7 @@ function cardHTML(s){
   return `<button class="card" onclick="openDetail('${s.id}')">
     <div class="band" style="background:${col[0]}"></div>
     <div class="in">
-      <div class="nm">${esc(s.name)}</div>
+      <div class="nm">${esc(s.name)}${s.isSample?' <span class="badge sample">예시</span>':''}</div>
       <div class="for">${esc(s.forWhom)}</div>
       <div class="tags">${(s.courses||[]).slice(0,4).map(c=>`<span>${esc(c.name)}</span>`).join('')}${(s.courses||[]).length>4?`<span>+${s.courses.length-4}</span>`:''}</div>
       <div class="meta"><span>과목 ${(s.courses||[]).length}개${newCnt?` (새 과목 ${newCnt})`:''}</span><span>학생 ${ttCount(s.id)}명</span></div>
@@ -661,7 +661,7 @@ function openDetail(id, push=true){
   v.innerHTML = `
   <div class="brochure">
     <div class="bro-head">
-      <div class="est">설립자 ${esc(s.founder)}${s.createdAt?' · '+fmtDate(s.createdAt):''}</div>
+      <div class="est">${s.isSample?'<span class="badge sample">예시 학교</span> ':'설립자 '+esc(s.founder)+(s.createdAt?' · '+fmtDate(s.createdAt):'')}</div>
       <h1>${esc(s.name)}</h1>
       <div class="for">${esc(s.forWhom)}</div>
       ${s.goal?`<div class="goal"><b>교육 목표</b>${esc(s.goal)}</div>`:''}
@@ -750,6 +750,7 @@ function refresh(){
 }
 SCH.orderBy('createdAt','desc').onSnapshot(snap => {
   schools = snap.docs.map(d=>({id:d.id, ...d.data()})).filter(s=>s.name && Array.isArray(s.courses));
+  schools.sort((a,b)=>(b.isSample?1:0)-(a.isSample?1:0));
   gotS = true; refresh();
 }, e => { console.error(e); $('recentCards').innerHTML = '<div class="empty" style="grid-column:1/-1">불러오지 못했어요. 새로고침해 주세요.</div>'; });
 TT.onSnapshot(snap => { tts = snap.docs.map(d=>({id:d.id, ...d.data()})); tts.sort((a,b)=>(a.createdAt?.seconds||9e9)-(b.createdAt?.seconds||9e9)); gotT = true; refresh(); });
