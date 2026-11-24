@@ -98,10 +98,33 @@ textarea.inp{resize:vertical;min-height:72px}
 .course .why textarea{min-height:54px;font-size:14px}
 .course .x{position:absolute;top:10px;right:10px;border:0;background:none;color:#C4B8AA;font-size:18px;line-height:1;padding:4px}
 .course .x:hover{color:#D9546E}
+.rules{border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 22px;background:#FFFDF9}
+.rules-h{font-weight:700;font-size:14px;margin-bottom:6px}
+.rules-h small{font-weight:400;color:var(--sub);margin-left:4px;font-size:12px}
+.rule{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--sub);padding:3px 0}
+.rule i{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid #D8CCBC;font-style:normal;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.rule.ok{color:var(--ink)}
+.rule.ok i{background:#3FA58F;border-color:#3FA58F;color:#fff}
+.rule small{color:var(--sub);margin-left:2px}
+.rules.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.sec{margin-bottom:22px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.sec-h strong{font-size:16px}
+.sec-h span:not(.count){font-size:13px;color:var(--sub);margin-left:8px}
+.sec .mycourses{margin:0 0 8px}
+.sec .mycourses:empty{display:none}
+.addbox-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.addslot .addbox{border:1.5px solid var(--line);border-radius:16px;padding:14px;margin-top:4px;background:#fff}
+.whybtn{border:0;background:none;color:var(--sub);font-size:13px;padding:4px 0 0}
+.whybtn:hover{color:var(--ink)}
+.basicline{font-size:13px;color:#6F655C;background:var(--soft);border-radius:10px;padding:8px 12px;margin-bottom:10px}
+.basicline:empty{display:none}
+.basicline b{font-weight:700;margin-right:4px}
+.bro-body h3 small{font-family:'Pretendard Variable',sans-serif;font-size:13px;color:var(--sub);margin-left:6px}
 .course .why-lab{font-size:12.5px;font-weight:700;color:#7D7166;margin-bottom:4px}
 .empty{border:1.5px dashed var(--line);border-radius:16px;padding:22px;text-align:center;color:var(--sub);font-size:14px}
 
-.addbox{border-top:1.5px dashed var(--line);padding-top:18px}
 .tabs{display:flex;gap:4px;margin-bottom:14px;background:var(--soft);padding:4px;border-radius:999px;width:fit-content}
 .tabs button{border:0;background:none;border-radius:999px;padding:7px 16px;font-size:14px;color:var(--sub)}
 .tabs button.on{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
@@ -273,36 +296,49 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
 
     <!-- STEP 2 -->
     <div class="sheet hidden" id="s2">
-      <h2>우리 학교만의 선택과목</h2>
-      <p class="lead">5~8개를 구상해 보세요. 기존 과목을 가져와도, 이름부터 새로 지어도 돼요. 중요한 건 과목마다 '왜 이 배움이 필요한가'예요.</p>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
-        <strong>개설 과목</strong><span class="count" id="cCount">0 / 8</span>
-      </div>
-      <div class="mycourses" id="myCourses"></div>
+      <h2>우리 학교 교육과정</h2>
+      <p class="lead">모든 학생이 배우는 기본과목과, 학생이 골라 듣는 선택과목을 정해요. 기존 과목을 가져와도, 새로 만들어도 돼요.</p>
 
-      <div class="addbox">
+      <div class="rules" id="rules"></div>
+
+      <div class="sec">
+        <div class="sec-h"><div><strong>기본과목</strong><span>모든 학생이 배워요</span></div><span class="count" id="bCount">0</span></div>
+        <div class="mycourses" id="myBasic"></div>
+        <button class="btn sm addbtn" data-role="basic">+ 기본과목 추가</button>
+        <div class="addslot" id="slot-basic"></div>
+      </div>
+      <div class="sec">
+        <div class="sec-h"><div><strong>선택과목</strong><span>학생이 골라 들어요</span></div><span class="count" id="eCount">0</span></div>
+        <div class="mycourses" id="myElective"></div>
+        <button class="btn sm addbtn" data-role="elective">+ 선택과목 추가</button>
+        <div class="addslot" id="slot-elective"></div>
+      </div>
+
+      <div class="addbox hidden" id="addBox">
+        <div class="addbox-h"><strong id="addTitle">과목 추가</strong><button class="btn sm ghost" onclick="closeAdd()">닫기</button></div>
         <div class="tabs" id="addTabs">
-          <button data-t="new" class="on">새 과목 만들기</button>
-          <button data-t="cat">기존 선택과목에서 고르기</button>
+          <button data-t="cat" class="on">기존 과목에서 고르기</button>
+          <button data-t="new">새 과목 만들기</button>
         </div>
-        <div id="addNew" class="newform">
-          <div class="two">
-            <input class="inp" id="nName" maxlength="30" placeholder="과목 이름">
-            <input class="inp" id="nDesc" maxlength="80" placeholder="무엇을 배우나요? (한 줄 소개)">
-          </div>
-          <textarea class="inp" id="nWhy" maxlength="300" placeholder="왜 이 배움이 필요한가요?"></textarea>
-          <div style="display:flex;justify-content:flex-end;gap:8px;align-items:center"><span class="err" id="eNew"></span><button class="btn" onclick="addNew()">+ 과목 추가</button></div>
-        </div>
-        <div id="addCat" class="hidden">
-          <p class="cat-note">2022 개정 교육과정 고등학교 선택과목 (2025학년도 고1부터 적용) · 누르면 위 목록에 담겨요</p>
+        <div id="addCat">
+          <p class="cat-note" id="catNote"></p>
           <div class="filters">
             <select id="catGroup"></select>
-            <select id="catType"><option value="">전체 유형</option><option>일반 선택</option><option>진로 선택</option><option>융합 선택</option></select>
+            <select id="catType"></select>
             <input class="inp" id="catQ" placeholder="과목 검색">
           </div>
           <div class="catlist" id="catList"></div>
         </div>
+        <div id="addNew" class="newform hidden">
+          <div class="two">
+            <input class="inp" id="nName" maxlength="30" placeholder="과목 이름">
+            <select class="inp" id="nGroup"></select>
+          </div>
+          <input class="inp" id="nDesc" maxlength="80" placeholder="무엇을 배우나요? (한 줄 소개)">
+          <div style="display:flex;justify-content:flex-end;gap:8px;align-items:center"><span class="err" id="eNew"></span><button class="btn" onclick="addNew()">+ 추가</button></div>
+        </div>
       </div>
+
       <div class="nav"><button class="btn ghost" onclick="toStep(1)">← 이전</button><span class="err" id="e2"></span><button class="btn main" onclick="toStep(3)">다음</button></div>
     </div>
 
@@ -310,13 +346,14 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
     <div class="sheet hidden" id="s3">
       <div id="s3visit" class="hidden" style="font-size:13px;color:var(--sub);margin-bottom:4px"></div>
       <h2 id="s3title">이 학교의 학생이 되어 보세요</h2>
-      <p class="lead">내가 이 학교 학생이라면 어떤 과목을 듣고 싶을까요? 3~4개를 고르고 일주일 시간표를 채워 보세요.</p>
+      <p class="lead">기본과목은 모두 함께 들어요. 내가 이 학교 학생이라면 어떤 선택과목을 듣고 싶을까요? 3~4개를 고르고 일주일 시간표를 채워 보세요.</p>
       <div class="field">
         <label>학생 이름 <small>이름이나 별명</small></label>
         <input class="inp" id="tName" maxlength="20" style="max-width:260px">
       </div>
       <div class="field">
-        <label>듣고 싶은 과목 고르기 <small id="pickCount">0 / 4</small></label>
+        <label>듣고 싶은 선택과목 고르기 <small id="pickCount">0 / 4</small></label>
+        <div class="basicline" id="basicLine"></div>
         <div class="pickgrid" id="pickGrid"></div>
       </div>
       <div class="field" id="ttField">
@@ -353,11 +390,11 @@ table.tt{border-collapse:separate;border-spacing:4px;width:100%;min-width:430px;
 <script>
 /* ===== 2022 개정 교육과정 고등학교 선택과목 ===== */
 const CATALOG = {
-  '국어': {'일반 선택':['화법과 언어','독서와 작문','문학'],'진로 선택':['주제 탐구 독서','문학과 영상','직무 의사소통'],'융합 선택':['독서 토론과 글쓰기','매체 의사소통','언어생활 탐구']},
-  '수학': {'일반 선택':['대수','미적분Ⅰ','확률과 통계'],'진로 선택':['기하','미적분Ⅱ','경제 수학','인공지능 수학','직무 수학'],'융합 선택':['수학과 문화','실용 통계','수학과제 탐구']},
-  '영어': {'일반 선택':['영어Ⅰ','영어Ⅱ','영어 독해와 작문'],'진로 선택':['영미 문학 읽기','영어 발표와 토론','심화 영어','심화 영어 독해와 작문','직무 영어'],'융합 선택':['실생활 영어 회화','미디어 영어','세계 문화와 영어']},
-  '사회': {'일반 선택':['세계시민과 지리','세계사','사회와 문화','현대사회와 윤리'],'진로 선택':['한국지리 탐구','도시의 미래 탐구','동아시아 역사 기행','정치','법과 사회','경제','윤리와 사상','인문학과 윤리','국제 관계의 이해'],'융합 선택':['여행지리','역사로 탐구하는 현대 세계','사회문제 탐구','금융과 경제생활','윤리문제 탐구','기후변화와 지속가능한 세계']},
-  '과학': {'일반 선택':['물리학','화학','생명과학','지구과학'],'진로 선택':['역학과 에너지','전자기와 양자','물질과 에너지','화학 반응의 세계','세포와 물질대사','생물의 유전','지구시스템과학','행성우주과학'],'융합 선택':['과학의 역사와 문화','기후변화와 환경생태','융합과학 탐구']},
+  '국어': {'공통 과목':['공통국어'],'일반 선택':['화법과 언어','독서와 작문','문학'],'진로 선택':['주제 탐구 독서','문학과 영상','직무 의사소통'],'융합 선택':['독서 토론과 글쓰기','매체 의사소통','언어생활 탐구']},
+  '수학': {'공통 과목':['공통수학','기본수학'],'일반 선택':['대수','미적분Ⅰ','확률과 통계'],'진로 선택':['기하','미적분Ⅱ','경제 수학','인공지능 수학','직무 수학'],'융합 선택':['수학과 문화','실용 통계','수학과제 탐구']},
+  '영어': {'공통 과목':['공통영어','기본영어'],'일반 선택':['영어Ⅰ','영어Ⅱ','영어 독해와 작문'],'진로 선택':['영미 문학 읽기','영어 발표와 토론','심화 영어','심화 영어 독해와 작문','직무 영어'],'융합 선택':['실생활 영어 회화','미디어 영어','세계 문화와 영어']},
+  '사회': {'공통 과목':['한국사','통합사회'],'일반 선택':['세계시민과 지리','세계사','사회와 문화','현대사회와 윤리'],'진로 선택':['한국지리 탐구','도시의 미래 탐구','동아시아 역사 기행','정치','법과 사회','경제','윤리와 사상','인문학과 윤리','국제 관계의 이해'],'융합 선택':['여행지리','역사로 탐구하는 현대 세계','사회문제 탐구','금융과 경제생활','윤리문제 탐구','기후변화와 지속가능한 세계']},
+  '과학': {'공통 과목':['통합과학','과학탐구실험'],'일반 선택':['물리학','화학','생명과학','지구과학'],'진로 선택':['역학과 에너지','전자기와 양자','물질과 에너지','화학 반응의 세계','세포와 물질대사','생물의 유전','지구시스템과학','행성우주과학'],'융합 선택':['과학의 역사와 문화','기후변화와 환경생태','융합과학 탐구']},
   '체육': {'일반 선택':['체육1','체육2'],'진로 선택':['운동과 건강','스포츠 문화','스포츠 과학'],'융합 선택':['스포츠 생활1','스포츠 생활2']},
   '예술': {'일반 선택':['음악','미술','연극'],'진로 선택':['음악 연주와 창작','음악 감상과 비평','미술 창작','미술 감상과 비평'],'융합 선택':['음악과 미디어','미술과 매체']},
   '기술·가정/정보': {'일반 선택':['기술·가정','정보'],'진로 선택':['로봇과 공학세계','생활과학 탐구','인공지능 기초','데이터 과학'],'융합 선택':['창의 공학 설계','지식 재산 일반','생애 설계와 자립','아동발달과 부모','소프트웨어와 생활']},
@@ -447,58 +484,115 @@ function toStep(n, force){
     }
     if (n>cur && cur===2){
       syncWhys();
-      if (draft.courses.length<5) return err('e2','과목을 5개 이상 개설해 주세요.');
-      const noWhy = draft.courses.find(c=>!c.why.trim());
-      if (noWhy){ err('e2',`'${noWhy.name}'이(가) 왜 필요한지 적어 주세요.`); const el=document.querySelector(`[data-why="${noWhy.id}"]`); if(el){el.focus(); el.scrollIntoView({block:'center'});} return; }
+      if (checkRules(draft).some(r=>!r.ok)){ err('e2','교육과정 기준을 모두 채워 주세요.'); const r=$('rules'); r.scrollIntoView({block:'center',behavior:'smooth'}); r.classList.remove('shake'); void r.offsetWidth; r.classList.add('shake'); return; }
     }
   }
   ['e1','e2','e3'].forEach(e=>$(e).textContent='');
   [1,2,3].forEach(i => $('s'+i).classList.toggle('hidden', i!==n));
   document.querySelectorAll('#prog div').forEach(d => { const s=+d.dataset.s; d.classList.toggle('on', s===n); d.classList.toggle('done', s<n); });
   $('prog').classList.toggle('hidden', !!visit);
-  if (n===2) renderMyCourses(), renderCatalog();
+  if (n===2){ closeAdd(); renderMyCourses(); }
   if (n===3) prepStep3();
   window.scrollTo(0,0);
 }
 function err(id,msg){ $(id).textContent = msg; }
 
 /* ===== STEP 2 ===== */
+const roleOf = c => c.role || 'elective';
+const basics = s => s.courses.filter(c=>roleOf(c)==='basic');
+const electives = s => s.courses.filter(c=>roleOf(c)==='elective');
+const isFoundation = c => ['국어','수학','영어'].includes(c.group) || (c.name||'').startsWith('한국사');
+const BASIC_MAX = 8, EL_MIN = 5, EL_MAX = 8;
+let addRole = null;
+const whyOpen = new Set();
+
+function checkRules(d){
+  const b = basics(d), e = electives(d), all = d.courses;
+  const has = (list,g) => list.some(c=>c.group===g);
+  const f = all.filter(isFoundation).length;
+  return [
+    {ok: has(b,'국어') && has(b,'수학') && has(b,'영어'), t:'기본과목에 국어·수학·영어 과목이 하나씩 있어요'},
+    {ok: has(b,'사회') && has(b,'과학'), t:'기본과목에 사회(한국사 포함)·과학 과목이 하나씩 있어요'},
+    {ok: has(all,'체육') && has(all,'예술'), t:'체육·예술 과목이 하나 이상 있어요 <small>기본·선택 어디든</small>'},
+    {ok: e.length>=EL_MIN && e.length<=EL_MAX, t:`선택과목이 ${EL_MIN}~${EL_MAX}개예요 <small>지금 ${e.length}개</small>`},
+    {ok: all.length>0 && f*2<=all.length, t:`국어·수학·영어·한국사 과목이 전체의 절반을 넘지 않아요 <small>지금 ${f} / ${all.length}</small>`},
+  ];
+}
+function renderRules(){
+  const r = checkRules(draft);
+  $('rules').innerHTML = `<div class="rules-h">교육과정 기준 <small>실제 기준을 간단히 줄였어요</small></div>` +
+    r.map(x=>`<div class="rule ${x.ok?'ok':''}"><i>${x.ok?'✓':''}</i><span>${x.t}</span></div>`).join('');
+  if (r.every(x=>x.ok)) err('e2','');
+}
 function syncWhys(){ document.querySelectorAll('[data-why]').forEach(t => { const c = draft.courses.find(x=>x.id===t.dataset.why); if(c) c.why = t.value; }); }
-function renderMyCourses(){
-  const n = draft.courses.length;
-  $('cCount').textContent = `${n} / 8`; $('cCount').classList.toggle('ok', n>=5);
-  if (!n){ $('myCourses').innerHTML = `<div class="empty">아직 개설한 과목이 없어요. 아래에서 만들거나 골라 보세요.</div>`; return; }
-  $('myCourses').innerHTML = draft.courses.map(c => `
-    <div class="course">
-      <div class="row1"><span class="nm">${esc(c.name)}</span>${c.kind==='new' ? '<span class="badge new">새로 만든 과목</span>' : `<span class="badge">${esc(c.group)} · ${esc(c.type)}</span>`}</div>
+function courseCardHTML(c){
+  const badge = c.kind==='new' ? `<span class="badge new">새로 만든 과목 · ${esc(c.group||'')}</span>` : `<span class="badge">${esc(c.group)} · ${esc(c.type)}</span>`;
+  const showWhy = (c.why||'').trim() || whyOpen.has(c.id);
+  return `<div class="course">
+      <div class="row1"><span class="nm">${esc(c.name)}</span>${badge}</div>
       ${c.desc?`<div class="desc">${esc(c.desc)}</div>`:''}
-      <div class="why"><div class="why-lab">왜 이 배움이 필요한가요?</div><textarea class="inp" maxlength="300" data-why="${c.id}" placeholder="이 학교 학생에게 이 과목이 필요한 이유">${esc(c.why)}</textarea></div>
+      ${showWhy ? `<div class="why"><textarea class="inp" maxlength="300" data-why="${c.id}" placeholder="이 과목이 필요한 이유">${esc(c.why||'')}</textarea></div>`
+                : `<button class="whybtn" onclick="openWhy('${c.id}')">+ 필요한 이유 적기</button>`}
       <button class="x" title="빼기" onclick="removeCourse('${c.id}')">✕</button>
-    </div>`).join('');
+    </div>`;
+}
+function openWhy(id){ syncWhys(); whyOpen.add(id); renderMyCourses(); const t=document.querySelector(`[data-why="${id}"]`); if(t) t.focus(); }
+function renderMyCourses(){
+  const b = basics(draft), e = electives(draft);
+  $('bCount').textContent = `${b.length}개`;
+  $('eCount').textContent = `${e.length} / ${EL_MAX}`; $('eCount').classList.toggle('ok', e.length>=EL_MIN);
+  $('myBasic').innerHTML = b.map(courseCardHTML).join('');
+  $('myElective').innerHTML = e.map(courseCardHTML).join('');
   document.querySelectorAll('[data-why]').forEach(t => t.oninput = syncWhys);
+  renderRules();
 }
 function removeCourse(id){ syncWhys(); draft.courses = draft.courses.filter(c=>c.id!==id); renderMyCourses(); renderCatalog(); }
+function roleFull(){
+  const n = (addRole==='basic' ? basics(draft) : electives(draft)).length;
+  const max = addRole==='basic' ? BASIC_MAX : EL_MAX;
+  return n>=max ? `${addRole==='basic'?'기본':'선택'}과목은 ${max}개까지예요.` : '';
+}
 function addNew(){
-  const name = $('nName').value.trim(), desc=$('nDesc').value.trim(), why=$('nWhy').value.trim();
-  if (draft.courses.length>=8) return err('eNew','과목은 8개까지예요.');
+  const name = $('nName').value.trim(), desc=$('nDesc').value.trim(), group=$('nGroup').value;
+  const full = roleFull(); if (full) return err('eNew', full);
   if (!name) return err('eNew','과목 이름을 적어 주세요.');
+  if (!group) return err('eNew','어느 교과인지 골라 주세요.');
   if (draft.courses.some(c=>c.name===name)) return err('eNew','이미 있는 과목이에요.');
   syncWhys();
-  draft.courses.push({id:uid(), kind:'new', name, desc, why});
-  $('nName').value=$('nDesc').value=$('nWhy').value=''; err('eNew','');
+  draft.courses.push({id:uid(), kind:'new', role:addRole, name, desc, group, type:'', why:''});
+  $('nName').value=$('nDesc').value=''; $('nGroup').value=''; err('eNew','');
   renderMyCourses(); renderCatalog(); toast(`'${name}' 추가했어요.`);
 }
 function addCat(group,type,name){
   if (draft.courses.some(c=>c.name===name)) return;
-  if (draft.courses.length>=8) return toast('과목은 8개까지예요.');
+  const full = roleFull(); if (full) return toast(full);
   syncWhys();
-  const c = {id:uid(), kind:'existing', group, type, name, desc:'', why:''};
-  draft.courses.push(c); renderMyCourses(); renderCatalog();
-  const t = document.querySelector(`[data-why="${c.id}"]`); if(t){ t.scrollIntoView({block:'center',behavior:'smooth'}); setTimeout(()=>t.focus({preventScroll:true}),350); }
+  draft.courses.push({id:uid(), kind:'existing', role:addRole, group, type, name, desc:'', why:''});
+  renderMyCourses(); renderCatalog();
 }
+function openAdd(role){
+  syncWhys();
+  addRole = role;
+  $('slot-'+role).appendChild($('addBox'));
+  $('addBox').classList.remove('hidden');
+  document.querySelectorAll('.addbtn').forEach(b => b.classList.toggle('hidden', b.dataset.role===role));
+  $('addTitle').textContent = role==='basic' ? '기본과목 추가' : '선택과목 추가';
+  $('catNote').textContent = role==='basic'
+    ? '2022 개정 교육과정 고등학교 과목 · 공통 과목이 아니어도 모두가 배웠으면 하는 과목을 골라도 돼요'
+    : '2022 개정 교육과정 고등학교 선택과목 (2025학년도 고1부터 적용)';
+  const types = role==='basic' ? ['공통 과목','일반 선택','진로 선택','융합 선택'] : ['일반 선택','진로 선택','융합 선택'];
+  $('catType').innerHTML = '<option value="">전체 유형</option>' + types.map(t=>`<option>${t}</option>`).join('');
+  $('catQ').value=''; $('catGroup').value='';
+  renderCatalog();
+  $('addBox').scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+function closeAdd(){ $('addBox').classList.add('hidden'); addRole=null; document.querySelectorAll('.addbtn').forEach(b=>b.classList.remove('hidden')); }
+document.querySelectorAll('.addbtn').forEach(b => b.onclick = ()=> openAdd(b.dataset.role));
 $('catGroup').innerHTML = '<option value="">전체 교과</option>' + Object.keys(CATALOG).map(g=>`<option>${g}</option>`).join('');
+$('nGroup').innerHTML = '<option value="">어느 교과인가요?</option>' + [...Object.keys(CATALOG),'교과 융합'].map(g=>`<option>${g}</option>`).join('');
 ['catGroup','catType'].forEach(id => $(id).onchange = renderCatalog); $('catQ').oninput = renderCatalog;
 function renderCatalog(){
+  if (!addRole) return;
   const g = $('catGroup').value, ty = $('catType').value, q = $('catQ').value.trim().replace(/\s/g,'');
   const added = new Set(draft.courses.map(c=>c.name));
   let html = '';
@@ -507,6 +601,7 @@ function renderCatalog(){
     let inner = '';
     for (const [t, list] of Object.entries(types)){
       if (ty && ty!==t) continue;
+      if (addRole==='elective' && t==='공통 과목') continue;
       const items = list.filter(s => !q || s.replace(/\s/g,'').includes(q));
       if (!items.length) continue;
       inner += `<div class="t">${t}</div>` + items.map(s => `<button class="subj ${added.has(s)?'added':''}" data-g="${esc(grp)}" data-t="${t}" data-n="${esc(s)}">${added.has(s)?'✓ ':'+ '}${esc(s)}</button>`).join('');
@@ -523,7 +618,12 @@ document.querySelectorAll('#addTabs button').forEach(b => b.onclick = ()=>{
 
 /* ===== STEP 3 ===== */
 const curSchool = () => visit || draft;
-const courseColor = (school, cid) => COURSE_COLORS[Math.max(0, school.courses.findIndex(c=>c.id===cid)) % COURSE_COLORS.length];
+const BASIC_COLOR = '#E8E1D6';
+const courseColor = (school, cid) => {
+  const c = school.courses.find(x=>x.id===cid);
+  if (c && roleOf(c)==='basic') return BASIC_COLOR;
+  return COURSE_COLORS[Math.max(0, electives(school).findIndex(x=>x.id===cid)) % COURSE_COLORS.length];
+};
 function prepStep3(){
   const s = curSchool();
   if (!$('tName').value) $('tName').value = visit ? '' : (draft.founder||'');
@@ -531,22 +631,25 @@ function prepStep3(){
   if (visit) $('s3visit').textContent = visit.name + ' 입학하기';
   $('s3back').textContent = visit ? '← 학교 안내로' : '← 이전';
   $('s3back').onclick = visit ? ()=>openDetail(visit.id) : ()=>toStep(2);
-  tt.picks = tt.picks.filter(id => s.courses.some(c=>c.id===id));
+  tt.picks = tt.picks.filter(id => electives(s).some(c=>c.id===id));
+  const b = basics(s);
+  $('basicLine').innerHTML = b.length ? `<b>기본과목</b> ${b.map(c=>esc(c.name)).join(' · ')}` : '';
   renderPicks(); renderTTEdit();
 }
 function renderPicks(){
   const s = curSchool();
   $('pickCount').textContent = `${tt.picks.length} / 4`;
-  $('pickGrid').innerHTML = s.courses.map(c => `<button class="pick ${tt.picks.includes(c.id)?'on':''}" data-id="${c.id}"><span class="dot" style="background:${tt.picks.includes(c.id)?courseColor(s,c.id):'#E6DDD0'}"></span>${esc(c.name)}</button>`).join('');
+  $('pickGrid').innerHTML = electives(s).map(c => `<button class="pick ${tt.picks.includes(c.id)?'on':''}" data-id="${c.id}"><span class="dot" style="background:${tt.picks.includes(c.id)?courseColor(s,c.id):'#E6DDD0'}"></span>${esc(c.name)}</button>`).join('');
   $('pickGrid').querySelectorAll('.pick').forEach(b => b.onclick = ()=>{
     const id=b.dataset.id;
     if (tt.picks.includes(id)){ tt.picks = tt.picks.filter(x=>x!==id); for (const k in tt.grid) if (tt.grid[k]===id) delete tt.grid[k]; if (brush===id) brush=null; }
     else { if (tt.picks.length>=4) return toast('4개까지 고를 수 있어요.'); tt.picks.push(id); brush=id; }
     renderPicks(); renderTTEdit();
   });
-  $('ttField').classList.toggle('hidden', !tt.picks.length);
-  if (!tt.picks.includes(brush)) brush = tt.picks[0]||null;
-  $('brushBar').innerHTML = tt.picks.map(id => { const c=s.courses.find(x=>x.id===id); return `<button class="${brush===id?'on':''}" data-id="${id}" style="background:${courseColor(s,id)}">${esc(c.name)}</button>`; }).join('');
+  const bIds = basics(s).map(c=>c.id), brushIds = [...tt.picks, ...bIds];
+  $('ttField').classList.toggle('hidden', !brushIds.length);
+  if (!brushIds.includes(brush)) brush = tt.picks[0]||bIds[0]||null;
+  $('brushBar').innerHTML = brushIds.map(id => { const c=s.courses.find(x=>x.id===id); return `<button class="${brush===id?'on':''}" data-id="${id}" style="background:${courseColor(s,id)}">${esc(c.name)}</button>`; }).join('');
   $('brushBar').querySelectorAll('button').forEach(b => b.onclick = ()=>{ brush=b.dataset.id; renderPicks(); });
 }
 function ttHTML(school, grid, ro){
@@ -572,14 +675,14 @@ function renderTTEdit(){
 }
 function clearGrid(){ tt.grid = {}; renderTTEdit(); }
 function autoFill(){
-  if (!tt.picks.length) return;
+  const ids = [...tt.picks, ...basics(curSchool()).map(c=>c.id)];
+  if (!ids.length) return;
   tt.grid = {};
-  const slots = []; for (let p=1;p<=PERIODS;p++) for (let d=0;d<5;d++) slots.push(d+'-'+p);
-  // 과목마다 일주일 4시간, 날짜를 흩어서
-  tt.picks.forEach((id, i) => {
+  // 과목마다 일주일 3시간, 날짜를 흩어서 (선택과목 먼저)
+  ids.forEach(id => {
     let placed=0, tries=0;
     const days = [0,1,2,3,4].sort(()=>Math.random()-.5);
-    while (placed<4 && tries<60){
+    while (placed<3 && tries<80){
       const d = days[placed % 5], p = 1 + Math.floor(Math.random()*PERIODS), k = d+'-'+p;
       if (!tt.grid[k]){ tt.grid[k]=id; placed++; }
       tries++;
@@ -591,7 +694,7 @@ function autoFill(){
 /* ===== 저장 ===== */
 async function saveAll(){
   const student = $('tName').value.trim(), note = $('tNote').value.trim();
-  if (tt.picks.length<3) return err('e3','과목을 3개 이상 골라 주세요.');
+  if (tt.picks.length<3) return err('e3','선택과목을 3개 이상 골라 주세요.');
   const unplaced = tt.picks.filter(id => !Object.values(tt.grid).includes(id));
   if (unplaced.length){ const s=curSchool(); return err('e3',`'${s.courses.find(c=>c.id===unplaced[0]).name}'을(를) 시간표에 넣어 주세요.`); }
   if (!student) return err('e3','학생 이름을 적어 주세요.');
@@ -603,7 +706,7 @@ async function saveAll(){
     } else {
       syncWhys();
       const data = {name:draft.name, forWhom:draft.forWhom, goal:draft.goal, founder:draft.founder, color:draft.color,
-        courses: draft.courses.map(c=>({id:c.id, kind:c.kind, name:c.name, desc:c.desc||'', why:c.why.trim(), group:c.group||'', type:c.type||''})),
+        courses: draft.courses.map(c=>({id:c.id, kind:c.kind, role:roleOf(c), name:c.name, desc:c.desc||'', why:(c.why||'').trim(), group:c.group||'', type:c.type||''})),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()};
       if (draft.id){ await SCH.doc(draft.id).update(data); schoolId = draft.id; }
       else { data.createdAt = firebase.firestore.FieldValue.serverTimestamp(); const r = await SCH.add(data); schoolId = r.id; remember('schools', schoolId); }
@@ -622,14 +725,14 @@ async function saveAll(){
 const ttCount = id => tts.filter(t=>t.schoolId===id).length;
 function cardHTML(s){
   const col = (SCHOOL_COLORS[s.color]||SCHOOL_COLORS[4]);
-  const newCnt = (s.courses||[]).filter(c=>c.kind==='new').length;
+  const el = electives(s), bc = basics(s).length;
   return `<button class="card" onclick="openDetail('${s.id}')">
     <div class="band" style="background:${col[0]}"></div>
     <div class="in">
       <div class="nm">${esc(s.name)}${s.isSample?' <span class="badge sample">예시</span>':''}</div>
       <div class="for">${esc(s.forWhom)}</div>
-      <div class="tags">${(s.courses||[]).slice(0,4).map(c=>`<span>${esc(c.name)}</span>`).join('')}${(s.courses||[]).length>4?`<span>+${s.courses.length-4}</span>`:''}</div>
-      <div class="meta"><span>과목 ${(s.courses||[]).length}개${newCnt?` (새 과목 ${newCnt})`:''}</span><span>학생 ${ttCount(s.id)}명</span></div>
+      <div class="tags">${el.slice(0,4).map(c=>`<span>${esc(c.name)}</span>`).join('')}${el.length>4?`<span>+${el.length-4}</span>`:''}</div>
+      <div class="meta"><span>${bc?`기본 ${bc} · `:''}선택 ${el.length}</span><span>학생 ${ttCount(s.id)}명</span></div>
     </div></button>`;
 }
 function renderRecent(){
@@ -665,14 +768,9 @@ function openDetail(id, push=true){
       ${s.goal?`<div class="goal"><b>교육 목표</b>${esc(s.goal)}</div>`:''}
     </div>
     <div class="bro-body">
-      <h3>개설 과목 ${s.courses.length}</h3>
-      <div class="clist">${s.courses.map(c=>`
-        <div class="citem">
-          <div class="nm"><span style="width:10px;height:10px;border-radius:50%;background:${courseColor(s,c.id)};flex:none"></span>${esc(c.name)} ${c.kind==='new'?'<span class="badge new">새로 만든 과목</span>':`<span class="badge">${esc(c.group)} · ${esc(c.type)}</span>`}</div>
-          ${c.desc?`<div class="desc">${esc(c.desc)}</div>`:''}
-          <div class="why"><b>왜 필요한가</b>${esc(c.why)}</div>
-        </div>`).join('')}
-      </div>
+      ${basics(s).length?`<h3>기본과목 <small>모든 학생</small></h3><div class="clist">${basics(s).map(c=>citemHTML(s,c)).join('')}</div>`:''}
+      <h3 ${basics(s).length?'style="margin-top:26px"':''}>선택과목 <small>골라 듣기</small></h3>
+      <div class="clist">${electives(s).map(c=>citemHTML(s,c)).join('')}</div>
       <h3 style="margin-top:28px">이 학교 학생들의 시간표 ${list.length}</h3>
       <div class="students">${list.map(t => stuHTML(s,t)).join('') || '<div class="empty">아직 입학한 학생이 없어요.</div>'}</div>
       <div class="bro-actions">
@@ -685,14 +783,21 @@ function openDetail(id, push=true){
   </div>`;
   go('detail', push);
 }
+function citemHTML(s,c){
+  return `<div class="citem">
+    <div class="nm"><span style="width:10px;height:10px;border-radius:50%;background:${courseColor(s,c.id)};flex:none"></span>${esc(c.name)} ${c.kind==='new'?`<span class="badge new">새로 만든 과목${c.group?' · '+esc(c.group):''}</span>`:`<span class="badge">${esc(c.group)} · ${esc(c.type)}</span>`}</div>
+    ${c.desc?`<div class="desc">${esc(c.desc)}</div>`:''}
+    ${(c.why||'').trim()?`<div class="why"><b>왜 필요한가</b>${esc(c.why)}</div>`:''}
+  </div>`;
+}
 function stuHTML(s,t){
   const mineT = isMine('tts', t.id);
-  const picks = (t.picks||[]).filter(id=>s.courses.some(c=>c.id===id));
+  const picks = (t.picks||[]).filter(id=>electives(s).some(c=>c.id===id));
   return `<div class="stu">
     <div class="who"><span>${esc(t.student)} ${t.founder?'<small>설립자</small>':''}</span>${mineT?`<span><button class="btn sm ghost" style="padding:2px 8px" onclick="editTT('${t.id}')">고치기</button><button class="btn sm ghost" style="padding:2px 8px" onclick="delTT('${t.id}')">지우기</button></span>`:''}</div>
     ${t.note?`<div class="note">${esc(t.note)}</div>`:''}
     <table class="tt ro">${ttHTML(s, t.grid||{}, true)}</table>
-    <div class="legend">${picks.map(id=>`<span><i style="background:${courseColor(s,id)}"></i>${esc(s.courses.find(c=>c.id===id).name)}</span>`).join('')}</div>
+    <div class="legend">${basics(s).length?`<span><i style="background:${BASIC_COLOR}"></i>기본과목</span>`:''}${picks.map(id=>`<span><i style="background:${courseColor(s,id)}"></i>${esc(s.courses.find(c=>c.id===id).name)}</span>`).join('')}</div>
   </div>`;
 }
 function fmtDate(ts){ try{ const d = ts.toDate(); return `${d.getMonth()+1}월 ${d.getDate()}일`; }catch(e){ return ''; } }
